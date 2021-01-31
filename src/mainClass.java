@@ -15,7 +15,7 @@ public class mainClass extends JPanel implements ActionListener {
 	static String playerOneName;
 	static String playerTwoName;
 	static boolean playerOneNameSet;
-
+	static boolean nameSetUpDone= false;
 	public static final int NUM_PLAYERS = 2;
 	public static final int NUM_NEUTRALS = 4;
 	public static final int NUM_PLAYERS_PLUS_NEUTRALS = NUM_PLAYERS + NUM_NEUTRALS;
@@ -140,39 +140,79 @@ public class mainClass extends JPanel implements ActionListener {
 		g.setColor(Color.white);
 		g.fillRect(0, 0, getWidth(), getHeight());
 
-		//iterating through array to correctly position nodes and country string names and colors
-		for(int i =0; i<COUNTRY_COORD.length;i++) {
+		if(nameSetUpDone ==false) {
+			//iterating through array to correctly position nodes and country string names and colors
+			for(int i =0; i<COUNTRY_COORD.length;i++) {
 
-			//coloring the continents
-			if(i<=8) {
-				g.setColor(Color.yellow);
-			}
-			if(i>8 && i <=15) {
-				g.setColor(Color.blue);
-			}
-			if(i>=16 && i <=27) {
-				g.setColor(Color.green);
+				//coloring the continents
+				if(i<=8) {
+					g.setColor(Color.yellow);
+				}
+				if(i>8 && i <=15) {
+					g.setColor(Color.blue);
+				}
+				if(i>=16 && i <=27) {
+					g.setColor(Color.green);
 
-			}if(i>=28 && i <=31) {
+				}if(i>=28 && i <=31) {
+					g.setColor(Color.black);
+				}
+				if(i>=32 && i <=35) {
+					g.setColor(Color.orange);
+				}
+				if(i>=36 && i <=41) {
+					g.setColor(Color.red);
+				}
+
+				//creating the circular nodes
+				g.fillOval(COUNTRY_COORD[i][0],COUNTRY_COORD[i][1],20,20);	
+
+				//setting the text color to black
 				g.setColor(Color.black);
+
+				//writing the country names
+				g.drawString(COUNTRY_NAMES[i],(COUNTRY_COORD[i][0]-10),(COUNTRY_COORD[i][1]-10));
+
 			}
-			if(i>=32 && i <=35) {
-				g.setColor(Color.orange);
+		}else {
+			
+			// if nameSetUpDone is true i.e we are done setting up the names
+			// then assign each player 9 territories and each of the 4 neutral players 6 territories
+			
+			for(int i =0; i<COUNTRY_COORD.length;i++) {
+				//coloring the continents for each of the players
+				if(i<=8) {
+					g.setColor(Color.yellow);
+				}
+				if(i>8 && i <=17) {
+					g.setColor(Color.blue);
+				}
+				if(i>17 && i <=23) {
+					g.setColor(Color.green);
+
+				}if(i>23 && i <=29) {
+					g.setColor(Color.black);
+				}
+				if(i>29 && i <=35) {
+					g.setColor(Color.orange);
+				}
+				if(i>35 && i <=41) {
+					g.setColor(Color.red);
+				}
+				//creating the circular nodes
+				g.fillOval(COUNTRY_COORD[i][0],COUNTRY_COORD[i][1],20,20);	
+
+				//setting the text color to black
+				g.setColor(Color.black);
+
+				//writing the country names
+				g.drawString(COUNTRY_NAMES[i],(COUNTRY_COORD[i][0]-10),(COUNTRY_COORD[i][1]-10));
+
+				//writing the armies underneath the names of the countries
+				g.drawString("1",(COUNTRY_COORD[i][0]+-5),(COUNTRY_COORD[i][1]+30));
 			}
-			if(i>=36 && i <=41) {
-				g.setColor(Color.red);
-			}
-
-			//creating the circular nodes
-			g.fillOval(COUNTRY_COORD[i][0],COUNTRY_COORD[i][1],20,20);	
-
-			//setting the text color to black
-			g.setColor(Color.black);
-
-			//writing the country names
-			g.drawString(COUNTRY_NAMES[i],(COUNTRY_COORD[i][0]-10),(COUNTRY_COORD[i][1]-10));
-
 		}
+
 
 		//making the lines dashed
 		Graphics2D g2d = (Graphics2D) g;
@@ -286,7 +326,7 @@ public class mainClass extends JPanel implements ActionListener {
 		{
 			public void actionPerformed(java.awt.event.ActionEvent evt)
 			{
-				
+
 				//checks if player Ones name is set and sets player Twos name aswell
 				if (!playerOneNameSet)
 				{
@@ -299,8 +339,14 @@ public class mainClass extends JPanel implements ActionListener {
 				{
 					playerTwoName = textField.getText();
 					textField.setText("");  
-					welcome.setText("Player One:" + playerOneName +" Player Two:" + playerTwoName);
-
+					
+					//turning the nameSetUpDone to true as we are finished setting up the names
+					nameSetUpDone = true;
+					
+					// repainting as we want to update the screen
+			        frame.getContentPane().repaint();
+					welcome.setText("Player One:" + playerOneName +" Player Two:" + playerTwoName + " Awaiting player one move");
+					
 				}
 			}
 		});
