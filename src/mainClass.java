@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 
 public class mainClass extends JPanel implements ActionListener {
 
@@ -175,10 +177,10 @@ public class mainClass extends JPanel implements ActionListener {
 
 			}
 		}else {
-			
+
 			// if nameSetUpDone is true i.e we are done setting up the names
 			// then assign each player 9 territories and each of the 4 neutral players 6 territories
-			
+
 			for(int i =0; i<COUNTRY_COORD.length;i++) {
 				//coloring the continents for each of the players
 				if(i<=8) {
@@ -312,78 +314,85 @@ public class mainClass extends JPanel implements ActionListener {
 		//creates splash screen displaying name and loading progress bar
 		new SplashScreen();
 		EventQueue.invokeLater(new Runnable()
-        {
-           public void run()
-           {
-        	  runProgram(); 
-           }
-        });
-  }
-	
+		{
+			public void run()
+			{
+				runProgram(); 
+			}
+		});
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
 	}
 	private static void runProgram() {
 		// title of frame
-				JFrame frame = new JFrame("Risk");
+		JFrame frame = new JFrame("Risk");
 
-				//Creating a text field
-				JTextField textField = new JTextField(20);
-				frame.add(textField, BorderLayout.SOUTH);
+		//Creating a text field
+		JTextField textField = new JTextField(20);
+		frame.add(textField, BorderLayout.SOUTH);
+		
+		// decorating text field
+		Font fieldFont = new Font("Helvetica", Font.PLAIN, 20);
+		textField.setFont(fieldFont);
+		textField.setBackground(Color.white);
+		textField.setForeground(Color.gray.brighter());
+		textField.setColumns(30);
+		
+		JLabel welcome = new JLabel("");
+		welcome.setFont (welcome.getFont ().deriveFont (20.0f));
+		welcome.setText("Please Enter name for Player 1 in the text box at the bottom");
+		frame.add(welcome,BorderLayout.NORTH);
+		//action listener listens for enter key
 
-				JLabel welcome = new JLabel("");
-				welcome.setFont (welcome.getFont ().deriveFont (20.0f));
-				welcome.setText("Please Enter name for Player 1 in the text box at the bottom");
-				frame.add(welcome,BorderLayout.NORTH);
-				//action listener listens for enter key
-				
-				textField.addActionListener(new java.awt.event.ActionListener()
+		textField.addActionListener(new java.awt.event.ActionListener()
+		{
+			public void actionPerformed(java.awt.event.ActionEvent evt)
+			{
+
+				//checks if player Ones name is set and sets player Twos name aswell
+				if (!playerOneNameSet)
 				{
-					public void actionPerformed(java.awt.event.ActionEvent evt)
-					{
+					playerOneName = textField.getText();
+					textField.setText("");
+					welcome.setText("Please Enter name for Player 2 in the text box at the bottom");
+					playerOneNameSet = true;
+				}
+				else
+				{
+					playerTwoName = textField.getText();
+					textField.setText("");  
 
-						//checks if player Ones name is set and sets player Twos name aswell
-						if (!playerOneNameSet)
-						{
-							playerOneName = textField.getText();
-							textField.setText("");
-							welcome.setText("Please Enter name for Player 2 in the text box at the bottom");
-							playerOneNameSet = true;
-						}
-						else
-						{
-							playerTwoName = textField.getText();
-							textField.setText("");  
-							
-							//turning the nameSetUpDone to true as we are finished setting up the names
-							nameSetUpDone = true;
-							
-							// repainting as we want to update the screen
-					        frame.getContentPane().repaint();
-							welcome.setText("Player One:" + playerOneName +" Player Two:" + playerTwoName + " Awaiting player one move");
-							
-						}
-					}
-				});
+					//turning the nameSetUpDone to true as we are finished setting up the names
+					nameSetUpDone = true;
+
+					// repainting as we want to update the screen
+					frame.getContentPane().repaint();
+					welcome.setText("Player One:" + playerOneName +" Player Two:" + playerTwoName + " Awaiting player one move");
+
+				}
+			}
+		});
 
 
 
-				// make sure it closes correctly
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// make sure it closes correctly
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-				//frame size in pixels
-				final int FRAME_WIDTH = 1000;    
-				final int FRAME_HEIGHT = 700;
-				frame.setSize(FRAME_WIDTH,FRAME_HEIGHT);
+		//frame size in pixels
+		final int FRAME_WIDTH = 1000;    
+		final int FRAME_HEIGHT = 700;
+		frame.setSize(FRAME_WIDTH,FRAME_HEIGHT);
 
-				// makes sure the frame is visible
-				frame.setVisible(true);
-				mainClass main = new mainClass();
-				frame.add(main);
-				
-				//makes sure the image refreshes correctly
-				main.updateUI();
+		// makes sure the frame is visible
+		frame.setVisible(true);
+		mainClass main = new mainClass();
+		frame.add(main);
+
+		//makes sure the image refreshes correctly
+		main.updateUI();
 
 	}
 
