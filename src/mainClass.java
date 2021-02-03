@@ -309,6 +309,9 @@ public class mainClass extends JPanel implements ActionListener {
 
 	public static void main(String[] args) {
 
+		//creates splash screen displaying name and loading progress bar
+		new SplashScreen();
+		
 		// title of frame
 		JFrame frame = new JFrame("Risk");
 
@@ -320,8 +323,8 @@ public class mainClass extends JPanel implements ActionListener {
 		welcome.setFont (welcome.getFont ().deriveFont (20.0f));
 		welcome.setText("Please Enter name for Player 1 in the text box at the bottom");
 		frame.add(welcome,BorderLayout.NORTH);
-
 		//action listener listens for enter key
+		
 		textField.addActionListener(new java.awt.event.ActionListener()
 		{
 			public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -365,6 +368,9 @@ public class mainClass extends JPanel implements ActionListener {
 		frame.setVisible(true);
 		mainClass main = new mainClass();
 		frame.add(main);
+		
+		//makes sure the image refreshes correctly
+		main.updateUI();
 
 
 	}
@@ -375,3 +381,4 @@ public class mainClass extends JPanel implements ActionListener {
 
 
 }
+
