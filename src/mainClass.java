@@ -333,16 +333,22 @@ public class mainClass extends JPanel implements ActionListener {
 		//Creating a text field
 		JTextField textField = new JTextField(20);
 		frame.add(textField, BorderLayout.SOUTH);
-		
+
 		// decorating text field
 		Font fieldFont = new Font("Helvetica", Font.PLAIN, 20);
 		textField.setFont(fieldFont);
 		textField.setBackground(Color.white);
 		textField.setForeground(Color.gray.brighter());
 		textField.setColumns(30);
-		
+
+		//creating JLabel
 		JLabel welcome = new JLabel("");
-		welcome.setFont (welcome.getFont ().deriveFont (20.0f));
+		
+		//decorating JLabel
+		welcome.setFont(new Font("Helvetica", Font.BOLD, 20));
+		welcome.setForeground(new Color(120, 90, 40));
+		welcome.setBackground(new Color(100, 20, 70));
+		
 		welcome.setText("Please Enter name for Player 1 in the text box at the bottom");
 		frame.add(welcome,BorderLayout.NORTH);
 		//action listener listens for enter key
