@@ -5,7 +5,7 @@ public class SplashScreen {
 	
 	//variables 
     JFrame frameSplash;
-    JLabel image=new JLabel(new ImageIcon("risk.jpg"));
+    JLabel image=new JLabel(new ImageIcon("src/risk.jpg"));
     JLabel text=new JLabel("Risk By WhyNotBot");
     JProgressBar progressBar=new JProgressBar();
     JLabel message=new JLabel();
