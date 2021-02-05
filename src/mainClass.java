@@ -331,7 +331,7 @@ public class mainClass extends JPanel implements ActionListener {
 		JFrame frame = new JFrame("Risk");
 
 		//Creating a text field
-		JTextField textField = new JTextField(20);
+		JTextField textField = new JTextField("Player One Name: ");
 		frame.add(textField, BorderLayout.SOUTH);
 
 		// decorating text field
@@ -359,24 +359,25 @@ public class mainClass extends JPanel implements ActionListener {
 			{
 
 				//checks if player Ones name is set and sets player Twos name aswell
+				// .substring(17) removes the "Player Two Name: " at the start of the string
 				if (!playerOneNameSet)
 				{
-					playerOneName = textField.getText();
-					textField.setText("");
+					playerOneName = textField.getText().substring(17);
+					textField.setText("Player Two Name: ");
 					welcome.setText("Please Enter name for Player 2 in the text box at the bottom");
 					playerOneNameSet = true;
 				}
 				else
 				{
-					playerTwoName = textField.getText();
-					textField.setText("");  
+					playerTwoName = textField.getText().substring(17);
+					textField.setText("Awaiting........ ");  
 
 					//turning the nameSetUpDone to true as we are finished setting up the names
 					nameSetUpDone = true;
 
 					// repainting as we want to update the screen
 					frame.getContentPane().repaint();
-					welcome.setText("Player One (yellow):" + playerOneName +" Player Two (blue):" + playerTwoName + " Awaiting player one move");
+					welcome.setText("Player One (yellow): " + playerOneName +"   <-vs->   Player Two (blue):" + playerTwoName + "     Awaiting player one move...");
 
 				}
 			}
@@ -404,4 +405,3 @@ public class mainClass extends JPanel implements ActionListener {
 
 
 }
-
