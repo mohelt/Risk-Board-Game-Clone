@@ -376,7 +376,7 @@ public class mainClass extends JPanel implements ActionListener {
 
 					// repainting as we want to update the screen
 					frame.getContentPane().repaint();
-					welcome.setText("Player One:" + playerOneName +" Player Two:" + playerTwoName + " Awaiting player one move");
+					welcome.setText("Player One (yellow):" + playerOneName +" Player Two (blue):" + playerTwoName + " Awaiting player one move");
 
 				}
 			}
