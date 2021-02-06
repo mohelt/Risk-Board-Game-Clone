@@ -1,4 +1,5 @@
-Team Name: WhyNotBot
+Alt-Team Name: WhyNotBot
+======
 
 Team Members:
 
@@ -9,7 +10,8 @@ Cian O'Reilly Student Number:19394833
 Tom Higgins Student Number: 19343176
 
 
-Overview:
+Alt-Overview:
+======
 We have created a Java Project which completes all the requirements for the first sprint.
 
 The requirements state the app should:
@@ -25,8 +27,8 @@ The allocation does not need to be random. Put one army on each territory.
 ![alt text](https://github.com/UCD-COMP20050/WhyNotBot/blob/main/src/images/splashscreen.PNG?raw=true)
 ![alt text](https://github.com/UCD-COMP20050/WhyNotBot/blob/main/src/images/homescreen.PNG?raw=true)
 
-Installation:
-
+Alt-Installation:
+======
 // Eclipse
 
 Step 1. Open up the project in Eclipse,
