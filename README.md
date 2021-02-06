@@ -1,4 +1,4 @@
-Alt-Team Name: WhyNotBot
+Team Name: WhyNotBot
 ======
 
 Team Members:
@@ -10,7 +10,7 @@ Cian O'Reilly Student Number:19394833
 Tom Higgins Student Number: 19343176
 
 
-Alt-Overview:
+Overview:
 ======
 We have created a Java Project which completes all the requirements for the first sprint.
 
@@ -27,7 +27,7 @@ The allocation does not need to be random. Put one army on each territory.
 ![alt text](https://github.com/UCD-COMP20050/WhyNotBot/blob/main/src/images/splashscreen.PNG?raw=true)
 ![alt text](https://github.com/UCD-COMP20050/WhyNotBot/blob/main/src/images/homescreen.PNG?raw=true)
 
-Alt-Installation:
+Installation:
 ======
 // Eclipse
 
