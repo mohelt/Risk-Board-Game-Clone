@@ -259,7 +259,7 @@ public class MainClass extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 	}
-	private static void runProgram() {
+	public static void runProgram() {
 		// title of frame
 		JFrame frame = new JFrame("Risk");
 
