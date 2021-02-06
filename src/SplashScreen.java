@@ -5,9 +5,16 @@ public class SplashScreen {
 	
 	//variables 
     JFrame frameSplash;
+    //adds an image
     JLabel image=new JLabel(new ImageIcon("./src/images/risk.jpg"));
+    
+    //adds a text
     JLabel text=new JLabel("Risk By WhyNotBot");
+    
+    //adds the progress bar
     JProgressBar progressBar=new JProgressBar();
+    
+    //adds a message
     JLabel message=new JLabel();
     
     
@@ -77,9 +84,13 @@ public class SplashScreen {
             	//makes the splash screen appear on screen for a certain amount of time
                 Thread.sleep(25);
                 progressBar.setValue(i);
+                
+                //displays loading message
                 message.setText("Loading...");
                 i++;
-                if(i==100 || i>98)
+                
+                //deletes the jframe when the value of i reaches 100
+                if(i==100 )
                     frameSplash.dispose();
             }catch(Exception e){
                 e.printStackTrace();

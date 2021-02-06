@@ -1,4 +1,10 @@
 //Group WhyNotBot
+// Team Members:
+//Mohamed Eltayeb Student Number:19349633
+//Cian O'Reilly Student Number:19394833
+//Tom Higgins Student Number: 19343176
+
+
 import java.lang.*;
 import java.util.*;
 import java.util.List;
@@ -10,10 +16,9 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-public class mainClass extends JPanel implements ActionListener {
+public class MainClass extends JPanel implements ActionListener {
 
-	//constant variables to use
-
+	//constant variables to use, taken from the constants.java 
 	static String playerOneName;
 	static String playerTwoName;
 	static boolean playerOneNameSet;
@@ -33,105 +38,31 @@ public class mainClass extends JPanel implements ActionListener {
 			"E Australia","New Guinea","W Australia","Indonesia",
 			"Venezuela","Peru","Brazil","Argentina",
 			"Congo","N Africa","S Africa","Egypt","E Africa","Madagascar"};  
+
 	// for reference
 	public static final int[][] ADJACENT = { 
-			{4,1,5,6,3,2},    // 0
-			{4,5,0},
-			{4,0,3,8},
-			{2,0,6,8},
-			{14,1,0,2},
-			{0,1,7,6}, 
-			{3,0,5,7},
-			{6,5,32},
-			{2,3,22},
-			{14,15,13,10},    
-			{9,13,11,37},     // 10
-			{13,12,18,39,10},
-			{20,16,18,11,13,15},
-			{15,12,11,10,9},
-			{15,9,4},
-			{12,13,14},
-			{20,27,17,18,12}, 
-			{16,27,23,18},
-			{12,16,17,40,39,11},
-			{26,22},
-			{25,27,16,12},    // 20
-			{22,24,25},        
-			{8,19,26,24,21},
-			{27,31,17},
-			{21,22,26,25},
-			{21,24,26,27,20},
-			{24,22,19,27,25},
-			{26,23,17,16,20,25},
-			{29,30},          
-			{28,30,31},
-			{29,28,31},      // 30
-			{23,29,30},
-			{7,34,33},       
-			{32,34,35},
-			{32,37,35,33},
-			{33,34},
-			{37,40,38},      
-			{10,11,39,40,36,34},
-			{36,40,41},
-			{11,18,40,37},
-			{39,18,41,38,36,37},  //40
-			{38,40}
-	};
+			{4,1,5,6,3,2},{4,5,0},{4,0,3,8},{2,0,6,8},{14,1,0,2},{0,1,7,6}, {3,0,5,7},{6,5,32},{2,3,22},{14,15,13,10},    {9,13,11,37},{13,12,18,39,10},
+			{20,16,18,11,13,15},{15,12,11,10,9},{15,9,4},{12,13,14},{20,27,17,18,12}, {16,27,23,18},{12,16,17,40,39,11},{26,22},
+			{25,27,16,12},{22,24,25},{8,19,26,24,21},{27,31,17},{21,22,26,25},{21,24,26,27,20},{24,22,19,27,25},{26,23,17,16,20,25},
+			{29,30},{28,30,31},{29,28,31},{23,29,30},{7,34,33},{32,34,35},{32,37,35,33},{33,34},{37,40,38},{10,11,39,40,36,34},{36,40,41},{11,18,40,37},
+			{39,18,41,38,36,37},{38,40}};
+
 	public static final int NUM_CONTINENTS = 6;
 	public static final String[] CONTINENT_NAMES = {"N America","Europe","Asia","Australia","S America","Africa"};  // for reference 
 	public static final int[] CONTINENT_IDS = {0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,5,5};
 	public static final int[] CONTINENT_VALUES = {5,5,7,2,2,3};
-	public static final int[][] COUNTRY_COORD = {
-			{191,150},     // 0
-			{255,161},
-			{146,86},
-			{123,144},
-			{314,61},
-			{205,235},
-			{135,219},
-			{140,299},
-			{45,89},
-			{370,199},
-			{398,280},      // 10
-			{465,270},
-			{547,180},
-			{460,200},
-			{393,127},
-			{463,122},
-			{628,227},
-			{679,332},
-			{572,338},
-			{861,213},
-			{645,152},      // 20
-			{763,70},
-			{827,94},
-			{751,360},
-			{750,140},
-			{695,108},
-			{760,216},
-			{735,277},
-			{889,537},
-			{850,429},
-			{813,526},       // 30
-			{771,454},
-			{213,352},
-			{221,426},
-			{289,415},
-			{233,523},
-			{496,462},
-			{440,393},
-			{510,532},
-			{499,354},
-			{547,432},        // 40
-			{586,545}
-	};
 
+	public static final int[][] COUNTRY_COORD = {{191,150},{255,161},{146,86},{123,144},{314,61},{205,235},{135,219},{140,299},
+			{45,89},{370,199},{398,280},{465,270},{547,180},{460,200},{393,127},{463,122},{628,227},{679,332},{572,338},{861,213},{645,152},     
+			{763,70},{827,94},{751,360},{750,140},{695,108},{760,216},{735,277},{889,537},{850,429},{813,526},     {771,454},
+			{213,352},{221,426},{289,415},{233,523},{496,462},{440,393},{510,532},{499,354},{547,432},{586,545}
+	};
+	// end of variables from constant.java
 
 	private static final long serialVersionUID = 1L;
 
 	//default constructor
-	public mainClass() {
+	public MainClass() {
 
 	}
 
@@ -313,6 +244,8 @@ public class mainClass extends JPanel implements ActionListener {
 
 		//creates splash screen displaying name and loading progress bar
 		new SplashScreen();
+		
+		//creating an invokeLatermethod to make sure the screen loads up the map and program after the splash screen
 		EventQueue.invokeLater(new Runnable()
 		{
 			public void run()
@@ -343,15 +276,15 @@ public class mainClass extends JPanel implements ActionListener {
 
 		//creating JLabel
 		JLabel welcome = new JLabel("");
-		
+
 		//decorating JLabel
 		welcome.setFont(new Font("Helvetica", Font.BOLD, 20));
 		welcome.setForeground(new Color(120, 90, 40));
 		welcome.setBackground(new Color(100, 20, 70));
-		
+
 		welcome.setText("Please Enter name for Player 1 in the text box at the bottom");
 		frame.add(welcome,BorderLayout.NORTH);
-		//action listener listens for enter key
+		//action listener listens for enter key, if enter key is pressed it changes the text
 
 		textField.addActionListener(new java.awt.event.ActionListener()
 		{
@@ -395,7 +328,9 @@ public class mainClass extends JPanel implements ActionListener {
 
 		// makes sure the frame is visible
 		frame.setVisible(true);
-		mainClass main = new mainClass();
+		
+		//creating a main class and then adding it to the frame
+		MainClass main = new MainClass();
 		frame.add(main);
 
 		//makes sure the image refreshes correctly
