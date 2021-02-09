@@ -2,6 +2,7 @@
 /mainClass.class
 /SplashScreen.class
 /mainClass$2.class
+<<<<<<< HEAD
 /Board.class
 /CommandPanel$1AddActionListener.class
 /CommandPanel.class
@@ -10,3 +11,8 @@
 /MapPanel.class
 /Sprint1.class
 /UI.class
+=======
+>>>>>>> 2451aaa6ea35c163e3a0ff097e6e293340d636b4
+/MainClass$1.class
+/MainClass$2.class
+/MainClass.class
