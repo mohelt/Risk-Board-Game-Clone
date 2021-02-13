@@ -5,6 +5,7 @@ public final class GameData {
 	public static final int NUM_NEUTRALS = 4;
 	public static final int NUM_PLAYERS_PLUS_NEUTRALS = NUM_PLAYERS + NUM_NEUTRALS;
 	public static final int NUM_COUNTRIES = 42;
+	public static final int NUM_CARDS = 42;
 	public static final int INIT_COUNTRIES_PLAYER = 9;
 	public static final int INIT_COUNTRIES_NEUTRAL = 6;
 	public static final int PLAYERS_NUM_ARMIES = 36;

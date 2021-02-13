@@ -3,10 +3,11 @@ public class Sprint1 {
 
 	public static void main (String args[]) {	   
 		Board board = new Board();
+		Cards cards = new Cards();
 		UI ui = new UI(board);
 		int playerId, countryId;
 		String name;
-		
+		String userInput;
 		// display blank board
 		ui.displayMap();
 		
@@ -34,7 +35,7 @@ public class Sprint1 {
 
 		// display map
 		ui.displayMap();
-
+		
 		// Create two dice for game
 		Die die1 = new Die(1);
 		Die die2 = new Die(2);
@@ -46,8 +47,14 @@ public class Sprint1 {
 		} while (die1.rolledNum == die2.rolledNum);
 
 		// Display that player with higher roll
-		ui.displayString(Integer.toString(die1.compareTo(die2)));
-
+		ui.displayString(die1.compareTo(die2));
+		ui.displayString("Type 'draw card' to draw a card");
+		userInput = ui.getCommand();
+		ui.displayString("> " + userInput);
+		if(userInput.equals("draw card")) {
+			ui.displayString("> " + "Drawing card...");
+			ui.displayString("> " + "You drew " + cards.drawCard());
+		}
 		return;
 	}
 }

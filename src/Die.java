@@ -12,17 +12,17 @@ public class Die {
         rolledNum = randomNumber.nextInt(bound) + 1; // Generate random number and return as roll
     }
 
-    public int compareTo(Die die2){
+    public String compareTo(Die die2){
         /*
         If die1 is greater return 1
         if die2 is greater return 2
          */
         if(rolledNum > die2.rolledNum){
-            return 1;
+            return "Player One assigns armies first";
         }
 
         else{
-            return 2;
+        	return "Player Two assigns armies first ";
         }
     }
 }
