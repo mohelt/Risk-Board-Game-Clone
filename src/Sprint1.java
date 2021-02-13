@@ -35,7 +35,7 @@ public class Sprint1 {
 		// display map
 		ui.displayMap();
 
-		Sprint2 sprint2 = new Sprint2();
+
 
 		return;
 	}

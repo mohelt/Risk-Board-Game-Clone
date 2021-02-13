@@ -1,5 +1,4 @@
 import java.util.Random;
-
 public class Die {
     int diceNum;
     int rolledNum;
