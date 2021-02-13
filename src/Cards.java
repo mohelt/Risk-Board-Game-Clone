@@ -13,6 +13,7 @@ public class Cards {
 			}
 		}
 	}
+	
 	public String drawCard() {
 		  Random random = new Random();
 		  //instance of random class

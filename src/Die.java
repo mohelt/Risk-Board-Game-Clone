@@ -18,11 +18,11 @@ public class Die {
         if die2 is greater return 2
          */
         if(rolledNum > die2.rolledNum){
-            return "Player One assigns armies first";
+            return "Player One rolled a " + rolledNum +". " +"Player Two rolled a " + die2.rolledNum +". " +"Player One assigns armies first.";
         }
 
         else{
-        	return "Player Two assigns armies first ";
+            return "Player One rolled a " + rolledNum +". " +"Player Two rolled a " + die2.rolledNum +". " +"Player Two assigns armies first.";
         }
     }
 }

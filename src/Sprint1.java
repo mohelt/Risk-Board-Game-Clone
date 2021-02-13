@@ -4,10 +4,12 @@ public class Sprint1 {
 	public static void main (String args[]) {	   
 		Board board = new Board();
 		Cards cards = new Cards();
+		new SplashScreen();
 		UI ui = new UI(board);
 		int playerId, countryId;
 		String name;
 		String userInput;
+		
 		// display blank board
 		ui.displayMap();
 		
