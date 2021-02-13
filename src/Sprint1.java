@@ -35,6 +35,15 @@ public class Sprint1 {
 		// display map
 		ui.displayMap();
 
+		// Create two dice for game
+		Die die1 = new Die(1);
+		Die die2 = new Die(2);
+		// roll both dice
+		// Continue to roll until numbers are different
+		do {
+			die1.roll(6);
+			die2.roll(6);
+		} while (die1.rolledNum == die2.rolledNum);
 
 
 		return;
