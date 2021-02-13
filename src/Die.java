@@ -11,4 +11,18 @@ public class Die {
         Random randomNumber = new Random(); // Create new instance of Random class
         rolledNum = randomNumber.nextInt(bound) + 1; // Generate random number and return as roll
     }
+
+    public int compareTo(Die die2){
+        /*
+        If die1 is greater return 1
+        if die2 is greater return 2
+         */
+        if(rolledNum > die2.rolledNum){
+            return 1;
+        }
+
+        else{
+            return 2;
+        }
+    }
 }

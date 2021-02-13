@@ -45,6 +45,8 @@ public class Sprint1 {
 			die2.roll(6);
 		} while (die1.rolledNum == die2.rolledNum);
 
+		// Display that player with higher roll
+		ui.displayString(Integer.toString(die1.compareTo(die2)));
 
 		return;
 	}
