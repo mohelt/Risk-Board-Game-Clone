@@ -9,7 +9,7 @@ public class Sprint1 {
 		int playerId, countryId;
 		String name;
 		String userInput;
-		Boolean gameOver = false;
+		boolean gameOver = false;
 		int playerTurn;
 		//player 1 turn is odd, player 2 turn is odd
 
@@ -67,14 +67,42 @@ public class Sprint1 {
 		while(gameOver == false) {
 			switch(playerTurn % 2) {
 			case 0:
-				ui.displayString("> Player 2 turn: ");
-				userInput = ui.getCommand();
-				playerTurn++;
+				while(playerTurn % 2 == 0) {
+					ui.displayString("> Player 2 turn choose a territory to place 3 units on: ");
+					ui.displayStringCountryNames();
+					userInput = ui.getCommand();
+					for(int i=0;i<GameData.NUM_COUNTRIES;i++) {
+						if(userInput.equals(GameData.COUNTRY_NAMES[i])) {
+							if(board.getOccupier(i)== 1) {
+								ui.displayString("> Player 2 Added 3 Units to "+ GameData.COUNTRY_NAMES[i]);
+								board.addUnits(i, 1, 3);
+								ui.displayMap();
+								playerTurn++;
+							}else {
+								ui.displayString("> Cannot add units to this country as it it not your territory! ");
+							}
+						}
+					}
+				}
 				break;
 			case 1:
-				ui.displayString("> Player 1 turn: ");
-				userInput = ui.getCommand();
-				playerTurn++;
+				while(playerTurn % 2 == 1) {
+					ui.displayString("> Player 1 turn choose a territory to place 3 units on: ");
+					ui.displayStringCountryNames();
+					userInput = ui.getCommand();
+					for(int i=0;i<GameData.NUM_COUNTRIES;i++) {
+						if(userInput.equals(GameData.COUNTRY_NAMES[i])) {
+							if(board.getOccupier(i)== 0) {
+								ui.displayString("> Player 1 Added 3 Units to "+ GameData.COUNTRY_NAMES[i]);
+								board.addUnits(i, 1, 3);
+								ui.displayMap();
+								playerTurn++;
+							}else {
+								ui.displayString("> Cannot add units to this country as it it not your territory! ");
+							}
+						}
+					}
+				}
 				break;
 			default: ui.displayString("> Error: Unknown player turn ");
 			}

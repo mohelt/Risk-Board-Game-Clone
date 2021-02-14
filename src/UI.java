@@ -37,5 +37,14 @@ public class UI {
 		infoPanel.addText(string);
 		return;
 	}
-	
+	public void displayStringCountryNames() {
+		infoPanel.addText("\r\n" + 
+				"		\"Ontario\",\"Quebec\",\"NW Territory\",\"Alberta\",\"Greenland\",\"E United States\",\"W United States\",\"Central America\",\"Alaska\",\r\n" + 
+				"		\"Great Britain\",\"W Europe\",\"S Europe\",\"Ukraine\",\"N Europe\",\"Iceland\",\"Scandinavia\",\r\n" + 
+				"		\"Afghanistan\",\"India\",\"Middle East\",\"Japan\",\"Ural\",\"Yakutsk\",\"Kamchatka\",\"Siam\",\"Irkutsk\",\"Siberia\",\"Mongolia\",\"China\",\r\n" + 
+				"		\"E Australia\",\"New Guinea\",\"W Australia\",\"Indonesia\",\r\n" + 
+				"		\"Venezuela\",\"Peru\",\"Brazil\",\"Argentina\",\r\n" + 
+				"		\"Congo\",\"N Africa\",\"S Africa\",\"Egypt\",\"E Africa\",\"Madagascar\"");
+		return;
+	}
 }
