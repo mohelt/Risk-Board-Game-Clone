@@ -94,7 +94,7 @@ public class Sprint1 {
 						if(userInput.equals(GameData.COUNTRY_NAMES[i])) {
 							if(board.getOccupier(i)== 0) {
 								ui.displayString("> Player 1 Added 3 Units to "+ GameData.COUNTRY_NAMES[i]);
-								board.addUnits(i, 1, 3);
+								board.addUnits(i, 0, 3);
 								ui.displayMap();
 								playerTurn++;
 							}else {
