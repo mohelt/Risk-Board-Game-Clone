@@ -2,7 +2,9 @@ import java.util.Random;
 public class Die {
     int diceNum;
     int rolledNum;
-
+    int playerTurn;
+    
+    
     public Die(int diceNum) {
         this.diceNum = diceNum;
     }
@@ -10,6 +12,15 @@ public class Die {
     public void roll(int bound) {
         Random randomNumber = new Random(); // Create new instance of Random class
         rolledNum = randomNumber.nextInt(bound) + 1; // Generate random number and return as roll
+    }
+    public int getPlayerTurn(Die die2) {
+    	if(rolledNum > die2.rolledNum){
+    		playerTurn=1;
+         }
+        else{
+        playerTurn=2;
+        }
+    	return playerTurn;
     }
 
     public String compareTo(Die die2){

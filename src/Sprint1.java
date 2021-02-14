@@ -9,17 +9,21 @@ public class Sprint1 {
 		int playerId, countryId;
 		String name;
 		String userInput;
-		
+		Boolean gameOver = false;
+		int playerTurn;
+		//player 1 turn is odd, player 2 turn is odd
+
+
 		// display blank board
 		ui.displayMap();
-		
+
 		// get player names
 		for (playerId=0; playerId<GameData.NUM_PLAYERS; playerId++) {
 			ui.displayString("Enter the name of player " + (playerId+1));
 			name = ui.getCommand();
 			ui.displayString("> " + name);
 		}
-	
+
 		// add units
 		countryId = 0;
 		for (playerId=0; playerId<GameData.NUM_PLAYERS; playerId++) {
@@ -37,7 +41,7 @@ public class Sprint1 {
 
 		// display map
 		ui.displayMap();
-		
+
 		// Create two dice for game
 		Die die1 = new Die(1);
 		Die die2 = new Die(2);
@@ -50,12 +54,30 @@ public class Sprint1 {
 
 		// Display that player with higher roll
 		ui.displayString(die1.compareTo(die2));
+
+		playerTurn =die1.getPlayerTurn(die2);
+
 		ui.displayString("Type 'draw card' to draw a card");
 		userInput = ui.getCommand();
 		ui.displayString("> " + userInput);
 		if(userInput.equals("draw card")) {
 			ui.displayString("> " + "Drawing card...");
-			ui.displayString("> " + "You drew " + cards.drawCard());
+		}
+		ui.displayString("> " + "You drew " + cards.drawCard());
+		while(gameOver == false) {
+			switch(playerTurn % 2) {
+			case 0:
+				ui.displayString("> Player 2 turn: ");
+				userInput = ui.getCommand();
+				playerTurn++;
+				break;
+			case 1:
+				ui.displayString("> Player 1 turn: ");
+				userInput = ui.getCommand();
+				playerTurn++;
+				break;
+			default: ui.displayString("> Error: Unknown player turn ");
+			}
 		}
 		return;
 	}
