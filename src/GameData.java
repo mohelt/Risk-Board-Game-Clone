@@ -18,6 +18,14 @@ public final class GameData {
 		"E Australia","New Guinea","W Australia","Indonesia",
 		"Venezuela","Peru","Brazil","Argentina",
 		"Congo","N Africa","S Africa","Egypt","E Africa","Madagascar"};  // for reference
+	
+	public static final String[] COUNTRY_NAMES_SHORT = {
+			"Ont","Que","NW Ter","Alb","Gre","E US","W US","C Amer","Ala",
+			"GB","W E","S E","Ukr","N E","Ice","Scan",
+			"Afg","Ind","M East","Jap","Ur","Yak","Kam","Si","Irk","Sib","Mong","Chin",
+			"E Aus","New G","W Aus","Indon",
+			"Ven","Per","Bra","Arg",
+			"Con","N Af","S Af","Egy","E Af","Mad"};
 	public static final int[][] ADJACENT = { 
 		{4,1,5,6,3,2},    // 0
 		{4,5,0},

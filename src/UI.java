@@ -44,7 +44,9 @@ public class UI {
 				"		\"Afghanistan\",\"India\",\"Middle East\",\"Japan\",\"Ural\",\"Yakutsk\",\"Kamchatka\",\"Siam\",\"Irkutsk\",\"Siberia\",\"Mongolia\",\"China\",\r\n" + 
 				"		\"E Australia\",\"New Guinea\",\"W Australia\",\"Indonesia\",\r\n" + 
 				"		\"Venezuela\",\"Peru\",\"Brazil\",\"Argentina\",\r\n" + 
-				"		\"Congo\",\"N Africa\",\"S Africa\",\"Egypt\",\"E Africa\",\"Madagascar\"");
+				"		\"Congo\",\"N Africa\",\"S Africa\",\"Egypt\",\"E Africa\",\"Madagascar\""
+				);
+		
 		return;
 	}
 }

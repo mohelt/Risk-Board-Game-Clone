@@ -68,11 +68,11 @@ public class Sprint1 {
 			switch(playerTurn % 2) {
 			case 0:
 				while(playerTurn % 2 == 0) {
-					ui.displayString("> Player 2 turn choose a territory to place 3 units on: ");
+					ui.displayString("> Player 2 turn choose a territory (shortname/longname)  to place 3 units on: ");
 					ui.displayStringCountryNames();
 					userInput = ui.getCommand();
 					for(int i=0;i<GameData.NUM_COUNTRIES;i++) {
-						if(userInput.equals(GameData.COUNTRY_NAMES[i])) {
+						if(userInput.equals(GameData.COUNTRY_NAMES[i]) ||userInput.equals(GameData.COUNTRY_NAMES_SHORT[i])) {
 							if(board.getOccupier(i)== 1) {
 								ui.displayString("> Player 2 Added 3 Units to "+ GameData.COUNTRY_NAMES[i]);
 								board.addUnits(i, 1, 3);
@@ -87,11 +87,11 @@ public class Sprint1 {
 				break;
 			case 1:
 				while(playerTurn % 2 == 1) {
-					ui.displayString("> Player 1 turn choose a territory to place 3 units on: ");
+					ui.displayString("> Player 1 turn choose a territory (shortname/longname) to place 3 units on: ");
 					ui.displayStringCountryNames();
 					userInput = ui.getCommand();
 					for(int i=0;i<GameData.NUM_COUNTRIES;i++) {
-						if(userInput.equals(GameData.COUNTRY_NAMES[i])) {
+						if(userInput.equals(GameData.COUNTRY_NAMES[i]) ||userInput.equals(GameData.COUNTRY_NAMES_SHORT[i])) {
 							if(board.getOccupier(i)== 0) {
 								ui.displayString("> Player 1 Added 3 Units to "+ GameData.COUNTRY_NAMES[i]);
 								board.addUnits(i, 0, 3);
