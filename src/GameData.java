@@ -11,6 +11,7 @@ public final class GameData {
 	public static final int PLAYERS_NUM_ARMIES = 36;
 	public static final int NEUTRALS_NUM_ARMIES = 24;
 	
+	
 	public static final String[] COUNTRY_NAMES = {
 		"Ontario","Quebec","NW Territory","Alberta","Greenland","E United States","W United States","Central America","Alaska",
 		"Great Britain","W Europe","S Europe","Ukraine","N Europe","Iceland","Scandinavia",

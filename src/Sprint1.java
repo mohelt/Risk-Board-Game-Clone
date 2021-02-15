@@ -73,9 +73,16 @@ public class Sprint1 {
 					userInput = ui.getCommand();
 					for(int i=0;i<GameData.NUM_COUNTRIES;i++) {
 						if(userInput.equals(GameData.COUNTRY_NAMES[i]) ||userInput.equals(GameData.COUNTRY_NAMES_SHORT[i])) {
+							ui.displayString("> " +userInput);
 							if(board.getOccupier(i)== 1) {
-								ui.displayString("> Player 2 Added 3 Units to "+ GameData.COUNTRY_NAMES[i]);
-								board.addUnits(i, 1, 3);
+								if(board.getPlayerArmiesNumber(1) >= 3) {
+									ui.displayString("> Player 2 Added 3 Units to "+ GameData.COUNTRY_NAMES[i]);
+									board.addUnits(i, 1, 3);
+								}
+								else {
+									ui.displayString("> Cannot add, not enough armies");
+								}
+								ui.displayString("> Armies left: "+board.getPlayerArmies(1));
 								ui.displayMap();
 								playerTurn++;
 							}else {
@@ -92,9 +99,16 @@ public class Sprint1 {
 					userInput = ui.getCommand();
 					for(int i=0;i<GameData.NUM_COUNTRIES;i++) {
 						if(userInput.equals(GameData.COUNTRY_NAMES[i]) ||userInput.equals(GameData.COUNTRY_NAMES_SHORT[i])) {
+							ui.displayString("> " +userInput);
 							if(board.getOccupier(i)== 0) {
-								ui.displayString("> Player 1 Added 3 Units to "+ GameData.COUNTRY_NAMES[i]);
-								board.addUnits(i, 0, 3);
+								if(board.getPlayerArmiesNumber(0) >= 3) {
+									ui.displayString("> Player 1 Added 3 Units to "+ GameData.COUNTRY_NAMES[i]);
+									board.addUnits(i, 0, 3);
+								}
+								else {
+									ui.displayString("> Cannot add, not enough armies");
+								}
+								ui.displayString("> Armies left: " + board.getPlayerArmies(0));
 								ui.displayMap();
 								playerTurn++;
 							}else {
