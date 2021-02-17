@@ -57,12 +57,13 @@ public class Sprint1 {
 
 		playerTurn =die1.getPlayerTurn(die2);
 
-		ui.displayString("Type 'draw card' to draw a card");
-		userInput = ui.getCommand();
-		ui.displayString("> " + userInput);
-		if(userInput.equals("draw card")) {
-			ui.displayString("> " + "Drawing card...");
-		}
+		do {
+			ui.displayString("Type 'draw card' to draw a card");
+			userInput = ui.getCommand();
+			ui.displayString("> " + userInput);
+		} while (!(userInput.equals("draw card")));
+		
+		ui.displayString("> " + "Drawing card...");
 		ui.displayString("> " + "You drew " + cards.drawCard());
 		while(gameOver == false) {
 			switch(playerTurn % 2) {
