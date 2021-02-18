@@ -63,7 +63,7 @@ public class Sprint1 {
 			userInput = ui.getCommand();
 			ui.displayString("> " + userInput);
 		} while (!(userInput.equals("draw card")));
-		
+
 		ui.displayString("> " + "Drawing card...");
 		ui.displayString("> " + "You drew " + cards.drawCard());
 		while(gameOver == false) {
