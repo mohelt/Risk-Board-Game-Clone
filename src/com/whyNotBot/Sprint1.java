@@ -1,3 +1,4 @@
+package com.whyNotBot;
 
 public class Sprint1 {
 
