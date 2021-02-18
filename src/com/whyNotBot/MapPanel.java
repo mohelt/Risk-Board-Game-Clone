@@ -1,3 +1,4 @@
+package com.whyNotBot;
 import javax.swing.*;
 
 import java.awt.*;

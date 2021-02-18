@@ -1,4 +1,4 @@
-package Testing;
+package com.whyNotBot;
 import static org.junit.jupiter.api.Assertions.*;
 
 import javax.swing.*;
