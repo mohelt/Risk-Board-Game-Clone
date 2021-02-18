@@ -83,6 +83,7 @@ public class Main {
 								}
 								else {
 									ui.displayString("> Cannot add, not enough armies");
+									gameOver = true;
 								}
 								ui.displayString("> Armies left: "+board.getPlayerArmies(1));
 								ui.displayMap();
@@ -109,6 +110,7 @@ public class Main {
 								}
 								else {
 									ui.displayString("> Cannot add, not enough armies");
+									gameOver = true;
 								}
 								ui.displayString("> Armies left: " + board.getPlayerArmies(0));
 								ui.displayMap();
@@ -121,6 +123,13 @@ public class Main {
 				}
 				break;
 			default: ui.displayString("> Error: Unknown player turn ");
+			}
+		}
+		countryId = 18;
+		for (playerId =2; playerId<GameData.NUM_PLAYERS_PLUS_NEUTRALS; playerId++) {
+			for (int i=0; i<GameData.INIT_COUNTRIES_NEUTRAL; i++) {
+				board.addUnits(countryId, playerId, 4);
+				countryId++;
 			}
 		}
 		return;
