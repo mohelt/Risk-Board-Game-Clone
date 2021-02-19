@@ -11,6 +11,7 @@ public class Main {
 		String name;
 		String userInput;
 		boolean gameOver = false;
+		boolean matching_country = false;
 		int playerTurn;
 		//player 1 turn is odd, player 2 turn is odd
 
@@ -71,11 +72,12 @@ public class Main {
 			case 0:
 				while(playerTurn % 2 == 0) {
 					ui.displayString("> Player 2 turn choose a territory (shortname/longname)  to place 3 units on: ");
-					ui.displayStringCountryNames();
+//					ui.displayStringCountryNames();
 					userInput = ui.getCommand();
 					for(int i=0;i<GameData.NUM_COUNTRIES;i++) {
 						if(userInput.equals(GameData.COUNTRY_NAMES[i]) ||userInput.equals(GameData.COUNTRY_NAMES_SHORT[i])) {
 							ui.displayString("> " +userInput);
+							matching_country = true;
 							if(board.getOccupier(i)== 1) {
 								if(board.getPlayerArmiesNumber(1) >= 3) {
 									ui.displayString("> Player 2 Added 3 Units to "+ GameData.COUNTRY_NAMES[i]);
@@ -90,19 +92,28 @@ public class Main {
 								playerTurn++;
 							}else {
 								ui.displayString("> Cannot add units to this country as it it not your territory! ");
+								ui.displayString("Your Territory is Europe (Blue)!");
+
 							}
 						}
+					}
+					if(matching_country==false) {
+						ui.displayString("---> '" + userInput + "' not recognised, please check spelling and ensure correct case.");
+					}
+					else {
+						matching_country=false;
 					}
 				}
 				break;
 			case 1:
 				while(playerTurn % 2 == 1) {
 					ui.displayString("> Player 1 turn choose a territory (shortname/longname) to place 3 units on: ");
-					ui.displayStringCountryNames();
+//					ui.displayStringCountryNames();
 					userInput = ui.getCommand();
 					for(int i=0;i<GameData.NUM_COUNTRIES;i++) {
 						if(userInput.equals(GameData.COUNTRY_NAMES[i]) ||userInput.equals(GameData.COUNTRY_NAMES_SHORT[i])) {
 							ui.displayString("> " +userInput);
+							matching_country = true;
 							if(board.getOccupier(i)== 0) {
 								if(board.getPlayerArmiesNumber(0) >= 3) {
 									ui.displayString("> Player 1 Added 3 Units to "+ GameData.COUNTRY_NAMES[i]);
@@ -117,8 +128,16 @@ public class Main {
 								playerTurn++;
 							}else {
 								ui.displayString("> Cannot add units to this country as it it not your territory! ");
+								ui.displayString("Your Territory is Nothern America (Red)!");
+								
 							}
 						}
+					}
+					if(matching_country==false) {
+						ui.displayString("---> '" + userInput + "' not recognised, please check spelling and ensure correct case.");
+					}
+					else {
+						matching_country=false;
 					}
 				}
 				break;
