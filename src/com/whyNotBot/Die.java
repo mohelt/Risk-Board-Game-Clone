@@ -10,9 +10,10 @@ public class Die {
         this.diceNum = diceNum;
     }
 
-    public void roll(int bound) {
+    public int roll(int bound) {
         Random randomNumber = new Random(); // Create new instance of Random class
         rolledNum = randomNumber.nextInt(bound) + 1; // Generate random number and return as roll
+        return rolledNum;
     }
     public int getPlayerTurn(Die die2) {
     	if(rolledNum > die2.rolledNum){
