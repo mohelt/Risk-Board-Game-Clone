@@ -3,6 +3,7 @@ import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
 
+//file taken from the answer of sprint 1
 public class InfoPanel extends JPanel {
 	
 	private static final long serialVersionUID = 1L;

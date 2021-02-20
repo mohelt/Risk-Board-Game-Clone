@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class UI {
-
+	//file taken from the answer of sprint 1
 	private static final int FRAME_WIDTH = 1000;
 	private static final int FRAME_HEIGHT = 800;
 
