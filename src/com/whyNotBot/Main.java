@@ -59,7 +59,7 @@ public class Main {
 		ui.displayString(die1.compareTo(die2));
 
 		playerTurn =die1.getPlayerTurn(die2);
-
+		ui.displayString("> Player One is Red, Player 2 is Blue");
 		do {
 			ui.displayString("Type 'draw card' to draw a card");
 			userInput = ui.getCommand();
