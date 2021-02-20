@@ -58,7 +58,7 @@ public class Main {
 
 		// display map
 		ui.displayMap();
-		
+
 		// Create two dice for game
 		Die die1 = new Die(1);
 		Die die2 = new Die(2);
@@ -110,29 +110,29 @@ public class Main {
 			//if its player ones turn
 			case 0:
 				while(playerTurn % 2 == 0) {
-					
+
 					//while its player ones turn tell him to place armies on a territory
 					ui.displayString("> Player 2 turn choose a territory (shortname/longname)  to place 3 units on: ");
-					
+
 					//recieve the input and store it in user input
 					userInput = ui.getCommand();
-					
+
 					//for loop which loops through all countries to see which one the user typed
 					for(int i=0;i<GameData.NUM_COUNTRIES;i++) {
-						
+
 						//checks if the user input is equal to a short name/ long name
 						if(userInput.equals(GameData.COUNTRY_NAMES[i]) ||userInput.equals(GameData.COUNTRY_NAMES_SHORT[i])) {
-							
+
 							//displays user input
 							ui.displayString("> " +userInput);
-							
+
 							//checks to see if input matches a country
 							matching_country = true;
-							
+
 
 							//checks to see if country is ones own territory
 							if(board.getOccupier(i)== 1) {
-								
+
 								//checks to see if users armies are enough to add three
 								if(board.getPlayerArmiesNumber(1) >= 3) {
 
@@ -148,10 +148,10 @@ public class Main {
 
 								//display how many armies left
 								ui.displayString("> Armies left: "+board.getPlayerArmies(1));
-								
+
 								//update the map
 								ui.displayMap();
-								
+
 								//end players turn
 								playerTurn++;
 							}else {
@@ -167,7 +167,7 @@ public class Main {
 						ui.displayString("---> '" + userInput + "' not recognised, please check spelling and ensure correct case.");
 					}
 					else {
-						
+
 						//else matching country is false
 						matching_country=false;
 					}
@@ -176,32 +176,32 @@ public class Main {
 				//if its player twos turn
 			case 1:
 				while(playerTurn % 2 == 1) {
-					
+
 					//while its player ones turn tell him to place armies on a territory
 					ui.displayString("> Player 1 turn choose a territory (shortname/longname) to place 3 units on: ");
-					
+
 					//recieve the input and store it in user input
 					userInput = ui.getCommand();
-					
+
 					//for loop which loops through all countries to see which one the user typed
 					for(int i=0;i<GameData.NUM_COUNTRIES;i++) {
 
 						//checks if the user input is equal to a short name/ long name
 						if(userInput.equals(GameData.COUNTRY_NAMES[i]) ||userInput.equals(GameData.COUNTRY_NAMES_SHORT[i])) {
-							
+
 							//displays user input
 							ui.displayString("> " +userInput);
-							
+
 							//checks to see if input matches a country
 							matching_country = true;
-							
+
 							//checks to see if country is ones own territory
 							if(board.getOccupier(i)== 0) {
-								
+
 
 								//checks to see if users armies are enough to add three
 								if(board.getPlayerArmiesNumber(0) >= 3) {
-									
+
 									//adds armies to users territory
 									ui.displayString("> Player 1 Added 3 Units to "+ GameData.COUNTRY_NAMES[i]);
 									board.addUnits(i, 0, 3);
@@ -212,13 +212,13 @@ public class Main {
 									ui.displayString("> Cannot add, not enough armies");
 									gameOver = true;
 								}
-								
+
 								//display how many armies left
 								ui.displayString("> Armies left: " + board.getPlayerArmies(0));
-								
+
 								//update the map
 								ui.displayMap();
-								
+
 								//end players turn
 								playerTurn++;
 							}else {
@@ -247,14 +247,14 @@ public class Main {
 		}
 		//initial country value after player one and player two territories
 		countryId = 18;
-		
+
 		//assigning neutral armies
 		ui.displayString("> Neutral armies assigned. ");
-		
+
 		//for playerid is first neutral player
 		for (playerId =2; playerId<GameData.NUM_PLAYERS_PLUS_NEUTRALS; playerId++) {
 			for (int i=0; i<GameData.INIT_COUNTRIES_NEUTRAL; i++) {
-				
+
 				//assign the armies for the neutral players
 				board.addUnits(countryId, playerId, 4);
 				countryId++;

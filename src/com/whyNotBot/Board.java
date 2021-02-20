@@ -1,7 +1,7 @@
 package com.whyNotBot;
 
 public class Board {
-	
+
 	private boolean[] occupied = new boolean [GameData.NUM_COUNTRIES];
 	private int[] occupier = new int [GameData.NUM_COUNTRIES];
 	private int[] numUnits = new int [GameData.NUM_COUNTRIES];
@@ -19,7 +19,7 @@ public class Board {
 		playerArmies[5]= GameData.NEUTRALS_NUM_ARMIES + 6;
 		return;
 	}
-	
+
 	public void addUnits (int country, int player, int addNumUnits) {	
 		// prerequisite: country must be unoccupied or already occupied by this player
 		if (!occupied[country]) {
@@ -30,15 +30,15 @@ public class Board {
 		playerArmies[player]-=addNumUnits;
 		return;
 	}
-	
+
 	public boolean isOccupied(int country) {
 		return occupied[country];
 	}
-	
+
 	public int getOccupier (int country) {
 		return occupier[country];
 	}
-	
+
 	public int getNumUnits (int country) {
 		return numUnits[country];
 	}

@@ -46,7 +46,7 @@ public class UI {
 
 	public void displayCardDrawn (String string) {
 		URL url = SplashScreen.class.getResource(string);
-	    ImageIcon icon =new ImageIcon(url);
+		ImageIcon icon =new ImageIcon(url);
 		JLabel label = new JLabel(icon);
 		dialog.add( label );
 		dialog.pack();
