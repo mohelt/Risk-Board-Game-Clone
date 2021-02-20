@@ -8,7 +8,7 @@ public class Board {
 	private int[] playerArmies = new int[GameData.NUM_PLAYERS_PLUS_NEUTRALS];
 	Board() {
 		for (int i=0; i<GameData.NUM_COUNTRIES; i++) {
-			occupied[i] = false ;
+			occupied[i] = false;
 			numUnits[i] = 0;
 		}
 		playerArmies[0]= GameData.PLAYERS_NUM_ARMIES + 9;
@@ -27,7 +27,7 @@ public class Board {
 			occupier[country] = player;
 		}
 		numUnits[country] = numUnits[country] + addNumUnits;
-		playerArmies[player]-=addNumUnits;
+		playerArmies[player]-= addNumUnits;
 		return;
 	}
 	
