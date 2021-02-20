@@ -23,7 +23,6 @@ class CardsTest {
 		boolean testGreaterThan = card.intRandom > -1;
 		boolean testLessThan = card.intRandom < 42;
 		assertEquals(testGreaterThan,true);
-
 		assertEquals(testLessThan,true);
 	}
 
