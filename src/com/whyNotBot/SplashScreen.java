@@ -7,13 +7,17 @@ package com.whyNotBot;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 
 public class SplashScreen {
 	
 	//variables 
     JFrame frameSplash;
     //adds an image
-    JLabel image=new JLabel(new ImageIcon("./src/images/risk.jpg"));
+
+    URL url = SplashScreen.class.getResource("/image/splashscreen/risk.jpg");
+    ImageIcon icon =new ImageIcon(url);
+    JLabel image=new JLabel(icon);
     
     //adds a text
     JLabel text=new JLabel("Risk By WhyNotBot");

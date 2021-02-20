@@ -2,14 +2,15 @@ package com.whyNotBot;
 
 public class Main {
 
-	public static void main (String args[]) {	   
+	public static void main (String args[]) {	
+		new SplashScreen();
 		Board board = new Board();
 		Cards cards = new Cards();
-		new SplashScreen();
 		UI ui = new UI(board);
 		int playerId, countryId;
 		String name;
 		String userInput;
+		String cardDrawn;
 		boolean gameOver = false;
 		boolean matching_country = false;
 		int playerTurn;
@@ -64,15 +65,17 @@ public class Main {
 			userInput = ui.getCommand();
 			ui.displayString("> " + userInput);
 		} while (!(userInput.equals("draw card")));
-
+		cardDrawn =cards.drawCard();
 		ui.displayString("> " + "Drawing card...");
-		ui.displayString("> " + "You drew " + cards.drawCard());
+		ui.displayString("> " + "You drew " + cardDrawn);
+		ui.displayCardDrawn("/image/countries/"+cardDrawn +".jpg");
+		ui.displayString("> " + " Neutral armies will be assigned after both users finish assigning armies");
 		while(gameOver == false) {
 			switch(playerTurn % 2) {
 			case 0:
 				while(playerTurn % 2 == 0) {
 					ui.displayString("> Player 2 turn choose a territory (shortname/longname)  to place 3 units on: ");
-//					ui.displayStringCountryNames();
+					//					ui.displayStringCountryNames();
 					userInput = ui.getCommand();
 					for(int i=0;i<GameData.NUM_COUNTRIES;i++) {
 						if(userInput.equals(GameData.COUNTRY_NAMES[i]) ||userInput.equals(GameData.COUNTRY_NAMES_SHORT[i])) {
@@ -108,7 +111,7 @@ public class Main {
 			case 1:
 				while(playerTurn % 2 == 1) {
 					ui.displayString("> Player 1 turn choose a territory (shortname/longname) to place 3 units on: ");
-//					ui.displayStringCountryNames();
+					//					ui.displayStringCountryNames();
 					userInput = ui.getCommand();
 					for(int i=0;i<GameData.NUM_COUNTRIES;i++) {
 						if(userInput.equals(GameData.COUNTRY_NAMES[i]) ||userInput.equals(GameData.COUNTRY_NAMES_SHORT[i])) {
@@ -129,7 +132,7 @@ public class Main {
 							}else {
 								ui.displayString("> Cannot add units to this country as it it not your territory! ");
 								ui.displayString("Your Territory is Nothern America (Red)!");
-								
+
 							}
 						}
 					}
@@ -145,6 +148,7 @@ public class Main {
 			}
 		}
 		countryId = 18;
+		ui.displayString("> Neutral armies assigned. ");
 		for (playerId =2; playerId<GameData.NUM_PLAYERS_PLUS_NEUTRALS; playerId++) {
 			for (int i=0; i<GameData.INIT_COUNTRIES_NEUTRAL; i++) {
 				board.addUnits(countryId, playerId, 4);

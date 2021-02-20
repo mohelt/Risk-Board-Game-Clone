@@ -1,17 +1,22 @@
 package com.whyNotBot;
 import java.awt.BorderLayout;
+import java.net.URL;
+
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class UI {
 
 	private static final int FRAME_WIDTH = 1000;
 	private static final int FRAME_HEIGHT = 800;
-	
+
 	private JFrame frame = new JFrame();
 	private MapPanel mapPanel;	
 	private InfoPanel infoPanel = new InfoPanel();
 	private CommandPanel commandPanel = new CommandPanel();
-	
+	private JDialog dialog = new JDialog();
 	UI (Board board) {
 		mapPanel = new MapPanel(board);
 		frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -24,7 +29,7 @@ public class UI {
 		frame.setVisible(true);
 		return;
 	}
-	
+
 	public String getCommand () {
 		return commandPanel.getCommand();
 	}
@@ -38,16 +43,13 @@ public class UI {
 		infoPanel.addText(string);
 		return;
 	}
-	public void displayStringCountryNames() {
-		infoPanel.addText("\r\n" + 
-				"		\"Ontario\",\"Quebec\",\"NW Territory\",\"Alberta\",\"Greenland\",\"E United States\",\"W United States\",\"Central America\",\"Alaska\",\r\n" + 
-				"		\"Great Britain\",\"W Europe\",\"S Europe\",\"Ukraine\",\"N Europe\",\"Iceland\",\"Scandinavia\",\r\n" + 
-				"		\"Afghanistan\",\"India\",\"Middle East\",\"Japan\",\"Ural\",\"Yakutsk\",\"Kamchatka\",\"Siam\",\"Irkutsk\",\"Siberia\",\"Mongolia\",\"China\",\r\n" + 
-				"		\"E Australia\",\"New Guinea\",\"W Australia\",\"Indonesia\",\r\n" + 
-				"		\"Venezuela\",\"Peru\",\"Brazil\",\"Argentina\",\r\n" + 
-				"		\"Congo\",\"N Africa\",\"S Africa\",\"Egypt\",\"E Africa\",\"Madagascar\""
-				);
-		
-		return;
+
+	public void displayCardDrawn (String string) {
+		URL url = SplashScreen.class.getResource(string);
+	    ImageIcon icon =new ImageIcon(url);
+		JLabel label = new JLabel(icon);
+		dialog.add( label );
+		dialog.pack();
+		dialog.setVisible(true);
 	}
 }

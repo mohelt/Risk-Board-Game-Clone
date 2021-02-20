@@ -10,9 +10,9 @@ public class Cards {
 			}
 		for(int i =0;i<GameData.NUM_CARDS;i++) {
 			if(i % 3 ==0) {
-				cardDeck[i] = GameData.COUNTRY_NAMES[i] + " Artillary Card";
+				cardDeck[i] = GameData.COUNTRY_NAMES[i] + " Artillery Card";
 			}else if(i % 3 ==1) {
-				cardDeck[i] = GameData.COUNTRY_NAMES[i] + " Calvalry Card";
+				cardDeck[i] = GameData.COUNTRY_NAMES[i] + " Cavalry Card";
 			}else if(i % 3 ==2) {
 				cardDeck[i] = GameData.COUNTRY_NAMES[i] + " Infantry Card";
 			}
@@ -23,7 +23,7 @@ public class Cards {
 		  Random random = new Random();
 		  //instance of random class
 	      int upperBound = 42;
-	        //generate random values from 0-41
+	       //generate random values from 0-41
 	      int intRandom = random.nextInt(upperBound); 
 	      if( cardDeckTaken[intRandom] == true) {
 		      return drawCard();
