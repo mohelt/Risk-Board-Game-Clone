@@ -58,7 +58,7 @@ public class Main {
 
 		// display map
 		ui.displayMap();
-
+		
 		// Create two dice for game
 		Die die1 = new Die(1);
 		Die die2 = new Die(2);
