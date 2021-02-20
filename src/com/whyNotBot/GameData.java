@@ -2,6 +2,7 @@ package com.whyNotBot;
 
 public final class GameData {
 
+	//file taken from the answer of sprint 1
 	public static final int NUM_PLAYERS = 2;
 	public static final int NUM_NEUTRALS = 4;
 	public static final int NUM_PLAYERS_PLUS_NEUTRALS = NUM_PLAYERS + NUM_NEUTRALS;
@@ -9,6 +10,8 @@ public final class GameData {
 	public static final int NUM_CARDS = 42;
 	public static final int INIT_COUNTRIES_PLAYER = 9;
 	public static final int INIT_COUNTRIES_NEUTRAL = 6;
+	
+	//assigning player armies as required
 	public static final int PLAYERS_NUM_ARMIES = 36;
 	public static final int NEUTRALS_NUM_ARMIES = 24;
 	
@@ -21,6 +24,7 @@ public final class GameData {
 		"Venezuela","Peru","Brazil","Argentina",
 		"Congo","N Africa","S Africa","Egypt","E Africa","Madagascar"};  // for reference
 	
+	//allowing user to type in a short name,as required
 	public static final String[] COUNTRY_NAMES_SHORT = {
 			"Ont","Que","NW Ter","Alb","Gre","E US","W US","C Amer","Ala",
 			"GB","W E","S E","Ukr","N E","Ice","Scan",

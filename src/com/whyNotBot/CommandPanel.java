@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.JTextField;
 
-
+//file taken from the answer of sprint 1
 public class CommandPanel extends JPanel  {
 	
 	private static final long serialVersionUID = 1L;

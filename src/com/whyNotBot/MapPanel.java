@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.geom.*;
 
 class MapPanel extends JPanel {
-	
+	//file taken from the answer of sprint 1
 	private static final long serialVersionUID = 1L;
 	private static final int FRAME_WIDTH = 1000;    // must be even
 	private static final int FRAME_HEIGHT = 600;
