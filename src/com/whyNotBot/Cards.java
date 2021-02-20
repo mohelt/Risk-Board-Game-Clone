@@ -2,8 +2,13 @@ package com.whyNotBot;
 import java.util.Random;
 
 public class Cards {
-	private String[] cardDeck = new String [GameData.NUM_CARDS];
-	private boolean[] cardDeckTaken = new boolean [GameData.NUM_CARDS];
+	public String[] cardDeck = new String [GameData.NUM_CARDS];
+	public boolean[] cardDeckTaken = new boolean [GameData.NUM_CARDS];
+    Random random = new Random();
+    
+    //generate random values from 0-41
+	public int intRandom = random.nextInt(42); 
+	
 	Cards() {
 		for(int i =0;i<GameData.NUM_CARDS;i++) {
 			cardDeckTaken[i] = false;
@@ -20,11 +25,6 @@ public class Cards {
 	}
 	
 	public String drawCard() {
-		  Random random = new Random();
-		  //instance of random class
-	      int upperBound = 42;
-	       //generate random values from 0-41
-	      int intRandom = random.nextInt(upperBound); 
 	      if( cardDeckTaken[intRandom] == true) {
 		      return drawCard();
 	      }else {
