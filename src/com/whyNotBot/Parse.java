@@ -1,4 +1,4 @@
-
+package com.whyNotBot;
 public class Parse {
 	
 	private String[] countryCodes = new String[GameData.NUM_COUNTRIES];

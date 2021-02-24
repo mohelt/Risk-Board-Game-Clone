@@ -1,54 +1,52 @@
 package com.whyNotBot;
-//Team Members:
-//Mohamed Eltayeb Student Number:19349633
-//Cian O'Reilly Student Number:19394833
-//Tom Higgins Student Number: 19343176
 public class Board {
-
+	
 	private boolean[] occupied = new boolean [GameData.NUM_COUNTRIES];
 	private int[] occupier = new int [GameData.NUM_COUNTRIES];
 	private int[] numUnits = new int [GameData.NUM_COUNTRIES];
-	private int[] playerArmies = new int[GameData.NUM_PLAYERS_PLUS_NEUTRALS];
+	
 	Board() {
 		for (int i=0; i<GameData.NUM_COUNTRIES; i++) {
-			occupied[i] = false;
+			occupied[i] = false ;
 			numUnits[i] = 0;
 		}
-		playerArmies[0]= GameData.PLAYERS_NUM_ARMIES + 9;
-		playerArmies[1]= GameData.PLAYERS_NUM_ARMIES + 9;
-		playerArmies[2]= GameData.NEUTRALS_NUM_ARMIES + 6;
-		playerArmies[3]= GameData.NEUTRALS_NUM_ARMIES + 6;
-		playerArmies[4]= GameData.NEUTRALS_NUM_ARMIES + 6;
-		playerArmies[5]= GameData.NEUTRALS_NUM_ARMIES + 6;
 		return;
 	}
-
-	public void addUnits (int country, int player, int addNumUnits) {	
+	
+	public void addUnits (int countryId, int player, int addNumUnits) {	
 		// prerequisite: country must be unoccupied or already occupied by this player
-		if (!occupied[country]) {
-			occupied[country] = true;
-			occupier[country] = player;
+		if (!occupied[countryId]) {
+			occupied[countryId] = true;
+			occupier[countryId] = player;
 		}
-		numUnits[country] = numUnits[country] + addNumUnits;
-		playerArmies[player]-= addNumUnits;
+		numUnits[countryId] = numUnits[countryId] + addNumUnits;
 		return;
 	}
-
+	
+	public void addUnits (Card card, Player player, int addNumUnits) {
+		addUnits(card.getCountryId(), player.getId(), addNumUnits);
+		return;
+	}
+	
+	public void addUnits (int countryId, Player player, int addNumUnits) {
+		addUnits(countryId, player.getId(), addNumUnits);
+		return;
+	}	
+	
+	public boolean checkOccupier (Player player, int countryId) {
+		return (occupier[countryId] == player.getId());
+	}
+	
 	public boolean isOccupied(int country) {
 		return occupied[country];
 	}
-
+	
 	public int getOccupier (int country) {
 		return occupier[country];
 	}
-
+	
 	public int getNumUnits (int country) {
 		return numUnits[country];
 	}
-	public String getPlayerArmies (int playerNumber) {
-		return Integer.toString(playerArmies[playerNumber]);
-	}
-	public int getPlayerArmiesNumber (int playerNumber) {
-		return playerArmies[playerNumber];
-	}
+
 }

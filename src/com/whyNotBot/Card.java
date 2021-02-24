@@ -1,4 +1,4 @@
-
+package com.whyNotBot;
 public class Card {
 	
 	private int countryId;
