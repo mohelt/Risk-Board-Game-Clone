@@ -1,14 +1,9 @@
-package com.whyNotBot;
 import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
-//Team Members:
-//Mohamed Eltayeb Student Number:19349633
-//Cian O'Reilly Student Number:19394833
-//Tom Higgins Student Number: 19343176
-//file taken from the answer of sprint 1
-public class InfoPanel extends JPanel {
 
+public class InfoPanel extends JPanel {
+	
 	private static final long serialVersionUID = 1L;
 	private static final int TEXT_AREA_HEIGHT = 10;
 	private static final int CHARACTER_WIDTH = 30;
@@ -17,7 +12,7 @@ public class InfoPanel extends JPanel {
 	JTextArea textArea = new JTextArea(TEXT_AREA_HEIGHT, CHARACTER_WIDTH);
 	JScrollPane scrollPane = new JScrollPane(textArea);
 	DefaultCaret caret = (DefaultCaret)textArea.getCaret();
-
+	
 	InfoPanel () {
 		textArea.setEditable(false);
 		textArea.setFont(new Font("Times New Roman", Font.PLAIN, FONT_SIZE));
@@ -29,7 +24,7 @@ public class InfoPanel extends JPanel {
 		add(scrollPane, BorderLayout.CENTER);
 		return;
 	}
-
+	
 	public void addText (String text) {
 		textArea.setText(textArea.getText()+"\n"+text);
 	}
