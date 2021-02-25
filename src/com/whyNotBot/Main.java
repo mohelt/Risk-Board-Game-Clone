@@ -1,5 +1,5 @@
 package com.whyNotBot;
-public class Sprint2 {
+public class Main {
 
 	public static void main (String args[]) {	   
 		Board board = new Board();
