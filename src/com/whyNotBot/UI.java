@@ -2,6 +2,8 @@ package com.whyNotBot;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 
+import sun.security.util.Length;
+
 public class UI {
 
 	private static final int FRAME_WIDTH = 1000;
@@ -14,6 +16,8 @@ public class UI {
 	private CommandPanel commandPanel = new CommandPanel();
 	private Parse parse = new Parse();
 	private Board board;
+	
+	int num_of_units = 0;
 	
 	UI (Board inBoard) {
 		board = inBoard;
@@ -61,6 +65,46 @@ public class UI {
 	public void displayRollWinner (Player player) {
 		displayString(makeLongName(player)  + " wins roll and goes first");
 		return;
+	}
+	
+	public void reinforcementsPlacement (Player player) {
+		displayString(makeLongName(player)  + " gets 3 reinforcements.");
+		displayString(makeLongName(player)  + ": REINFORCE: Enter a country to reinforce and the number of units");
+		
+		String countryName; 
+
+		boolean placementOK = false;
+		do {
+			countryName = commandPanel.getCommand(); //no need to shorten it as the parse function handles it
+			displayString(PROMPT + countryName);
+			
+			//this should remove all but the last number and convert it to an integer
+			num_of_units = Integer.parseInt((countryName.substring(countryName.length()-1)));
+			// need to ensure it is between 1 and 3
+			// idk if ^^^ is the case because in the log he only uses 3
+			
+			parse.countryId(countryName);
+			if (parse.isError()) {
+				displayString("Error: Not a country");
+			} else {
+				if (!board.checkOccupier(player, parse.getCountryId())) {
+					displayString("Error: Cannot place the units on that country");
+				} else {
+					placementOK = true;
+				}
+			}
+			if(num_of_units > 3) {
+				displayString("Error: You don't have that many units to reinforce with.");
+				placementOK = false;
+			}
+			
+		} while (!placementOK);
+		
+		return;
+	}
+	
+	public int getReinforcementsPlacementUnits () {
+		return num_of_units;
 	}
 	
 	public String inputName (int playerId) {

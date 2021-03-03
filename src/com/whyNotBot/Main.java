@@ -93,7 +93,54 @@ public class Main {
 		currPlayer = players[playerId];
 		ui.displayRollWinner(currPlayer);
 		
+		
 		ui.displayString("\nSTART TURNS");
+		
+		///////////////////////////////////////////////////////////////////////////////
+			// NEED TO CALCULATE THE NUMBER OF NEW ARMIES YOU CAN PLACE ON A TERRITORY
+		
+			// According to risk rules:
+//		At the beginning of each turn, calculate how many new armies you can add to your territories based on:
+//
+//			The number of territories you occupy.
+//			The value of the continents you control.
+//			The value of the matched sets of RISK cards you trade in.
+//			The specific territory pictured on a traded-in card.
+//
+//			Territories
+//			At the beginning of every turn (including your first), count the number of territories you currently occupy, then divide the total by three (ignore any fraction).
+//
+//			The answer is the number of armies you receive. Place the new armies on any territory you already occupy.
+//
+//			Example: 11 territories = 3 armies, 14 territories = 4 armies, 17 territories = 5 armies. You will always receive at least 3 armies on a turn, even if you occupy fewer than 9 territories.
+//
+//
+//			Continents
+//			In addition, at the beginning of your turn, you will receive armies for each continent you control. (To control a continent, you must occupy all its territories at the start of your turn).
+//
+//			The number of extra armies is different for each continent:
+//
+//			Asia: 7
+//			North America: 5
+//			Europe: 5
+//			Africa: 3
+//			South America: 2
+//			Australia: 2
+		///////////////////////////////////////////////////////////////////////////////
+		
+		currPlayer.addUnits(3); //player gets 3 units to start
+		ui.reinforcementsPlacement(currPlayer); // asks the player the country and the number of units they requested to reinforce with
+		
+		do {
+			numUnits += ui.getReinforcementsPlacementUnits(); // the number of units they requested to reinforce the country with
+			
+		}while(currPlayer.getNumUnits() >= numUnits); //so that the user can't try to add more than they have
+		
+		countryId = ui.getCountryId(); //gets country id entered
+		board.addUnits(countryId, currPlayer, numUnits); //adds units to board
+		currPlayer.subtractUnits(numUnits); //subtract from current units
+		ui.displayMap(); 
+		
 		
 		
 		
