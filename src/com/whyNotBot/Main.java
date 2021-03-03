@@ -8,7 +8,7 @@ public class Main {
 		Player[] players = new Player[GameData.NUM_PLAYERS_PLUS_NEUTRALS];
 		Player currPlayer;
 		Card card;
-		int playerId, countryId, numUnits = 0, numCards;
+		int playerId, countryId, numUnits, numCards;
 		String name;
 //		boolean gameover = false;
 	
@@ -130,6 +130,8 @@ public class Main {
 		
 		currPlayer.addUnits(3); //player gets 3 units to start
 		ui.reinforcementsPlacement(currPlayer); // asks the player the country and the number of units they requested to reinforce with
+		
+		numUnits = 0;
 		
 		do {
 			numUnits += ui.getReinforcementsPlacementUnits(); // the number of units they requested to reinforce the country with
