@@ -2,7 +2,6 @@ package com.whyNotBot;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 
-import sun.security.util.Length;
 
 public class UI {
 

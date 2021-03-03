@@ -8,7 +8,7 @@ public class Main {
 		Player[] players = new Player[GameData.NUM_PLAYERS_PLUS_NEUTRALS];
 		Player currPlayer;
 		Card card;
-		int playerId, countryId, numUnits, numCards;
+		int playerId, countryId, numUnits = 0, numCards;
 		String name;
 //		boolean gameover = false;
 	
