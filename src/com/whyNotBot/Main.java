@@ -78,18 +78,26 @@ public class Main {
 			currPlayer = players[playerId];
 		}
 		
-		
 		ui.displayString("\nROLL DICE TO SEE WHO TAKES THE FIRST TURN");
+		do {
+			for (int i=0; i<GameData.NUM_PLAYERS; i++) {
+				players[i].rollDice(1);
+				ui.displayDice(players[i]);
+			}
+		} while (players[0].getDie(0) == players[1].getDie(0)); 
+		if (players[0].getDie(0) > players[1].getDie(0)) {
+			playerId = 0;
+		} else {
+			playerId = 1;
+		}
+		currPlayer = players[playerId];
+		ui.displayRollWinner(currPlayer);
+		
+		ui.displayString("\nSTART TURNS");
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		// **Cian**-> My intentions were good but it prints all jumbled up 
+		// **Cian**-> This prints all jumbled up 
 		// Don't delete it yet, may still use it
 		
 //		if(gameover = true) {
