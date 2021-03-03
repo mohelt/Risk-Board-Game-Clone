@@ -1,4 +1,5 @@
 package com.whyNotBot;
+
 public class Main {
 
 	public static void main (String args[]) {	   
@@ -9,6 +10,8 @@ public class Main {
 		Card card;
 		int playerId, countryId, numUnits, numCards;
 		String name;
+//		boolean gameover = false;
+	
 		
 		ui.displayString("ENTER PLAYER NAMES");
 		ui.displayMap();
@@ -74,6 +77,32 @@ public class Main {
 			playerId = (++playerId)%GameData.NUM_PLAYERS;
 			currPlayer = players[playerId];
 		}
+		
+		
+		ui.displayString("\nROLL DICE TO SEE WHO TAKES THE FIRST TURN");
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		// **Cian**-> My intentions were good but it prints all jumbled up 
+		// Don't delete it yet, may still use it
+		
+//		if(gameover = true) {
+//			ui.displayString("*****    *   *     * ***** 	     ****  *     * ***** ***   ");
+//			ui.displayString("*       * *  * * * * *	 		*	 * *     * *	 *  *  ");
+//			ui.displayString("*  *** ***** *  *  * *****		*	 *  *   *  ***** ***   ");
+//			ui.displayString("*   *  *   * *     * *         	*	 *   * *   *	 *  *  ");
+//			ui.displayString("*****  *   * *     * *****    	 ****  	  *    ***** *   * ");
+//			
+//			ui.displayString("THE WINNER IS ...........");
+//			
+//		}
+//		
 		
 		return;
 	}
