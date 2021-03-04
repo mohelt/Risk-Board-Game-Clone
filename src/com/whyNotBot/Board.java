@@ -48,5 +48,84 @@ public class Board {
 	public int getNumUnits (int country) {
 		return numUnits[country];
 	}
-
+	
+	public int getNumTerritories(int player) {
+		int numTerritories =0;
+		for(int i =0;i<GameData.NUM_COUNTRIES;i++) {
+			if (occupier[i]==player){
+				numTerritories++;
+			}
+		}
+		return numTerritories;
+	}
+	
+	public int numOfArmies(Player[] playerArray,int player) {
+		int numOfArmies = 0;
+		if(playerArray[player].getNumUnits() <9) {
+			return 3
+			 +ownsNorthAmerica(player)
+			 +ownsEurope(player)
+			 +ownsAsia(player)
+			 +ownsAfrica(player)
+			 +ownsSouthAmerica(player)
+			 +ownsAustralia(player);
+		}else {
+		 numOfArmies = (this.getNumTerritories(player)/3) 
+				 +ownsNorthAmerica(player)
+				 +ownsEurope(player)
+				 +ownsAsia(player)
+				 +ownsAfrica(player)
+				 +ownsSouthAmerica(player)
+				 +ownsAustralia(player);
+		}
+		return numOfArmies;
+	}
+	public int ownsNorthAmerica(int player) {
+		for(int i =0;i<=8;i++) {
+			if (occupier[i]!=player){
+				return 0;
+			}
+		}
+		return 5;
+	}
+	public int ownsEurope(int player) {
+		for(int i =9;i<=15;i++) {
+			if (occupier[i]!=player){
+				return 0;
+			}
+		}
+		return 5;
+	}
+	public int ownsAsia(int player) {
+		for(int i =16;i<=27;i++) {
+			if (occupier[i]!=player){
+				return 0;
+			}
+		}
+		return 7;
+	}
+	public int ownsAustralia(int player) {
+		for(int i =28;i<=31;i++) {
+			if (occupier[i]!=player){
+				return 0;
+			}
+		}
+		return 2;
+	}
+	public int ownsSouthAmerica(int player) {
+		for(int i =32;i<=35;i++) {
+			if (occupier[i]!=player){
+				return 0;
+			}
+		}
+		return 2;
+	}
+	public int ownsAfrica(int player) {
+		for(int i =36;i<=41;i++) {
+			if (occupier[i]!=player){
+				return 0;
+			}
+		}
+		return 3;
+	}
 }

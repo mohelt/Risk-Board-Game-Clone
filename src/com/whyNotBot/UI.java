@@ -67,7 +67,6 @@ public class UI {
 	}
 	
 	public void reinforcementsPlacement (Player player) {
-		displayString(makeLongName(player)  + " gets 3 reinforcements.");
 		displayString(makeLongName(player)  + ": REINFORCE: Enter a country to reinforce and the number of units");
 		
 		String countryName; 
@@ -90,7 +89,11 @@ public class UI {
 					placementOK = true;
 				}
 			}
-			if((num_of_units > 3) && (num_of_units < 0)) {
+			if(num_of_units >player.getNumUnits()) {
+				displayString("Error: You don't have that many units to reinforce with.");
+				placementOK = false;
+			}
+			if(num_of_units <= 0) {
 				displayString("Error: You don't have that many units to reinforce with.");
 				placementOK = false;
 			}
