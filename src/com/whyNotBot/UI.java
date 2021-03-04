@@ -15,9 +15,9 @@ public class UI {
 	private CommandPanel commandPanel = new CommandPanel();
 	private Parse parse = new Parse();
 	private Board board;
-	
+
 	int num_of_units = 0;
-	
+
 	UI (Board inBoard) {
 		board = inBoard;
 		mapPanel = new MapPanel(board);
@@ -31,11 +31,11 @@ public class UI {
 		frame.setVisible(true);
 		return;
 	}
-	
+
 	public String makeLongName (Player player) {
 		return player.getName() + " (" + mapPanel.getColorName(player.getId()) + ") ";
 	}
-	
+
 	public void displayMap () {
 		mapPanel.refresh();
 		return;
@@ -45,7 +45,7 @@ public class UI {
 		infoPanel.addText(string);
 		return;
 	}
-	
+
 	public void displayName (int playerId, String name) {
 		displayString("Neutral player " + (playerId+1) + " is " + mapPanel.getColorName(playerId));
 		return;		
@@ -55,17 +55,17 @@ public class UI {
 		displayString(makeLongName(player) + " draws the " + card.getCountryName() + " card");
 		return;
 	}
-	
+
 	public void displayDice (Player player) {
 		displayString(makeLongName(player) + " rolls " + player.getDice() );
 		return;
 	}
-	
+
 	public void displayRollWinner (Player player) {
 		displayString(makeLongName(player)  + " wins roll and goes first");
 		return;
 	}
-	
+
 	public void reinforcementsPlacement (Player player) {
 		displayString(makeLongName(player)  + ": REINFORCE: Enter a country to reinforce");
 		String countryName,numOfUnitsReinforce; 
@@ -96,16 +96,16 @@ public class UI {
 				displayString("Error: You don't have that many units to reinforce with.");
 				placementOK = false;
 			}
-			
+
 		} while (!placementOK);
-		
+
 		return;
 	}
-	
+
 	public int getReinforcementsPlacementUnits () {
 		return num_of_units;
 	}
-	
+
 	public String inputName (int playerId) {
 		String response;
 		displayString("Enter the name for player " + (playerId+1) + " (" + mapPanel.getColorName(playerId) + "):");
@@ -114,7 +114,7 @@ public class UI {
 		displayString(PROMPT + response);
 		return response;		
 	}
-		
+
 	public void inputPlacement (Player byPlayer, Player forPlayer) {
 		String response, message;
 		boolean placementOK = false;
@@ -142,19 +142,69 @@ public class UI {
 		} while (!placementOK);
 		return;
 	}
-	
+
 	public int getCountryId () {
 		return parse.getCountryId();
 	}
 	public int attackOrSkip(Player player,int playerId) {
+		boolean attackFinished = false;
+		int numUnitsAttackWith = 0;
+		int defenceArmiesNumber =0;
 		displayString(makeLongName(player) + "): Type 'attack' to attack or 'skip' to skip your turn...");
 		String command = commandPanel.getCommand();
 		if(command.equals("skip") ||command.equals("skip ")) {
 			playerId = (playerId +1) % 2;
+			return playerId;
 		}else if (command.equals("attack") ||command.equals("attack ")){
-			
+			while(attackFinished == false) {
+			displayString(makeLongName(player) + "): Type a country to attack from");
+			String response = commandPanel.getCommand();
+			parse.countryId(response);
+			if (parse.isError()) {
+				displayString("Error: Not a country");
+				response = commandPanel.getCommand();
+			}
+			int countryAttackingFrom= parse.getCountryId();
+			displayString(makeLongName(player) + "): Type a country to attack");
+			response = commandPanel.getCommand();
+			parse.countryId(response);
+			if (parse.isError()) {
+				displayString("Error: Not a country");
+				response = commandPanel.getCommand();
+			}
+			int countryToAttack = parse.getCountryId();
+			displayString(makeLongName(player) + "): Type Number Of Units to Attack With ");
+			response = commandPanel.getCommand();
+			numUnitsAttackWith =  Integer.parseInt(response);
+			if(isAdjacent(countryAttackingFrom,countryToAttack)) {
+				displayString("DEFEND: Enter number of units to defend with");
+				String defenceArmies = commandPanel.getCommand();
+				defenceArmiesNumber =Integer.parseInt(defenceArmies);
+				attackFinished = true;
+				return playerId;
+			}else {
+				displayString(makeLongName(player) + "): ERROR, not adjacent countries");
+			}
+			}
 		}
 		return playerId;
 	}
-	
+	public boolean isAdjacent(int countryFrom,int countryTo) {
+		boolean containsCountryFrom=false;
+		boolean containsCountryTo=false;
+		for (int i=0; i<GameData.NUM_COUNTRIES; i++) {
+        	for (int j=0; j<GameData.ADJACENT[i].length; j++) {
+        		if(GameData.ADJACENT[i][j] == countryFrom) {
+        			containsCountryFrom = true;
+        			int tempInt = i;
+        			for (int x =0; x<GameData.ADJACENT[tempInt].length; x++) {
+        				if(GameData.ADJACENT[tempInt][x] == countryTo) {
+        					containsCountryTo = true;
+        				}
+        			}
+        		}
+        	}
+		}
+		return containsCountryFrom && containsCountryTo;
+	}
 }

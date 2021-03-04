@@ -11,8 +11,6 @@ public class Main {
 		int playerId, countryId, numUnits, numCards;
 		String name;
 		boolean gameOver = false;
-
-
 		ui.displayString("ENTER PLAYER NAMES");
 		ui.displayMap();
 		for (playerId=0; playerId<GameData.NUM_PLAYERS_PLUS_NEUTRALS; playerId++) {
@@ -110,7 +108,9 @@ public class Main {
 				ui.displayMap();
 			}
 			 
-			playerId=ui.attackOrSkip(currPlayer,playerId);
+			ui.attackOrSkip(currPlayer,playerId);
+			playerId=(playerId +1 )%2;
+			currPlayer = players[playerId];
 		}
 
 
