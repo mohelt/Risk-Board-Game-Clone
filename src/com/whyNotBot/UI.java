@@ -67,18 +67,17 @@ public class UI {
 	}
 	
 	public void reinforcementsPlacement (Player player) {
-		displayString(makeLongName(player)  + ": REINFORCE: Enter a country to reinforce and the number of units");
-		
-		String countryName; 
+		displayString(makeLongName(player)  + ": REINFORCE: Enter a country to reinforce");
+		String countryName,numOfUnitsReinforce; 
 
 		boolean placementOK = false;
 		do {
 			countryName = commandPanel.getCommand(); //no need to shorten it as the parse function handles it
 			displayString(PROMPT + countryName);
-			
-			//this should remove all but the last word (number) and convert it to an integer
-			num_of_units = Integer.parseInt((countryName.substring(countryName.lastIndexOf(" ") + 1)));
-			
+			displayString(makeLongName(player)  + ": Enter the number of units to reinforce with.");
+			numOfUnitsReinforce = commandPanel.getCommand();
+			displayString(PROMPT + num_of_units );
+			num_of_units =  Integer.parseInt(numOfUnitsReinforce);
 			parse.countryId(countryName);
 			if (parse.isError()) {
 				displayString("Error: Not a country");
@@ -132,6 +131,7 @@ public class UI {
 			parse.countryId(response);
 			if (parse.isError()) {
 				displayString("Error: Not a country");
+				response = commandPanel.getCommand();
 			} else {
 				if (!board.checkOccupier(forPlayer, parse.getCountryId())) {
 					displayString("Error: Cannot place the units on that country");
@@ -145,6 +145,16 @@ public class UI {
 	
 	public int getCountryId () {
 		return parse.getCountryId();
+	}
+	public int attackOrSkip(Player player,int playerId) {
+		displayString(makeLongName(player) + "): Type 'attack' to attack or 'skip' to skip your turn...");
+		String command = commandPanel.getCommand();
+		if(command.equals("skip") ||command.equals("skip ")) {
+			playerId = (playerId +1) % 2;
+		}else if (command.equals("attack") ||command.equals("attack ")){
+			
+		}
+		return playerId;
 	}
 	
 }
