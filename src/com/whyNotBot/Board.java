@@ -2,7 +2,7 @@ package com.whyNotBot;
 public class Board {
 	
 	private boolean[] occupied = new boolean [GameData.NUM_COUNTRIES];
-	private int[] occupier = new int [GameData.NUM_COUNTRIES];
+	public int[] occupier = new int [GameData.NUM_COUNTRIES];
 	private int[] numUnits = new int [GameData.NUM_COUNTRIES];
 	
 	Board() {
@@ -22,7 +22,8 @@ public class Board {
 		numUnits[countryId] = numUnits[countryId] + addNumUnits;
 		return;
 	}
-	
+	public void addUnitsTakeOver(int countryId, int player, int addNumUnits) {
+	}
 	public void addUnits (Card card, Player player, int addNumUnits) {
 		addUnits(card.getCountryId(), player.getId(), addNumUnits);
 		return;
