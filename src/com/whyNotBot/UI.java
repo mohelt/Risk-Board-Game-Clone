@@ -77,10 +77,8 @@ public class UI {
 			countryName = commandPanel.getCommand(); //no need to shorten it as the parse function handles it
 			displayString(PROMPT + countryName);
 			
-			//this should remove all but the last number and convert it to an integer
-			num_of_units = Integer.parseInt((countryName.substring(countryName.length()-1)));
-			// need to ensure it is between 1 and 3
-			// idk if ^^^ is the case because in the log he only uses 3
+			//this should remove all but the last word (number) and convert it to an integer
+			num_of_units = Integer.parseInt((countryName.substring(countryName.lastIndexOf(" ") + 1)));
 			
 			parse.countryId(countryName);
 			if (parse.isError()) {
@@ -92,7 +90,7 @@ public class UI {
 					placementOK = true;
 				}
 			}
-			if(num_of_units > 3) {
+			if((num_of_units > 3) && (num_of_units < 0)) {
 				displayString("Error: You don't have that many units to reinforce with.");
 				placementOK = false;
 			}

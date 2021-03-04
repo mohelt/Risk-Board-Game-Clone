@@ -132,12 +132,8 @@ public class Main {
 		ui.reinforcementsPlacement(currPlayer); // asks the player the country and the number of units they requested to reinforce with
 		
 		numUnits = 0;
-		
-		do {
-			numUnits += ui.getReinforcementsPlacementUnits(); // the number of units they requested to reinforce the country with
+		numUnits += ui.getReinforcementsPlacementUnits(); // the number of units they requested to reinforce the country with
 			
-		}while(currPlayer.getNumUnits() >= numUnits); //so that the user can't try to add more than they have
-		
 		countryId = ui.getCountryId(); //gets country id entered
 		board.addUnits(countryId, currPlayer, numUnits); //adds units to board
 		currPlayer.subtractUnits(numUnits); //subtract from current units
