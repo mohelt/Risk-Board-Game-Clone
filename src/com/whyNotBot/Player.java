@@ -22,7 +22,6 @@ public class Player {
 		}
 		return;
 	}
-
 	public void addUnits (int inNum) {
 		numUnits = numUnits + inNum;
 		return;

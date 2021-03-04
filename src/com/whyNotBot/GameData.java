@@ -60,6 +60,7 @@ public final class GameData {
 		{39,18,41,38,36,37},  //40
 		{38,40}
 	};
+	 
 	public static final int NUM_CONTINENTS = 6;
 	public static final String[] CONTINENT_NAMES = {"N America","Europe","Asia","Australia","S America","Africa"};  // for reference 
 	public static final int[] CONTINENTS = {0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,5,5};

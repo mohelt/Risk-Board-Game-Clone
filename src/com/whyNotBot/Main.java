@@ -108,7 +108,7 @@ public class Main {
 				ui.displayMap();
 			}
 			 
-			ui.attackOrSkip(currPlayer,playerId);
+			ui.attackOrSkip(currPlayer,players,playerId);
 			playerId=(playerId +1 )%2;
 			currPlayer = players[playerId];
 		}

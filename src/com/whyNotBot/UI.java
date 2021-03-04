@@ -146,14 +146,14 @@ public class UI {
 	public int getCountryId () {
 		return parse.getCountryId();
 	}
-	public void attackOrSkip(Player player,int playerId) {
+	public void attackOrSkip(Player player,Player[] playerArray, int playerId) {
 		boolean attackFinished = false;
 		int numUnitsAttackWith = 0;
 		int defenceArmiesNumber =0;
 		displayString(makeLongName(player) + "): Type 'attack' to attack or 'skip' to skip your turn...");
 		String command = commandPanel.getCommand();
 		if(command.equals("skip") ||command.equals("skip ")) {
-		return;
+			return;
 		}else if (command.equals("attack") ||command.equals("attack ")){
 			while(attackFinished == false) {
 				displayString(makeLongName(player) + "): Type a country to attack from");
@@ -173,6 +173,7 @@ public class UI {
 					response = commandPanel.getCommand();
 				}
 				int countryToAttack = parse.getCountryId();
+				int occupierPlayer =board.getOccupier(countryToAttack);
 				System.out.println(countryToAttack);
 				displayString(makeLongName(player) + "): Type Number Of Units to Attack With ");
 				response = commandPanel.getCommand();
@@ -190,14 +191,17 @@ public class UI {
 						displayString( "): You can't defend with more than 2");
 						response = commandPanel.getCommand();
 						defenceArmiesNumber =  Integer.parseInt(response);
-						
 					}
+					player.rollDice(numUnitsAttackWith);
+					playerArray[occupierPlayer].rollDice(defenceArmiesNumber);
+					displayString(makeLongName(player) + "Rolled: "+printDie(player));
+					displayString(makeLongName(playerArray[occupierPlayer]) + "Rolled: "+printDie(playerArray[occupierPlayer]));
 					displayString(makeLongName(player) + "): 'skip' or attack");
 					command = commandPanel.getCommand();
 					if(command.equals("skip") ||command.equals("skip ")) {
-					attackFinished = true;
+						attackFinished = true;
 					}else if(command.equals("attack") ||command.equals("attack ")){
-						attackOrSkip(player,playerId);
+						attackOrSkip(player,playerArray,playerId);
 					}
 				}else {
 					displayString(makeLongName(player) + "): ERROR, not adjacent countries");
@@ -231,11 +235,14 @@ public class UI {
 							containsCountryTo = true;
 						}
 					}
-					
+
 				}
 			}
 		}
 		return containsCountryFrom && containsCountryTo;*/
 		return true;
+	}
+	public String printDie(Player player) {
+		return player.getDice().toString();
 	}
 }
