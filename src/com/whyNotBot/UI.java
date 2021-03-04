@@ -1,5 +1,7 @@
 package com.whyNotBot;
 import java.awt.BorderLayout;
+import java.util.Collections;
+
 import javax.swing.JFrame;
 
 
@@ -76,7 +78,7 @@ public class UI {
 			displayString(PROMPT + countryName);
 			displayString(makeLongName(player)  + ": Enter the number of units to reinforce with.");
 			numOfUnitsReinforce = commandPanel.getCommand();
-			displayString(PROMPT + num_of_units );
+			displayString(PROMPT + num_of_units + "Number of Units" );
 			num_of_units =  Integer.parseInt(numOfUnitsReinforce);
 			parse.countryId(countryName);
 			if (parse.isError()) {
@@ -196,6 +198,12 @@ public class UI {
 					playerArray[occupierPlayer].rollDice(defenceArmiesNumber);
 					displayString(makeLongName(player) + "Rolled: "+printDie(player));
 					displayString(makeLongName(playerArray[occupierPlayer]) + "Rolled: "+printDie(playerArray[occupierPlayer]));
+					int attackingPlayerMax =Collections.max(player.getDice());
+					int defendingPlayerMax =Collections.max(playerArray[occupierPlayer].getDice());
+					displayString(makeLongName(playerArray[occupierPlayer]) + ": "+attackingPlayerMax+"vs"+defendingPlayerMax);
+					if(attackingPlayerMax>defendingPlayerMax) {
+						
+					}
 					displayString(makeLongName(player) + "): 'skip' or attack");
 					command = commandPanel.getCommand();
 					if(command.equals("skip") ||command.equals("skip ")) {
