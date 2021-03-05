@@ -96,7 +96,6 @@ public class Main {
 			ui.displayString(ui.makeLongName(currPlayer)+": gets "+ board.numOfArmies(players, playerId) + " reinforcements.");
 			while(currPlayer.getNumUnits()> 0) {
 				ui.displayString(ui.makeLongName(currPlayer)+": Number Of Armies " + currPlayer.getNumUnits());
-				
 				ui.reinforcementsPlacement(currPlayer); // asks the player the country and the number of units they requested to reinforce with
 
 				numUnits = 0;
@@ -110,7 +109,6 @@ public class Main {
 			 
 			ui.attackOrSkip(currPlayer,players,playerId);
 			playerId=(playerId +1 )%2;
-			currPlayer = players[playerId];
 		}
 
 

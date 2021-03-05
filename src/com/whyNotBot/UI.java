@@ -78,7 +78,6 @@ public class UI {
 			displayString(PROMPT + countryName);
 			displayString(makeLongName(player)  + ": Enter the number of units to reinforce with.");
 			numOfUnitsReinforce = commandPanel.getCommand();
-			displayString(PROMPT + num_of_units + "Number of Units" );
 			num_of_units =  Integer.parseInt(numOfUnitsReinforce);
 			parse.countryId(countryName);
 			if (parse.isError()) {
@@ -148,6 +147,40 @@ public class UI {
 	public int getCountryId () {
 		return parse.getCountryId();
 	}
+	public int countryFromCheck(int playerId,Player player) {
+		int countryAttackingFrom=0;
+		boolean checkOver = false;
+		
+		while(checkOver == false) {
+			displayString(makeLongName(player) + "): Type a country to attack from");
+			String response = commandPanel.getCommand();
+			parse.countryId(response);
+			countryAttackingFrom= parse.getCountryId();
+			if(board.getOccupier(countryAttackingFrom)==playerId) {
+				checkOver = true;
+			}else {
+				displayString(makeLongName(player) + "): This is not your country.");
+			}
+		}
+		return countryAttackingFrom;
+	}
+	public int countryToCheck(Player player) {
+		boolean checkOver = false;
+		int countryToAttack = 0;
+		while(checkOver ==false) {
+			displayString(makeLongName(player) + "): Type a country to attack");
+			String response = commandPanel.getCommand();
+			parse.countryId(response);
+		    countryToAttack = parse.getCountryId();
+			if(parse.isError()) {
+				displayString("Error: Not a country");
+			}else {
+				checkOver = true;
+			}
+		}
+		return countryToAttack;
+		
+	}
 	public void attackOrSkip(Player player,Player[] playerArray, int playerId) {
 		boolean attackFinished = false;
 		int numUnitsAttackWith = 0;
@@ -158,28 +191,13 @@ public class UI {
 			return;
 		}else if (command.equals("attack") ||command.equals("attack ")){
 			while(attackFinished == false) {
-				displayString(makeLongName(player) + "): Type a country to attack from");
-				String response = commandPanel.getCommand();
-				parse.countryId(response);
-				if (parse.isError()|| !board.checkOccupier(player,parse.getCountryId())) {
-					displayString("Error: Not a country or you dont own it");
-					response = commandPanel.getCommand();
-				}
-				int countryAttackingFrom= parse.getCountryId();
-				System.out.println(countryAttackingFrom);
-				displayString(makeLongName(player) + "): Type a country to attack");
-				response = commandPanel.getCommand();
-				parse.countryId(response);
-				if (parse.isError()) {
-					displayString("Error: Not a country");
-					response = commandPanel.getCommand();
-				}
-				int countryToAttack = parse.getCountryId();
-
+				int countryAttackingFrom=countryFromCheck(playerId,player);
+				
+				
+				int countryToAttack = countryToCheck(player);
 				int occupierPlayer =board.getOccupier(countryToAttack);
-				System.out.println(countryToAttack);
 				displayString(makeLongName(player) + "): Type Number Of Units to Attack With ");
-				response = commandPanel.getCommand();
+				String response = commandPanel.getCommand();
 				numUnitsAttackWith =  Integer.parseInt(response);
 				while(numUnitsAttackWith>3) {
 					displayString(makeLongName(player) + "): You can't attack with more than 3");
