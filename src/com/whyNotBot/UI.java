@@ -377,6 +377,16 @@ public class UI {
 		}
 		return adjacentTo;
 	}
+	
+
+	public void gameOverMessage(Player player){
+			
+		displayString(player + " is the winner!!!!!");
+		displayString("\nGAME OVER!");
+		
+	}
+
+	
 	public String printDie(Player player) {
 		return player.getDice().toString();
 	}

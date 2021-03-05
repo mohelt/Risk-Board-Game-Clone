@@ -111,23 +111,15 @@ public class Main {
 			playerId=(playerId +1 )%2;
 		}
 
-
-
-		// **Cian**-> This prints all jumbled up 
-		// Don't delete it yet, may still use it
-
-		//		if(gameover = true) {
-		//			ui.displayString("*****    *   *     * ***** 	     ****  *     * ***** ***   ");
-		//			ui.displayString("*       * *  * * * * *	 		*	 * *     * *	 *  *  ");
-		//			ui.displayString("*  *** ***** *  *  * *****		*	 *  *   *  ***** ***   ");
-		//			ui.displayString("*   *  *   * *     * *         	*	 *   * *   *	 *  *  ");
-		//			ui.displayString("*****  *   * *     * *****    	 ****  	  *    ***** *   * ");
-		//			
-		//			ui.displayString("THE WINNER IS ...........");
-		//			
-		//		}
-		//		
-
+		
+		// Checks if the game is over
+		for(int playerLoop = 0; playerLoop<GameData.NUM_PLAYERS; playerLoop++) {
+			if(board.getNumTerritories(playerLoop) == 0) { // if this player has no territories 
+				ui.gameOverMessage(players[(playerLoop + 1) % 2]); //the other player is the winner
+				gameOver=true;
+			}
+		}
+		
 		return;
 	}
 
