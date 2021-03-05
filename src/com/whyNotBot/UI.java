@@ -150,7 +150,7 @@ public class UI {
 	public int countryFromCheck(int playerId,Player player) {
 		int countryAttackingFrom=0;
 		boolean checkOver = false;
-		
+
 		while(checkOver == false) {
 			displayString(makeLongName(player) + "): Type a country to attack from");
 			String response = commandPanel.getCommand();
@@ -159,7 +159,7 @@ public class UI {
 			if(board.getOccupier(countryAttackingFrom)==playerId) {
 				checkOver = true;
 			}else {
-				displayString(makeLongName(player) + "): This is not your country.");
+				displayString(makeLongName(player) + "): This is not your country or you have spelt it wrong");
 			}
 		}
 		return countryAttackingFrom;
@@ -171,7 +171,7 @@ public class UI {
 			displayString(makeLongName(player) + "): Type a country to attack");
 			String response = commandPanel.getCommand();
 			parse.countryId(response);
-		    countryToAttack = parse.getCountryId();
+			countryToAttack = parse.getCountryId();
 			if(parse.isError()) {
 				displayString("Error: Not a country");
 			}else {
@@ -179,8 +179,31 @@ public class UI {
 			}
 		}
 		return countryToAttack;
-		
+
 	}
+	public int numUnitsCheckerAttack(Player player,int countryFrom) {
+		displayString(makeLongName(player) + "): Type Number Of Units to Attack With ");
+		String response = commandPanel.getCommand();
+		int numUnitsAttackWith =  Integer.parseInt(response);
+		while(numUnitsAttackWith>3 || !(board.getNumUnits(countryFrom)>=numUnitsAttackWith)) {
+			displayString(makeLongName(player) + "): You can't attack with more than 3, and you must have the number of units on your territory");
+			response = commandPanel.getCommand();
+			numUnitsAttackWith =  Integer.parseInt(response);
+		}
+		return numUnitsAttackWith;
+	}
+	public int numUnitsCheckerDefence(Player player,int countryTo) {
+		displayString( "DEFEND: Type Number Of Units to Defend With ");
+		String response = commandPanel.getCommand();
+		int numUnitsDefendWith =  Integer.parseInt(response);
+		while(numUnitsDefendWith>2 || !(board.getNumUnits(countryTo)>=numUnitsDefendWith)) {
+			displayString(makeLongName(player) + "): You can't defend with more than 2, and you must have the number of units on your territory");
+			response = commandPanel.getCommand();
+			numUnitsDefendWith =  Integer.parseInt(response);
+		}
+		return numUnitsDefendWith;
+	}
+	
 	public void attackOrSkip(Player player,Player[] playerArray, int playerId) {
 		boolean attackFinished = false;
 		int numUnitsAttackWith = 0;
@@ -192,27 +215,11 @@ public class UI {
 		}else if (command.equals("attack") ||command.equals("attack ")){
 			while(attackFinished == false) {
 				int countryAttackingFrom=countryFromCheck(playerId,player);
-				
-				
 				int countryToAttack = countryToCheck(player);
 				int occupierPlayer =board.getOccupier(countryToAttack);
-				displayString(makeLongName(player) + "): Type Number Of Units to Attack With ");
-				String response = commandPanel.getCommand();
-				numUnitsAttackWith =  Integer.parseInt(response);
-				while(numUnitsAttackWith>3) {
-					displayString(makeLongName(player) + "): You can't attack with more than 3");
-					response = commandPanel.getCommand();
-					numUnitsAttackWith =  Integer.parseInt(response);
-				}
+				numUnitsAttackWith =numUnitsCheckerAttack(player,countryAttackingFrom);
 				if(isAdjacent(countryAttackingFrom,countryToAttack)) {
-					displayString("DEFEND: Enter number of units to defend with");
-					String defenceArmies = commandPanel.getCommand();
-					defenceArmiesNumber =Integer.parseInt(defenceArmies);
-					while(defenceArmiesNumber>2) {
-						displayString( "): You can't defend with more than 2");
-						response = commandPanel.getCommand();
-						defenceArmiesNumber =  Integer.parseInt(response);
-					}
+					defenceArmiesNumber = numUnitsCheckerDefence(player,countryToAttack);
 					player.rollDice(numUnitsAttackWith);
 					playerArray[occupierPlayer].rollDice(defenceArmiesNumber);
 					displayString(makeLongName(player) + "Rolled: "+printDie(player));
@@ -242,7 +249,7 @@ public class UI {
 							displayMap();
 
 						}else if(attackingPlayerMax1<defendingPlayerMax1 && attackingPlayerMax2>defendingPlayerMax2) {
-							
+
 							board.addUnits(countryAttackingFrom, player, -1);
 							board.addUnits(countryToAttack, playerArray[occupierPlayer], -1);
 							if(board.getNumUnits(countryToAttack)<=0) {
@@ -251,7 +258,7 @@ public class UI {
 							}
 							displayString(makeLongName(player) + ": Lost 1 army" + makeLongName(playerArray[occupierPlayer])+" lost 1 army");
 							displayMap();
-							
+
 						}
 						else if(attackingPlayerMax1>defendingPlayerMax1 && attackingPlayerMax2<defendingPlayerMax2) {
 							board.addUnits(countryAttackingFrom, player, -1);
