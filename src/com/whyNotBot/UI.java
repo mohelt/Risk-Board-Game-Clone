@@ -203,7 +203,127 @@ public class UI {
 		}
 		return numUnitsDefendWith;
 	}
-	
+	public void diceCompare(Player player,Player[] playerArray,int occupierPlayer,int attackingPlayerMax2,int defendingPlayerMax2,
+			int attackingPlayerMax1, int defendingPlayerMax1,int countryToAttack,int numUnitsAttackWith,int countryAttackingFrom){
+		if(player.getDice().size() >=1 && playerArray[occupierPlayer].getDice().size() >=1) {
+			displayString(makeLongName(playerArray[occupierPlayer]) + ": "+attackingPlayerMax1+" vs "+defendingPlayerMax1);
+			displayString(makeLongName(playerArray[occupierPlayer]) + ": "+attackingPlayerMax2+" vs "+defendingPlayerMax2);
+			if(attackingPlayerMax1>defendingPlayerMax1 && attackingPlayerMax2>defendingPlayerMax2) {
+
+				board.addUnits(countryToAttack, playerArray[occupierPlayer], -2);
+				if(board.getNumUnits(countryToAttack)<=0) {
+					board.addUnits(countryToAttack, player,numUnitsAttackWith);
+					board.occupier[countryToAttack]= player.getId();
+				}
+				displayString(makeLongName(playerArray[occupierPlayer]) + ": Lost 2 armies ");
+				displayMap();
+
+			}else if(attackingPlayerMax1<defendingPlayerMax1 && attackingPlayerMax2<defendingPlayerMax2) {
+				board.addUnits(countryAttackingFrom, player, -2);
+				displayString(makeLongName(player) + ": Lost 2 armies ");
+				displayMap();
+
+			}else if(attackingPlayerMax1<defendingPlayerMax1 && attackingPlayerMax2>defendingPlayerMax2) {
+
+				board.addUnits(countryAttackingFrom, player, -1);
+				board.addUnits(countryToAttack, playerArray[occupierPlayer], -1);
+				if(board.getNumUnits(countryToAttack)<=0) {
+					board.addUnits(countryToAttack, player,numUnitsAttackWith);
+					board.occupier[countryToAttack]= player.getId();
+				}
+				displayString(makeLongName(player) + ": Lost 1 army" + makeLongName(playerArray[occupierPlayer])+" lost 1 army");
+				displayMap();
+
+			}
+			else if(attackingPlayerMax1>defendingPlayerMax1 && attackingPlayerMax2<defendingPlayerMax2) {
+				board.addUnits(countryAttackingFrom, player, -1);
+				board.addUnits(countryToAttack, playerArray[occupierPlayer], -1);
+				if(board.getNumUnits(countryToAttack)<=0) {
+					board.addUnits(countryToAttack, player,numUnitsAttackWith);
+					board.occupier[countryToAttack]= player.getId();
+				}
+				displayString(makeLongName(player) + ": Lost 1 army " + makeLongName(playerArray[occupierPlayer])+" lost 1 army");
+				displayMap();
+
+			}
+			else if(attackingPlayerMax1==defendingPlayerMax1 && attackingPlayerMax2==defendingPlayerMax2) {
+
+				board.addUnits(countryAttackingFrom, player, -2);
+				displayString(makeLongName(player) + ": Lost 2 armies ");
+				displayMap();
+
+			}
+			else if(attackingPlayerMax1==defendingPlayerMax1 && attackingPlayerMax2<defendingPlayerMax2) {
+
+				board.addUnits(countryAttackingFrom, player, -2);
+				displayString(makeLongName(player) + ": Lost 2 armies ");
+				displayMap();
+
+			}
+
+			else if(attackingPlayerMax1==defendingPlayerMax1 && attackingPlayerMax2>defendingPlayerMax2)
+			{
+				board.addUnits(countryAttackingFrom, player, -1);
+				board.addUnits(countryToAttack, playerArray[occupierPlayer], -1);
+				if(board.getNumUnits(countryToAttack)<=0) {
+					board.addUnits(countryToAttack, player,numUnitsAttackWith);
+					board.occupier[countryToAttack]= player.getId();
+				}
+				displayString(makeLongName(player) + ": Lost 1 army " + makeLongName(playerArray[occupierPlayer])+" lost 1 army");
+				displayMap();
+
+			}
+			else if(attackingPlayerMax1<defendingPlayerMax1 && attackingPlayerMax2==defendingPlayerMax2) {
+
+				board.addUnits(countryAttackingFrom, player, -2);
+				displayString(makeLongName(player) + ": Lost 2 armies ");
+				displayMap();
+			}
+
+			else if(attackingPlayerMax1>defendingPlayerMax1 && attackingPlayerMax2==defendingPlayerMax2) {
+
+				board.addUnits(countryAttackingFrom, player, -1);
+				board.addUnits(countryToAttack, playerArray[occupierPlayer], -1);
+				if(board.getNumUnits(countryToAttack)<=0) {
+					board.addUnits(countryToAttack, player,numUnitsAttackWith);
+					board.occupier[countryToAttack]= player.getId();
+				}
+				displayString(makeLongName(player) + ": Lost 1 army " + makeLongName(playerArray[occupierPlayer])+" lost 1 army");
+				displayMap();
+
+			}
+		}
+	}
+	public void diceCompare(Player player,Player[] playerArray,int occupierPlayer,
+			int attackingPlayerMax1, int defendingPlayerMax1,int countryToAttack,int numUnitsAttackWith,int countryAttackingFrom){
+			if(attackingPlayerMax1<defendingPlayerMax1) {
+				board.addUnits(countryAttackingFrom, player, -1);
+				displayString(makeLongName(player) + ": Lost 1 armies ");
+				if(board.getNumUnits(countryToAttack)<=0) {
+					board.addUnits(countryToAttack, player,numUnitsAttackWith);
+					board.occupier[countryToAttack]= player.getId();
+				}
+				displayMap();
+			}
+			else if(attackingPlayerMax1==defendingPlayerMax1) {
+				board.addUnits(countryAttackingFrom, player, -1);
+				displayString(makeLongName(player) + ": Lost 1 armies ");
+				if(board.getNumUnits(countryToAttack)<=0) {
+					board.addUnits(countryToAttack, player,numUnitsAttackWith);
+					board.occupier[countryToAttack]= player.getId();
+				}
+				displayMap();
+			}
+			else if(attackingPlayerMax1>defendingPlayerMax1) {
+				board.addUnits(countryToAttack, playerArray[occupierPlayer], -1);
+				displayString(makeLongName(playerArray[occupierPlayer]) + ": Lost 1 armies ");
+				if(board.getNumUnits(countryToAttack)<=0) {
+					board.addUnits(countryToAttack, player,numUnitsAttackWith);
+					board.occupier[countryToAttack]= player.getId();
+				}
+				displayMap();
+			}
+	}
 	public void attackOrSkip(Player player,Player[] playerArray, int playerId) {
 		boolean attackFinished = false;
 		int numUnitsAttackWith = 0;
@@ -229,122 +349,11 @@ public class UI {
 					player.getDice().remove(attackingPlayerMax1);
 					playerArray[occupierPlayer].getDice().remove(defendingPlayerMax1);
 					if(player.getDice().size() >=1 && playerArray[occupierPlayer].getDice().size() >=1) {
-						Integer attackingPlayerMax2 =Collections.max(player.getDice());
-						Integer defendingPlayerMax2 =Collections.max(playerArray[occupierPlayer].getDice());
-						displayString(makeLongName(playerArray[occupierPlayer]) + ": "+attackingPlayerMax1+" vs "+defendingPlayerMax1);
-						displayString(makeLongName(playerArray[occupierPlayer]) + ": "+attackingPlayerMax2+" vs "+defendingPlayerMax2);
-						if(attackingPlayerMax1>defendingPlayerMax1 && attackingPlayerMax2>defendingPlayerMax2) {
-
-							board.addUnits(countryToAttack, playerArray[occupierPlayer], -2);
-							if(board.getNumUnits(countryToAttack)<=0) {
-								board.addUnits(countryToAttack, player,numUnitsAttackWith);
-								board.occupier[countryToAttack]= player.getId();
-							}
-							displayString(makeLongName(playerArray[occupierPlayer]) + ": Lost 2 armies ");
-							displayMap();
-
-						}else if(attackingPlayerMax1<defendingPlayerMax1 && attackingPlayerMax2<defendingPlayerMax2) {
-							board.addUnits(countryAttackingFrom, player, -2);
-							displayString(makeLongName(player) + ": Lost 2 armies ");
-							displayMap();
-
-						}else if(attackingPlayerMax1<defendingPlayerMax1 && attackingPlayerMax2>defendingPlayerMax2) {
-
-							board.addUnits(countryAttackingFrom, player, -1);
-							board.addUnits(countryToAttack, playerArray[occupierPlayer], -1);
-							if(board.getNumUnits(countryToAttack)<=0) {
-								board.addUnits(countryToAttack, player,numUnitsAttackWith);
-								board.occupier[countryToAttack]= player.getId();
-							}
-							displayString(makeLongName(player) + ": Lost 1 army" + makeLongName(playerArray[occupierPlayer])+" lost 1 army");
-							displayMap();
-
-						}
-						else if(attackingPlayerMax1>defendingPlayerMax1 && attackingPlayerMax2<defendingPlayerMax2) {
-							board.addUnits(countryAttackingFrom, player, -1);
-							board.addUnits(countryToAttack, playerArray[occupierPlayer], -1);
-							if(board.getNumUnits(countryToAttack)<=0) {
-								board.addUnits(countryToAttack, player,numUnitsAttackWith);
-								board.occupier[countryToAttack]= player.getId();
-							}
-							displayString(makeLongName(player) + ": Lost 1 army " + makeLongName(playerArray[occupierPlayer])+" lost 1 army");
-							displayMap();
-
-						}
-						else if(attackingPlayerMax1==defendingPlayerMax1 && attackingPlayerMax2==defendingPlayerMax2) {
-
-							board.addUnits(countryAttackingFrom, player, -2);
-							displayString(makeLongName(player) + ": Lost 2 armies ");
-							displayMap();
-
-						}
-						else if(attackingPlayerMax1==defendingPlayerMax1 && attackingPlayerMax2<defendingPlayerMax2) {
-
-							board.addUnits(countryAttackingFrom, player, -2);
-							displayString(makeLongName(player) + ": Lost 2 armies ");
-							displayMap();
-
-						}
-
-						else if(attackingPlayerMax1==defendingPlayerMax1 && attackingPlayerMax2>defendingPlayerMax2)
-						{
-							board.addUnits(countryAttackingFrom, player, -1);
-							board.addUnits(countryToAttack, playerArray[occupierPlayer], -1);
-							if(board.getNumUnits(countryToAttack)<=0) {
-								board.addUnits(countryToAttack, player,numUnitsAttackWith);
-								board.occupier[countryToAttack]= player.getId();
-							}
-							displayString(makeLongName(player) + ": Lost 1 army " + makeLongName(playerArray[occupierPlayer])+" lost 1 army");
-							displayMap();
-
-						}
-						else if(attackingPlayerMax1<defendingPlayerMax1 && attackingPlayerMax2==defendingPlayerMax2) {
-
-							board.addUnits(countryAttackingFrom, player, -2);
-							displayString(makeLongName(player) + ": Lost 2 armies ");
-							displayMap();
-						}
-
-						else if(attackingPlayerMax1>defendingPlayerMax1 && attackingPlayerMax2==defendingPlayerMax2) {
-
-							board.addUnits(countryAttackingFrom, player, -1);
-							board.addUnits(countryToAttack, playerArray[occupierPlayer], -1);
-							if(board.getNumUnits(countryToAttack)<=0) {
-								board.addUnits(countryToAttack, player,numUnitsAttackWith);
-								board.occupier[countryToAttack]= player.getId();
-							}
-							displayString(makeLongName(player) + ": Lost 1 army " + makeLongName(playerArray[occupierPlayer])+" lost 1 army");
-							displayMap();
-
-						}
+					Integer attackingPlayerMax2 =Collections.max(player.getDice());
+					Integer defendingPlayerMax2 =Collections.max(playerArray[occupierPlayer].getDice());
+					diceCompare( player,playerArray,occupierPlayer,attackingPlayerMax2,defendingPlayerMax2,attackingPlayerMax1,defendingPlayerMax1,countryToAttack,numUnitsAttackWith,countryAttackingFrom);
 					}else {
-						if(attackingPlayerMax1<defendingPlayerMax1) {
-							board.addUnits(countryAttackingFrom, player, -1);
-							displayString(makeLongName(player) + ": Lost 1 armies ");
-							if(board.getNumUnits(countryToAttack)<=0) {
-								board.addUnits(countryToAttack, player,numUnitsAttackWith);
-								board.occupier[countryToAttack]= player.getId();
-							}
-							displayMap();
-						}
-						else if(attackingPlayerMax1==defendingPlayerMax1) {
-							board.addUnits(countryAttackingFrom, player, -1);
-							displayString(makeLongName(player) + ": Lost 1 armies ");
-							if(board.getNumUnits(countryToAttack)<=0) {
-								board.addUnits(countryToAttack, player,numUnitsAttackWith);
-								board.occupier[countryToAttack]= player.getId();
-							}
-							displayMap();
-						}
-						else if(attackingPlayerMax1>defendingPlayerMax1) {
-							board.addUnits(countryToAttack, playerArray[occupierPlayer], -1);
-							displayString(makeLongName(playerArray[occupierPlayer]) + ": Lost 1 armies ");
-							if(board.getNumUnits(countryToAttack)<=0) {
-								board.addUnits(countryToAttack, player,numUnitsAttackWith);
-								board.occupier[countryToAttack]= player.getId();
-							}
-							displayMap();
-						}
+					diceCompare( player,playerArray,occupierPlayer,attackingPlayerMax1,defendingPlayerMax1,countryToAttack,numUnitsAttackWith,countryAttackingFrom);	
 					}
 					displayString(makeLongName(player) + "): 'skip' or attack");
 					command = commandPanel.getCommand();
