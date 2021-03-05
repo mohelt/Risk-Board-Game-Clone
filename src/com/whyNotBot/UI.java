@@ -296,33 +296,33 @@ public class UI {
 	}
 	public void diceCompare(Player player,Player[] playerArray,int occupierPlayer,
 			int attackingPlayerMax1, int defendingPlayerMax1,int countryToAttack,int numUnitsAttackWith,int countryAttackingFrom){
-			if(attackingPlayerMax1<defendingPlayerMax1) {
-				board.addUnits(countryAttackingFrom, player, -1);
-				displayString(makeLongName(player) + ": Lost 1 armies ");
-				if(board.getNumUnits(countryToAttack)<=0) {
-					board.addUnits(countryToAttack, player,numUnitsAttackWith);
-					board.occupier[countryToAttack]= player.getId();
-				}
-				displayMap();
+		if(attackingPlayerMax1<defendingPlayerMax1) {
+			board.addUnits(countryAttackingFrom, player, -1);
+			displayString(makeLongName(player) + ": Lost 1 armies ");
+			if(board.getNumUnits(countryToAttack)<=0) {
+				board.addUnits(countryToAttack, player,numUnitsAttackWith);
+				board.occupier[countryToAttack]= player.getId();
 			}
-			else if(attackingPlayerMax1==defendingPlayerMax1) {
-				board.addUnits(countryAttackingFrom, player, -1);
-				displayString(makeLongName(player) + ": Lost 1 armies ");
-				if(board.getNumUnits(countryToAttack)<=0) {
-					board.addUnits(countryToAttack, player,numUnitsAttackWith);
-					board.occupier[countryToAttack]= player.getId();
-				}
-				displayMap();
+			displayMap();
+		}
+		else if(attackingPlayerMax1==defendingPlayerMax1) {
+			board.addUnits(countryAttackingFrom, player, -1);
+			displayString(makeLongName(player) + ": Lost 1 armies ");
+			if(board.getNumUnits(countryToAttack)<=0) {
+				board.addUnits(countryToAttack, player,numUnitsAttackWith);
+				board.occupier[countryToAttack]= player.getId();
 			}
-			else if(attackingPlayerMax1>defendingPlayerMax1) {
-				board.addUnits(countryToAttack, playerArray[occupierPlayer], -1);
-				displayString(makeLongName(playerArray[occupierPlayer]) + ": Lost 1 armies ");
-				if(board.getNumUnits(countryToAttack)<=0) {
-					board.addUnits(countryToAttack, player,numUnitsAttackWith);
-					board.occupier[countryToAttack]= player.getId();
-				}
-				displayMap();
+			displayMap();
+		}
+		else if(attackingPlayerMax1>defendingPlayerMax1) {
+			board.addUnits(countryToAttack, playerArray[occupierPlayer], -1);
+			displayString(makeLongName(playerArray[occupierPlayer]) + ": Lost 1 armies ");
+			if(board.getNumUnits(countryToAttack)<=0) {
+				board.addUnits(countryToAttack, player,numUnitsAttackWith);
+				board.occupier[countryToAttack]= player.getId();
 			}
+			displayMap();
+		}
 	}
 	public void attackOrSkip(Player player,Player[] playerArray, int playerId) {
 		boolean attackFinished = false;
@@ -337,8 +337,8 @@ public class UI {
 				int countryAttackingFrom=countryFromCheck(playerId,player);
 				int countryToAttack = countryToCheck(player);
 				int occupierPlayer =board.getOccupier(countryToAttack);
-				numUnitsAttackWith =numUnitsCheckerAttack(player,countryAttackingFrom);
 				if(isAdjacent(countryAttackingFrom,countryToAttack)) {
+					numUnitsAttackWith =numUnitsCheckerAttack(player,countryAttackingFrom);
 					defenceArmiesNumber = numUnitsCheckerDefence(player,countryToAttack);
 					player.rollDice(numUnitsAttackWith);
 					playerArray[occupierPlayer].rollDice(defenceArmiesNumber);
@@ -349,11 +349,11 @@ public class UI {
 					player.getDice().remove(attackingPlayerMax1);
 					playerArray[occupierPlayer].getDice().remove(defendingPlayerMax1);
 					if(player.getDice().size() >=1 && playerArray[occupierPlayer].getDice().size() >=1) {
-					Integer attackingPlayerMax2 =Collections.max(player.getDice());
-					Integer defendingPlayerMax2 =Collections.max(playerArray[occupierPlayer].getDice());
-					diceCompare( player,playerArray,occupierPlayer,attackingPlayerMax2,defendingPlayerMax2,attackingPlayerMax1,defendingPlayerMax1,countryToAttack,numUnitsAttackWith,countryAttackingFrom);
+						Integer attackingPlayerMax2 =Collections.max(player.getDice());
+						Integer defendingPlayerMax2 =Collections.max(playerArray[occupierPlayer].getDice());
+						diceCompare( player,playerArray,occupierPlayer,attackingPlayerMax2,defendingPlayerMax2,attackingPlayerMax1,defendingPlayerMax1,countryToAttack,numUnitsAttackWith,countryAttackingFrom);
 					}else {
-					diceCompare( player,playerArray,occupierPlayer,attackingPlayerMax1,defendingPlayerMax1,countryToAttack,numUnitsAttackWith,countryAttackingFrom);	
+						diceCompare( player,playerArray,occupierPlayer,attackingPlayerMax1,defendingPlayerMax1,countryToAttack,numUnitsAttackWith,countryAttackingFrom);	
 					}
 					displayString(makeLongName(player) + "): 'skip' or attack");
 					command = commandPanel.getCommand();
@@ -369,37 +369,13 @@ public class UI {
 		}
 	}
 	public boolean isAdjacent(int countryFrom,int countryTo) {
-		/*boolean containsCountryFrom=false;
-		boolean containsCountryTo=false;
-		for (int i=0; i<GameData.NUM_COUNTRIES; i++) {
-			for (int j=0; j<GameData.ADJACENT[i].length; j++) {
-				if(GameData.ADJACENT[i][j] == countryFrom) {
-					if(j==0) {
-						if(GameData.ADJACENT[i][GameData.ADJACENT[i].length-1] == countryTo) {
-							containsCountryTo= true;
-						}
-					}else if(j ==(GameData.ADJACENT[i].length-1)) {
-						if(GameData.ADJACENT[i][0] == countryTo) {
-							containsCountryTo= true;
-						}
-					}
-					containsCountryFrom = true;
-					if((j+1)<GameData.ADJACENT[i].length) {
-						if(GameData.ADJACENT[i][j+1] == countryTo) {
-							containsCountryTo= true;
-						}
-					}
-					if((j-1) > 0) {
-						if(GameData.ADJACENT[i][j-1] == countryTo) {
-							containsCountryTo = true;
-						}
-					}
-
-				}
+		boolean adjacentTo=false;
+		for (int j=0; j<GameData.ADJACENT[countryFrom].length; j++) {
+			if(GameData.ADJACENT[countryFrom][j] ==countryTo) {
+				adjacentTo=true;
 			}
 		}
-		return containsCountryFrom && containsCountryTo;*/
-		return true;
+		return adjacentTo;
 	}
 	public String printDie(Player player) {
 		return player.getDice().toString();
