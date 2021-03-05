@@ -109,6 +109,27 @@ public class Main {
 			 
 			ui.attackOrSkip(currPlayer,players,playerId);
 			playerId=(playerId +1 )%2;
+			boolean[][] gameWinner = new boolean[2][GameData.NUM_COUNTRIES];
+			for(int i=0;i<2;i++) {
+				for(int j=0;j<GameData.NUM_COUNTRIES;j++) {
+					gameWinner[i][j] = false;
+				}
+			}
+			for(int i=0;i<2;i++) {
+				for(int j=0;j<GameData.NUM_COUNTRIES;j++) {
+					if(board.getOccupier(j) == i) {
+						gameWinner[i][j] = true;
+					}
+				}
+			}
+			if(areAllTrue(gameWinner[0])) {
+				ui.displayString("THE WINNER IS "+ players[0].getName());
+				gameOver=true;
+			}
+			if(areAllTrue(gameWinner[1])) {
+				ui.displayString("THE WINNER IS "+ players[1].getName());
+				gameOver =true;
+			}
 		}
 
 
@@ -130,5 +151,13 @@ public class Main {
 
 		return;
 	}
-
+	public static boolean areAllTrue(boolean[] array)
+	{
+	    for(boolean b : array) {
+	    	if(!b) {
+	    		return false;
+	    	}
+	    }
+	    return true;
+	}
 }
