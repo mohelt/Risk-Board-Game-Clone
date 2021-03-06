@@ -62,7 +62,7 @@ public class Board {
 	
 	public int numOfArmies(Player[] playerArray,int player) {
 		int numOfArmies = 0;
-		if(playerArray[player].getNumUnits() <9) {
+		if(this.getNumTerritories(player) <9) {
 			return 3
 			 +ownsNorthAmerica(player)
 			 +ownsEurope(player)

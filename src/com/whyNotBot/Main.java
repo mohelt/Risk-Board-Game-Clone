@@ -58,7 +58,7 @@ public class Main {
 		currPlayer = players[playerId];
 		ui.displayRollWinner(currPlayer);
 		ui.displayString("\nREINFORCE INITIAL COUNTRIES");
-		/*while (currPlayer.getNumUnits() > 0) {
+		while (currPlayer.getNumUnits() > 0) {
 			ui.inputPlacement(currPlayer, currPlayer);
 			countryId = ui.getCountryId();
 			currPlayer.subtractUnits(3);
@@ -73,7 +73,7 @@ public class Main {
 			}
 			playerId = (++playerId)%GameData.NUM_PLAYERS;
 			currPlayer = players[playerId];
-		}*/
+		}
 		ui.displayString("\nROLL DICE TO SEE WHO TAKES THE FIRST TURN");
 		do {
 			for (int i=0; i<GameData.NUM_PLAYERS; i++) {
@@ -91,6 +91,9 @@ public class Main {
 
 		ui.displayString("\nSTART TURNS");
 		while(gameOver==false) {
+			while(board.getNumTerritories(playerId) == 0) {
+				playerId++;
+			}
 			currPlayer = players[playerId];
 			currPlayer.addUnits(board.numOfArmies(players, playerId));
 			ui.displayString(ui.makeLongName(currPlayer)+": gets "+ board.numOfArmies(players, playerId) + " reinforcements.");
@@ -106,9 +109,13 @@ public class Main {
 				currPlayer.subtractUnits(numUnits); //subtract from current units
 				ui.displayMap();
 			}
-			 
-			ui.attackOrSkip(currPlayer,players,playerId);
-			playerId=(playerId +1 )%2;
+			if(playerId == 0 ||playerId == 1) {
+				ui.attackOrSkip(currPlayer,players,playerId);
+			}
+
+			ui.fortify(players[playerId],playerId);
+			playerId=(playerId +1) % 6;
+			
 			boolean[][] gameWinner = new boolean[2][GameData.NUM_COUNTRIES];
 			for(int i=0;i<2;i++) {
 				for(int j=0;j<GameData.NUM_COUNTRIES;j++) {
@@ -130,16 +137,17 @@ public class Main {
 				ui.displayString("THE WINNER IS "+ players[1].getName());
 				gameOver =true;
 			}
+			// Checks if the game is over
+			for(int playerLoop = 0; playerLoop<GameData.NUM_PLAYERS; playerLoop++) {
+				if(board.getNumTerritories(playerLoop) == 0) { // if this player has no territories 
+					ui.gameOverMessage(players[(playerLoop + 1) % 2]); //the other player is the winner
+					gameOver=true;
+				}
+			}
 		}
 
 		
-		// Checks if the game is over
-		for(int playerLoop = 0; playerLoop<GameData.NUM_PLAYERS; playerLoop++) {
-			if(board.getNumTerritories(playerLoop) == 0) { // if this player has no territories 
-				ui.gameOverMessage(players[(playerLoop + 1) % 2]); //the other player is the winner
-				gameOver=true;
-			}
-		}
+		
 		
 		return;
 	}
