@@ -69,15 +69,16 @@ public class UI {
 	}
 
 	public void reinforcementsPlacement (Player player) {
-		displayString(makeLongName(player)  + ": REINFORCE: Enter a country to reinforce");
 		String countryName,numOfUnitsReinforce; 
 
 		boolean placementOK = false;
 		do {
+			displayString(makeLongName(player)  + ": REINFORCE: Enter a country to reinforce");
 			countryName = commandPanel.getCommand(); //no need to shorten it as the parse function handles it
 			displayString(PROMPT + countryName);
 			displayString(makeLongName(player)  + ": Enter the number of units to reinforce with.");
 			numOfUnitsReinforce = commandPanel.getCommand();
+			displayString(PROMPT + numOfUnitsReinforce);
 			num_of_units =  Integer.parseInt(numOfUnitsReinforce);
 			parse.countryId(countryName);
 			if (parse.isError()) {
@@ -85,6 +86,7 @@ public class UI {
 			} else {
 				if (!board.checkOccupier(player, parse.getCountryId())) {
 					displayString("Error: Cannot place the units on that country");
+					displayString(makeLongName(player)  + ": REINFORCE: Enter a country to reinforce.");
 				} else {
 					placementOK = true;
 				}
@@ -154,6 +156,7 @@ public class UI {
 		while(checkOver == false) {
 			displayString(makeLongName(player) + "): Type a country to attack from");
 			String response = commandPanel.getCommand();
+			displayString(PROMPT + response);
 			parse.countryId(response);
 			countryAttackingFrom= parse.getCountryId();
 			if(board.getOccupier(countryAttackingFrom)==playerId) {
@@ -170,6 +173,7 @@ public class UI {
 		while(checkOver ==false) {
 			displayString(makeLongName(player) + "): Type a country to attack");
 			String response = commandPanel.getCommand();
+			displayString(PROMPT + response);
 			parse.countryId(response);
 			countryToAttack = parse.getCountryId();
 			if(parse.isError()) {
@@ -184,10 +188,12 @@ public class UI {
 	public int numUnitsCheckerAttack(Player player,int countryFrom) {
 		displayString(makeLongName(player) + "): Type Number Of Units to Attack With ");
 		String response = commandPanel.getCommand();
+		displayString(PROMPT + response);
 		int numUnitsAttackWith =  Integer.parseInt(response);
 		while(numUnitsAttackWith>3 || !(board.getNumUnits(countryFrom)>=(numUnitsAttackWith)+1)) {
 			displayString(makeLongName(player) + "): You can't attack with more than 3,you must leave 1 army behind and you must have the number of units on your territory");
 			response = commandPanel.getCommand();
+			displayString(PROMPT + response);
 			numUnitsAttackWith =  Integer.parseInt(response);
 		}
 		return numUnitsAttackWith;
@@ -195,16 +201,19 @@ public class UI {
 	public int numUnitsCheckerDefence(Player player,int countryTo) {
 		displayString( "DEFEND: Type Number Of Units to Defend With ");
 		String response = commandPanel.getCommand();
+		displayString(PROMPT + response);
 		int numUnitsDefendWith =  Integer.parseInt(response);
 		while(numUnitsDefendWith>2 || !(board.getNumUnits(countryTo)>=numUnitsDefendWith)) {
 			displayString(makeLongName(player) + "): You can't defend with more than 2, and you must have the number of units on your territory");
 			response = commandPanel.getCommand();
+			displayString(PROMPT + response);
 			numUnitsDefendWith =  Integer.parseInt(response);
 		}
 		return numUnitsDefendWith;
 	}
 	public void diceCompare(Player player,Player[] playerArray,int occupierPlayer,int attackingPlayerMax2,int defendingPlayerMax2,
 			int attackingPlayerMax1, int defendingPlayerMax1,int countryToAttack,int numUnitsAttackWith,int countryAttackingFrom){
+		if(occupierPlayer !=player.getId()) {
 		if(player.getDice().size() >=1 && playerArray[occupierPlayer].getDice().size() >=1) {
 			displayString(makeLongName(playerArray[occupierPlayer]) + ": "+attackingPlayerMax1+" vs "+defendingPlayerMax1);
 			displayString(makeLongName(playerArray[occupierPlayer]) + ": "+attackingPlayerMax2+" vs "+defendingPlayerMax2);
@@ -298,9 +307,14 @@ public class UI {
 
 			}
 		}
+		}else {
+			displayString(makeLongName(playerArray[occupierPlayer]) + ": Cannot attack own country ");
+		}
 	}
 	public void diceCompare(Player player,Player[] playerArray,int occupierPlayer,
-			int attackingPlayerMax1, int defendingPlayerMax1,int countryToAttack,int numUnitsAttackWith,int countryAttackingFrom){
+	int attackingPlayerMax1, int defendingPlayerMax1,int countryToAttack,int numUnitsAttackWith,int countryAttackingFrom){
+		if(occupierPlayer !=player.getId()) {
+		displayString(makeLongName(playerArray[occupierPlayer]) + ": "+attackingPlayerMax1+" vs "+defendingPlayerMax1);
 		if(attackingPlayerMax1<defendingPlayerMax1) {
 			board.addUnits(countryAttackingFrom, player, -1);
 			displayString(makeLongName(player) + ": Lost 1 armies ");
@@ -332,15 +346,21 @@ public class UI {
 			displayMap();
 		}
 	}
+	else {
+		displayString(makeLongName(playerArray[occupierPlayer]) + ": Cannot attack own country ");
+	}
+}
 	public void attackOrSkip(Player player,Player[] playerArray, int playerId) {
 		boolean attackFinished = false;
 		int numUnitsAttackWith = 0;
 		int defenceArmiesNumber =0;
 		displayString(makeLongName(player) + "): Type 'attack' to attack or 'skip' to skip your turn...");
 		String command = commandPanel.getCommand();
+		displayString(PROMPT + command);
 		if(command.equals("skip") ||command.equals("skip ")) {
 			return;
 		}else if (command.equals("attack") ||command.equals("attack ")){
+			displayString(PROMPT + command);
 			while(attackFinished == false) {
 				int countryAttackingFrom=countryFromCheck(playerId,player);
 				int countryToAttack = countryToCheck(player);
@@ -365,6 +385,7 @@ public class UI {
 					}
 					displayString(makeLongName(player) + "): 'skip' or attack");
 					command = commandPanel.getCommand();
+					displayString(PROMPT + command);
 					if(command.equals("skip") ||command.equals("skip ")) {
 						attackFinished = true;
 					}else if(command.equals("attack") ||command.equals("attack ")){
@@ -385,16 +406,16 @@ public class UI {
 		}
 		return adjacentTo;
 	}
-	
+
 
 	public void gameOverMessage(Player player){
-			
+
 		displayString(player + " is the winner!!!!!");
 		displayString("\nGAME OVER!");
-		
+
 	}
 
-	
+
 	public String printDie(Player player) {
 		return player.getDice().toString();
 	}
