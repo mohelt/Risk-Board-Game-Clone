@@ -20,6 +20,30 @@ Step 3. Click run
 //Jar File
 Step 1. Double click the risk.jar
 
+Sprint 3 
+======
+
+1.Roll a dice each to see who takes the first turn. Highest roll does first. Re-roll if a draw. Inform the user.☑
+
+2.Allow the players to play a series of reduced turns. The turns do not include getting or exchanging territory cards:
+Calculate the number of reinforcements that a user gets based on the number of occupied countries and continents. 
+Inform the user.
+
+3.Allow users to place their reinforcements on their territories. Update the map after every update.
+ Provide error messages and allow re-entry of instructions, as appropriate.
+ Ensure that all reinforcements are placed.oAllow combat between armies. 
+ Combat takes place according to the rules of Risk. 
+ When the user does not want a further attack, the usermay enter the command “skip”.
+ Allow users to fortify their positions after combat according to the rules of Risk.
+ If the user does not want to fortify, the user may enter the command “skip”.☑
+ 
+ 4.If a neutral player’s armies are eliminated, the app must deal with them not having a turn.☑
+ 
+ 5.If the other human player’s armies are eliminated, the app should display the name of thewinner and a game over message.☑
+ 
+ 6.The user should receive appropriate error messages if their commands are invalid.☑
+ ![alt text](https://github.com/UCD-COMP20050/WhyNotBot/blob/main/src/ImagesForGithub/Sprint3.PNG?raw=true)
+ 
 Sprint 2
 ======
 
