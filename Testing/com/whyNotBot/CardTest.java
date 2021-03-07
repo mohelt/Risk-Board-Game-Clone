@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import com.sun.org.apache.xml.internal.security.c14n.helper.C14nHelper;
-
 class CardTest {
 
 	Card c1 = new Card(1, "Ireland");
