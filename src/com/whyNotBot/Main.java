@@ -58,6 +58,7 @@ public class Main {
 		currPlayer = players[playerId];
 		ui.displayRollWinner(currPlayer);
 		ui.displayString("\nREINFORCE INITIAL COUNTRIES");
+		//commented out for ease of use of testing
 		/*while (currPlayer.getNumUnits() > 0) {
 			ui.inputPlacement(currPlayer, currPlayer);
 			countryId = ui.getCountryId();
@@ -91,38 +92,60 @@ public class Main {
 
 		ui.displayString("\nSTART TURNS");
 		while(gameOver==false) {
+			
+			//makes sure that if a player has no territories he doesn't get a turn
 			while(board.getNumTerritories(playerId) == 0) {
 				playerId++;
 			}
+			//currPlayer holds the current player in an array of all players
 			currPlayer = players[playerId];
+			
+			// board.numOfArmies(players, playerId) is a function which calculates how much armies to allocate to players
+			//and we are adding that amount to the number of armies a player has
 			currPlayer.addUnits(board.numOfArmies(players, playerId));
+			
+			//displaying number of armies
 			ui.displayString(ui.makeLongName(currPlayer)+": gets "+ board.numOfArmies(players, playerId) + " reinforcements.");
 			
+			//while the player still has armies to  allocate
 			while(currPlayer.getNumUnits()> 0) {
 				ui.displayString(ui.makeLongName(currPlayer)+": Number Of Armies " + currPlayer.getNumUnits());
-				ui.reinforcementsPlacement(currPlayer); // asks the player the country and the number of units they requested to reinforce with
+
+				// asks the player the country and the number of units they requested to reinforce with
+				ui.reinforcementsPlacement(currPlayer); 
 
 				numUnits = 0;
-				numUnits += ui.getReinforcementsPlacementUnits(); // the number of units they requested to reinforce the country with
+				numUnits += ui.getReinforcementsPlacementUnits();
+				// the number of units they requested to reinforce the country with
 
-				countryId = ui.getCountryId(); //gets country id entered
-				board.addUnits(countryId, currPlayer, numUnits); //adds units to board
-				currPlayer.subtractUnits(numUnits); //subtract from current units
+				countryId = ui.getCountryId(); 
+				//gets country id entered
+				board.addUnits(countryId, currPlayer, numUnits);
+				//adds units to board
+				currPlayer.subtractUnits(numUnits);
+				//subtract from current units
 				ui.displayMap();
 			}
+			//if the player isn't neutral allow them to attack
 			if(playerId == 0 ||playerId == 1) {
 				ui.attackOrSkip(currPlayer,players,playerId);
 			}
-
+			//allow the user to fortify their positions if they want to
 			ui.fortify(players[playerId],playerId);
+			
+			//the player turn is over to add +1
 			playerId=(playerId +1) % 6;
 			
+			//array of booleans to check if a player has occupied all territories which is a win condition
 			boolean[][] gameWinner = new boolean[2][GameData.NUM_COUNTRIES];
+			
+			//initialises array to false
 			for(int i=0;i<2;i++) {
 				for(int j=0;j<GameData.NUM_COUNTRIES;j++) {
 					gameWinner[i][j] = false;
 				}
 			}
+			//checks if a user occupies all territories
 			for(int i=0;i<2;i++) {
 				for(int j=0;j<GameData.NUM_COUNTRIES;j++) {
 					if(board.getOccupier(j) == i) {
@@ -130,18 +153,22 @@ public class Main {
 					}
 				}
 			}
+			//if a user occupies all territories then he has one
 			if(areAllTrue(gameWinner[0])) {
 				ui.displayString("THE WINNER IS "+ players[0].getName());
 				gameOver=true;
 			}
+			//if a user occupies all territories then he has one
 			if(areAllTrue(gameWinner[1])) {
 				ui.displayString("THE WINNER IS "+ players[1].getName());
 				gameOver =true;
 			}
 			// Checks if the game is over
 			for(int playerLoop = 0; playerLoop<GameData.NUM_PLAYERS; playerLoop++) {
-				if(board.getNumTerritories(playerLoop) == 0) { // if this player has no territories 
-					ui.gameOverMessage(players[(playerLoop + 1) % 2]); //the other player is the winner
+				// if this player has no territories 
+				if(board.getNumTerritories(playerLoop) == 0) { 
+					//the other player is the winner
+					ui.gameOverMessage(players[(playerLoop + 1) % 2]); 
 					gameOver=true;
 				}
 			}
@@ -152,6 +179,7 @@ public class Main {
 		
 		return;
 	}
+	// array to check the boolean array which contains if the user occupies all territories
 	public static boolean areAllTrue(boolean[] array)
 	{
 	    for(boolean b : array) {
