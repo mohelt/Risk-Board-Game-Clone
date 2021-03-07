@@ -154,7 +154,7 @@ public class UI {
 		boolean checkOver = false;
 
 		while(checkOver == false) {
-			displayString(makeLongName(player) + "): Type a country to attack from");
+			displayString(makeLongName(player) + ": Type a country to attack from");
 			String response = commandPanel.getCommand();
 			displayString(PROMPT + response);
 			parse.countryId(response);
@@ -162,7 +162,7 @@ public class UI {
 			if(board.getOccupier(countryAttackingFrom)==playerId) {
 				checkOver = true;
 			}else {
-				displayString(makeLongName(player) + "): This is not your country or you have spelt it wrong");
+				displayString(makeLongName(player) + ": This is not your country or you have spelt it wrong");
 			}
 		}
 		return countryAttackingFrom;
@@ -171,7 +171,7 @@ public class UI {
 		boolean checkOver = false;
 		int countryToAttack = 0;
 		while(checkOver ==false) {
-			displayString(makeLongName(player) + "): Type a country to attack");
+			displayString(makeLongName(player) + ": Type a country to attack");
 			String response = commandPanel.getCommand();
 			displayString(PROMPT + response);
 			parse.countryId(response);
@@ -186,12 +186,12 @@ public class UI {
 
 	}
 	public int numUnitsCheckerAttack(Player player,int countryFrom) {
-		displayString(makeLongName(player) + "): Type Number Of Units to Attack With ");
+		displayString(makeLongName(player) + ": Type Number Of Units to Attack With ");
 		String response = commandPanel.getCommand();
 		displayString(PROMPT + response);
 		int numUnitsAttackWith =  Integer.parseInt(response);
 		while(numUnitsAttackWith>3 || !(board.getNumUnits(countryFrom)>=(numUnitsAttackWith)+1)) {
-			displayString(makeLongName(player) + "): You can't attack with more than 3,you must leave 1 army behind and you must have the number of units on your territory");
+			displayString(makeLongName(player) + ": You can't attack with more than 3,you must leave 1 army behind and you must have the number of units on your territory");
 			response = commandPanel.getCommand();
 			displayString(PROMPT + response);
 			numUnitsAttackWith =  Integer.parseInt(response);
@@ -204,7 +204,7 @@ public class UI {
 		displayString(PROMPT + response);
 		int numUnitsDefendWith =  Integer.parseInt(response);
 		while(numUnitsDefendWith>2 || !(board.getNumUnits(countryTo)>=numUnitsDefendWith)) {
-			displayString(makeLongName(player) + "): You can't defend with more than 2, and you must have the number of units on your territory");
+			displayString(makeLongName(player) + ": You can't defend with more than 2, and you must have the number of units on your territory");
 			response = commandPanel.getCommand();
 			displayString(PROMPT + response);
 			numUnitsDefendWith =  Integer.parseInt(response);
@@ -354,10 +354,10 @@ public class UI {
 		boolean attackFinished = false;
 		int numUnitsAttackWith = 0;
 		int defenceArmiesNumber =0;
-		displayString(makeLongName(player) + "): Type 'attack' to attack or 'skip' to skip your turn...");
+		displayString(makeLongName(player) + ": Type 'attack' to attack or 'skip' to skip your turn...");
 		String command = commandPanel.getCommand();
 		displayString(PROMPT + command);
-		if(command.equals("skip") ||command.equals("skip ")) {
+		if(command.equals("skip") ||command.equals("skip ") ||command.equals("s")) {
 			return;
 		}else if (command.equals("attack") ||command.equals("attack ")){
 			displayString(PROMPT + command);
@@ -365,7 +365,13 @@ public class UI {
 				int countryAttackingFrom=countryFromCheck(playerId,player);
 				int countryToAttack = countryToCheck(player);
 				int occupierPlayer =board.getOccupier(countryToAttack);
-				if(isAdjacent(countryAttackingFrom,countryToAttack)) {
+				
+				if ((board.getNumUnits(countryAttackingFrom)) < 2) {
+					displayString("You dont have enough units on this country to make an attack!");
+					attackOrSkip(player, playerArray, playerId);
+					break;}
+				
+				else if(isAdjacent(countryAttackingFrom,countryToAttack)) {
 					numUnitsAttackWith =numUnitsCheckerAttack(player,countryAttackingFrom);
 					defenceArmiesNumber = numUnitsCheckerDefence(player,countryToAttack);
 					player.rollDice(numUnitsAttackWith);
@@ -383,17 +389,21 @@ public class UI {
 					}else {
 						diceCompare( player,playerArray,occupierPlayer,attackingPlayerMax1,defendingPlayerMax1,countryToAttack,numUnitsAttackWith,countryAttackingFrom);	
 					}
-					displayString(makeLongName(player) + "): 'skip' or attack");
+					displayString(makeLongName(player) + ": 'end turn' or 'continue'");
 					command = commandPanel.getCommand();
 					displayString(PROMPT + command);
-					if(command.equals("skip") ||command.equals("skip ")) {
+					if(command.equals("end turn")||command.equals("end turn ") ||command.equals("endturn")||command.equals("endturn ") ||command.equals("end")) {
 						attackFinished = true;
 						return;
 					}else if(command.equals("attack") ||command.equals("attack ")){
+//						break;
+					}else if(command.equals("continue") ||command.equals("continue ") ||command.equals("con")){
 						attackOrSkip(player,playerArray,playerId);
+					}else {
+						return;
 					}
 				}else {
-					displayString(makeLongName(player) + "): ERROR, not adjacent countries");
+					displayString(makeLongName(player) + ": ERROR, not adjacent countries");
 				}
 			}
 		}

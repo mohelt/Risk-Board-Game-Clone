@@ -58,7 +58,7 @@ public class Main {
 		currPlayer = players[playerId];
 		ui.displayRollWinner(currPlayer);
 		ui.displayString("\nREINFORCE INITIAL COUNTRIES");
-		while (currPlayer.getNumUnits() > 0) {
+		/*while (currPlayer.getNumUnits() > 0) {
 			ui.inputPlacement(currPlayer, currPlayer);
 			countryId = ui.getCountryId();
 			currPlayer.subtractUnits(3);
@@ -73,7 +73,7 @@ public class Main {
 			}
 			playerId = (++playerId)%GameData.NUM_PLAYERS;
 			currPlayer = players[playerId];
-		}
+		}*/
 		ui.displayString("\nROLL DICE TO SEE WHO TAKES THE FIRST TURN");
 		do {
 			for (int i=0; i<GameData.NUM_PLAYERS; i++) {
@@ -97,6 +97,7 @@ public class Main {
 			currPlayer = players[playerId];
 			currPlayer.addUnits(board.numOfArmies(players, playerId));
 			ui.displayString(ui.makeLongName(currPlayer)+": gets "+ board.numOfArmies(players, playerId) + " reinforcements.");
+			
 			while(currPlayer.getNumUnits()> 0) {
 				ui.displayString(ui.makeLongName(currPlayer)+": Number Of Armies " + currPlayer.getNumUnits());
 				ui.reinforcementsPlacement(currPlayer); // asks the player the country and the number of units they requested to reinforce with

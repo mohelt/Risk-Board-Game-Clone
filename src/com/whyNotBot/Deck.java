@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Deck {
 
-	private ArrayList<Card> cards;
+	public ArrayList<Card> cards;
 	
 	Deck () {
 		int cardId;
@@ -15,7 +15,7 @@ public class Deck {
 	}
 	
 	public Card getCard () {
-		int index = (int)(Math.random() * cards.size());  
+		int index = (int)(Math.random() * cards.size());
 		Card card = cards.remove(index);
 		return card;
 	}
