@@ -443,7 +443,7 @@ public class UI {
 			}
 		}
 		return attackFinished;
-		
+
 	}
 	//function to allow users to fortify their position
 	public boolean fortify(Player player,int playerId) {
@@ -485,47 +485,48 @@ public class UI {
 						if(parse.isError()) {
 							displayString("Error: Not a country");
 						}else {
-
 							// if the user owns the territory he would like to move to
 							if(playerId ==board.getOccupier(countryInt2)) {
+								if(isAdjacent(countryInt,countryInt2)) {
 
-								//ask how many units he would like to move
-								displayString(makeLongName(player) + "Please Type a number of armies to move");
-								String response = commandPanel.getCommand();
-								displayString(PROMPT + response);
-								int numUnits =  Integer.parseInt(response);
+									//ask how many units he would like to move
+									displayString(makeLongName(player) + "Please Type a number of armies to move");
+									String response = commandPanel.getCommand();
+									displayString(PROMPT + response);
+									int numUnits =  Integer.parseInt(response);
 
-								//if the user has the number of units to move and still has one unit left to keep on the original territory
-								if(numUnits<=(board.getNumUnits(countryInt)-1)) {
-									//subtract the number of units from the country he chose to move from
-									board.addUnits(countryInt, player, -numUnits);
-									//add the number of units to the country he chose to move to
-									board.addUnits(countryInt2, player, numUnits);
-									//update the map
-									displayMap();
-									//the loop is over
-									checkOver = true;
-
-									//ask if he would like to do it again
-									displayString(makeLongName(player) + "):type 'fortify' to fortify again or 'skip' if you would like to skip ");
-									String command2 = commandPanel.getCommand();
-									while(!(command2.equals("fortify") || command2.equals("skip"))){
-										displayString(makeLongName(player) + "): Please type 'fortify' to fortify or 'skip' to skip");
-										command2 = commandPanel.getCommand();
+									//if the user has the number of units to move and still has one unit left to keep on the original territory
+									if(numUnits<=(board.getNumUnits(countryInt)-1)) {
+										//subtract the number of units from the country he chose to move from
+										board.addUnits(countryInt, player, -numUnits);
+										//add the number of units to the country he chose to move to
+										board.addUnits(countryInt2, player, numUnits);
+										//update the map
+										displayMap();
+										//the loop is over
+										checkOver = true;
+										//ask if he would like to do it again
+										displayString(makeLongName(player) + "):type 'fortify' to fortify again or 'skip' if you would like to skip ");
+										String command2 = commandPanel.getCommand();
+										while(!(command2.equals("fortify") || command2.equals("skip"))){
+											displayString(makeLongName(player) + "): Please type 'fortify' to fortify or 'skip' to skip");
+											command2 = commandPanel.getCommand();
+										}
+										//if he want to fortify again
+										if(command2.equals("fortify")) {
+											checkOver =fortify(player,playerId);
+										}
+										//else skip
+										if(command2.equals("skip")) {
+											return true;
+										}
 									}
-									//if he want to fortify again
-									if(command2.equals("fortify")) {
-										checkOver =fortify(player,playerId) ;
+									else {
+										displayString(makeLongName(player) + "): You dont have that many units, you must have atleast one army to hold a territory");
 									}
-									//else skip
-									if(command2.equals("skip")) {
-										return true;
-									}
+								}else {
+									displayString(makeLongName(player) + "): Countries must be adjacent");
 								}
-								else {
-									displayString(makeLongName(player) + "): You dont have that many units, you must have atleast one army to hold a territory");
-								}
-								displayString(makeLongName(player) + "): How many units would you like to move");
 							}else{
 								displayString(makeLongName(player) + "): Not your country");
 							}
@@ -534,6 +535,7 @@ public class UI {
 				}
 			}
 		}
+
 		return false;
 	}
 
