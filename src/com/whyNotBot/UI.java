@@ -190,8 +190,11 @@ public class UI {
 	//checks if the country has enough units to attack and that one unit is left behind to stay on the territory
 	public int numUnitsCheckerAttack(Player player,int countryFrom) {
 		displayString(makeLongName(player) + ": Type Number Of Units to Attack With ");
-		String response = commandPanel.getCommand();
-		displayString(PROMPT + response);
+		String response;
+		do {
+			response = commandPanel.getCommand();
+			displayString(PROMPT + response);
+		} while((response.equals("")) || (response.length() > 2)); //so user can't input nothing or a string too long
 		int numUnitsAttackWith =  Integer.parseInt(response);
 		while(numUnitsAttackWith>3 || !(board.getNumUnits(countryFrom)>=(numUnitsAttackWith)+1)) {
 			displayString(makeLongName(player) + ": You can't attack with more than 3,you must leave 1 army behind and you must have the number of units on your territory");
@@ -204,8 +207,11 @@ public class UI {
 	//checks if the country has enough units to defend
 	public int numUnitsCheckerDefence(Player player,int countryTo) {
 		displayString( "DEFEND: Type Number Of Units to Defend With ");
-		String response = commandPanel.getCommand();
-		displayString(PROMPT + response);
+		String response;
+		do {
+			response = commandPanel.getCommand();
+			displayString(PROMPT + response);
+		} while((response.equals("")) || (response.length() > 2)); //so user can't input nothing or a string too long
 		int numUnitsDefendWith =  Integer.parseInt(response);
 		while(numUnitsDefendWith>2 || !(board.getNumUnits(countryTo)>=numUnitsDefendWith)) {
 			displayString(makeLongName(player) + ": You can't defend with more than 2, and you must have the number of units on your territory");
@@ -491,8 +497,11 @@ public class UI {
 
 									//ask how many units he would like to move
 									displayString(makeLongName(player) + "Please Type a number of armies to move");
-									String response = commandPanel.getCommand();
-									displayString(PROMPT + response);
+									String response;
+									do {
+										response = commandPanel.getCommand();
+										displayString(PROMPT + response);
+									} while((response.equals("")) || (response.length() > 2)); //so user can't input nothing or a string too long
 									int numUnits =  Integer.parseInt(response);
 
 									//if the user has the number of units to move and still has one unit left to keep on the original territory
