@@ -220,14 +220,14 @@ public class UI {
 			int attackingPlayerMax1, int defendingPlayerMax1,int countryToAttack,int numUnitsAttackWith,int countryAttackingFrom){
 		//if you arent attacking your own country
 		if(occupierPlayer !=player.getId()) {
-			
+
 			//if the user specified 2 or more dice for attack and 2 dice for defence
 			if(player.getDice().size() >=1 && playerArray[occupierPlayer].getDice().size() >=1) {
-				
+
 				//display the dice rolls
 				displayString(makeLongName(playerArray[occupierPlayer]) + ": "+attackingPlayerMax1+" vs "+defendingPlayerMax1);
 				displayString(makeLongName(playerArray[occupierPlayer]) + ": "+attackingPlayerMax2+" vs "+defendingPlayerMax2);
-				
+
 				//the different conditions for who is the winner of the dice rolls
 				if(attackingPlayerMax1>defendingPlayerMax1 && attackingPlayerMax2>defendingPlayerMax2) {
 
@@ -325,12 +325,12 @@ public class UI {
 	}
 	public void diceCompare(Player player,Player[] playerArray,int occupierPlayer,
 			int attackingPlayerMax1, int defendingPlayerMax1,int countryToAttack,int numUnitsAttackWith,int countryAttackingFrom){
-	
+
 		//if the dice rolls are a 2v1 or a 1v1
 		//if the user isnt attacking himself
 		if(occupierPlayer !=player.getId()) {
 			displayString(makeLongName(playerArray[occupierPlayer]) + ": "+attackingPlayerMax1+" vs "+defendingPlayerMax1);
-			
+
 			//handles the different conditions for the winners of the dice roll
 			if(attackingPlayerMax1<defendingPlayerMax1) {
 				board.addUnits(countryAttackingFrom, player, -1);
@@ -367,7 +367,7 @@ public class UI {
 			displayString(makeLongName(playerArray[occupierPlayer]) + ": Cannot attack own country ");
 		}
 	}
-	public void attackOrSkip(Player player,Player[] playerArray, int playerId) {
+	public boolean attackOrSkip(Player player,Player[] playerArray, int playerId) {
 		boolean attackFinished = false;
 		int numUnitsAttackWith = 0;
 		int defenceArmiesNumber =0;
@@ -375,45 +375,45 @@ public class UI {
 		String command = commandPanel.getCommand();
 		displayString(PROMPT + command);
 		if(command.equals("skip") ||command.equals("skip ") ||command.equals("s")) {
-			return;
+			return true;
 		}else if (command.equals("attack") ||command.equals("attack ")){
 			displayString(PROMPT + command);
 			//while the attack isn't finished
 			while(attackFinished == false) {
-				
+
 				//get the country the user is attacking
 				int countryAttackingFrom=countryFromCheck(playerId,player);
 				//get the country to attack
 				int countryToAttack = countryToCheck(player);
 				//get the player who we are attacking
 				int occupierPlayer =board.getOccupier(countryToAttack);
-				
-				
+
+
 				if ((board.getNumUnits(countryAttackingFrom)) < 2) {
 					displayString("You dont have enough units on this country to make an attack!");
 					attackOrSkip(player, playerArray, playerId);
 					break;
-					}
+				}
 				//if the country is adjacent to another one then you can attack else no
 				else if(isAdjacent(countryAttackingFrom,countryToAttack)) {
-					
+
 					//check the number of unit to attack with
 					numUnitsAttackWith =numUnitsCheckerAttack(player,countryAttackingFrom);
 					//check the number of unit to defend with
 					defenceArmiesNumber = numUnitsCheckerDefence(player,countryToAttack);
-					
+
 					//roll the dice
 					player.rollDice(numUnitsAttackWith);
 					playerArray[occupierPlayer].rollDice(defenceArmiesNumber);
-					
+
 					//display the roll results
 					displayString(makeLongName(player) + "Rolled: "+printDie(player));
 					displayString(makeLongName(playerArray[occupierPlayer]) + "Rolled: "+printDie(playerArray[occupierPlayer]));
-					
+
 					//get the two highest numbers from the dice
 					Integer attackingPlayerMax1 =Collections.max(player.getDice());
 					Integer defendingPlayerMax1 =Collections.max(playerArray[occupierPlayer].getDice());
-					
+
 					//remove the highest rolls from both dice
 					player.getDice().remove(attackingPlayerMax1);
 					playerArray[occupierPlayer].getDice().remove(defendingPlayerMax1);
@@ -433,22 +433,20 @@ public class UI {
 					displayString(PROMPT + command);
 					if(command.equals("end turn")||command.equals("end turn ") ||command.equals("endturn")||command.equals("endturn ") ||command.equals("end")) {
 						attackFinished = true;
-						return;
-					}else if(command.equals("attack") ||command.equals("attack ")){
-//						break;
+						return attackFinished;
 					}else if(command.equals("continue") ||command.equals("continue ") ||command.equals("con")){
-						attackOrSkip(player,playerArray,playerId);
-					}else {
-						return;
+						attackFinished = attackOrSkip(player,playerArray,playerId);
 					}
 				}else {
 					displayString(makeLongName(player) + ": ERROR, not adjacent countries");
 				}
 			}
 		}
+		return attackFinished;
+		
 	}
 	//function to allow users to fortify their position
-	public void fortify(Player player,int playerId) {
+	public boolean fortify(Player player,int playerId) {
 		displayString(makeLongName(player) + "): Type 'fortify' to fortify or 'skip' to skip");
 		String command = commandPanel.getCommand();
 		while(!(command.equals("fortify") || command.equals("skip"))){
@@ -457,27 +455,27 @@ public class UI {
 		}
 		//if the user enters skip skip the call
 		if(command.equals("skip")) {
-			return;
-			
-		//if the user types in fortify
+			return true;
+
+			//if the user types in fortify
 		}else if(command.equals("fortify")) {
 			boolean checkOver =false;
 			while(checkOver == false){
 				//ask from where would he like to move units
 				displayString(makeLongName(player) + "): What country would you like to move units from");
-				
+
 				String country = commandPanel.getCommand();
 				parse.countryId(country);
 				displayString(makeLongName(player) + "):"+ country);
 				int countryInt = parse.getCountryId();
-				
+
 				//if its not a country return an error
 				if(parse.isError()) {
 					displayString("Error: Not a country");
 				}else {
 					//if the user own the territory
 					if(playerId ==board.getOccupier(countryInt)) {
-						
+
 						//ask where he would like to move the territory
 						displayString(makeLongName(player) + "): What country would you like to move units to");
 						String countryTo = commandPanel.getCommand();
@@ -487,16 +485,16 @@ public class UI {
 						if(parse.isError()) {
 							displayString("Error: Not a country");
 						}else {
-							
+
 							// if the user owns the territory he would like to move to
 							if(playerId ==board.getOccupier(countryInt2)) {
-								
+
 								//ask how many units he would like to move
 								displayString(makeLongName(player) + "Please Type a number of armies to move");
 								String response = commandPanel.getCommand();
 								displayString(PROMPT + response);
 								int numUnits =  Integer.parseInt(response);
-								
+
 								//if the user has the number of units to move and still has one unit left to keep on the original territory
 								if(numUnits<=(board.getNumUnits(countryInt)-1)) {
 									//subtract the number of units from the country he chose to move from
@@ -507,21 +505,21 @@ public class UI {
 									displayMap();
 									//the loop is over
 									checkOver = true;
-									
+
 									//ask if he would like to do it again
 									displayString(makeLongName(player) + "):type 'fortify' to fortify again or 'skip' if you would like to skip ");
 									String command2 = commandPanel.getCommand();
 									while(!(command2.equals("fortify") || command2.equals("skip"))){
-								    displayString(makeLongName(player) + "): Please type 'fortify' to fortify or 'skip' to skip");
-								    command2 = commandPanel.getCommand();
+										displayString(makeLongName(player) + "): Please type 'fortify' to fortify or 'skip' to skip");
+										command2 = commandPanel.getCommand();
 									}
 									//if he want to fortify again
 									if(command2.equals("fortify")) {
-										fortify(player,playerId) ;
+										checkOver =fortify(player,playerId) ;
 									}
 									//else skip
 									if(command2.equals("skip")) {
-										return;
+										return true;
 									}
 								}
 								else {
@@ -536,8 +534,9 @@ public class UI {
 				}
 			}
 		}
+		return false;
 	}
-	
+
 	//function checks if the user has typed in a country which is adjacent to the other country
 	public boolean isAdjacent(int countryFrom,int countryTo) {
 		boolean adjacentTo=false;
