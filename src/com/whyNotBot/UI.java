@@ -3,6 +3,11 @@ import java.awt.BorderLayout;
 import java.util.Collections;
 
 import javax.swing.JFrame;
+//Team Members:
+//Mohamed Eltayeb Student Number:19349633
+//Cian O'Reilly Student Number:19394833
+//Tom Higgins Student Number: 19343176
+
 
 
 public class UI {

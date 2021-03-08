@@ -1,8 +1,14 @@
 package com.whyNotBot;
+//Team Members:
+//Mohamed Eltayeb Student Number:19349633
+//Cian O'Reilly Student Number:19394833
+//Tom Higgins Student Number: 19343176
+
 
 public class Main {
 
-	public static void main (String args[]) {	   
+	public static void main (String args[]) {
+		SplashScreen splash =new SplashScreen();
 		Board board = new Board();
 		UI ui = new UI(board);
 		Player[] players = new Player[GameData.NUM_PLAYERS_PLUS_NEUTRALS];
@@ -59,7 +65,7 @@ public class Main {
 		ui.displayRollWinner(currPlayer);
 		ui.displayString("\nREINFORCE INITIAL COUNTRIES");
 		//commented out for ease of use of testing
-		while (currPlayer.getNumUnits() > 0) {
+		/*while (currPlayer.getNumUnits() > 0) {
 			ui.inputPlacement(currPlayer, currPlayer);
 			countryId = ui.getCountryId();
 			currPlayer.subtractUnits(3);
@@ -74,7 +80,7 @@ public class Main {
 			}
 			playerId = (++playerId)%GameData.NUM_PLAYERS;
 			currPlayer = players[playerId];
-		}
+		}*/
 		ui.displayString("\nROLL DICE TO SEE WHO TAKES THE FIRST TURN");
 		do {
 			for (int i=0; i<GameData.NUM_PLAYERS; i++) {
