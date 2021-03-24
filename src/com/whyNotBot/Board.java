@@ -1,19 +1,17 @@
 package com.whyNotBot;
-//Team Members:
-//Mohamed Eltayeb Student Number:19349633
-//Cian O'Reilly Student Number:19394833
-//Tom Higgins Student Number: 19343176
-
 
 public class Board {
 	
 	private boolean[] occupied = new boolean [GameData.NUM_COUNTRIES];
-	public int[] occupier = new int [GameData.NUM_COUNTRIES];
+	private int[] occupier = new int [GameData.NUM_COUNTRIES];
 	private int[] numUnits = new int [GameData.NUM_COUNTRIES];
+	private int winnerId;
+	private boolean invasionSuccess;
 	
 	Board() {
 		for (int i=0; i<GameData.NUM_COUNTRIES; i++) {
-			occupied[i] = false ;
+			occupied[i] = false;
+			occupier[i] = 0;
 			numUnits[i] = 0;
 		}
 		return;
@@ -28,8 +26,7 @@ public class Board {
 		numUnits[countryId] = numUnits[countryId] + addNumUnits;
 		return;
 	}
-	public void addUnitsTakeOver(int countryId, int player, int addNumUnits) {
-	}
+	
 	public void addUnits (Card card, Player player, int addNumUnits) {
 		addUnits(card.getCountryId(), player.getId(), addNumUnits);
 		return;
@@ -39,13 +36,136 @@ public class Board {
 		addUnits(countryId, player.getId(), addNumUnits);
 		return;
 	}	
+
+	public void subtractUnits (int countryId, int subNumUnits) {	
+		numUnits[countryId] = numUnits[countryId] - subNumUnits;
+		if (numUnits[countryId] == 0) {
+			occupied[countryId] = false;
+		}
+		return;
+	}
 	
-	public boolean checkOccupier (Player player, int countryId) {
-		return (occupier[countryId] == player.getId());
+	public int calcReinforcements (Player player) {
+		int playerId = player.getId();
+		int numCountriesOccupied = 0, numUnits;
+		boolean allOccupied;
+		int[] countryIds;
+		for (int i=0; i<GameData.NUM_COUNTRIES; i++) {
+			if (occupier[i]==playerId) {
+				numCountriesOccupied++;
+			}
+		}
+		numUnits = (int) numCountriesOccupied / 3;
+		if (numUnits < 3) {
+			numUnits = 3;
+		}
+		for (int i=0; i<GameData.NUM_CONTINENTS; i++) {
+			countryIds = GameData.CONTINENT_COUNTRIES[i];
+			allOccupied = true;
+			for (int j=0; (j<countryIds.length) && (allOccupied); j++) {
+				if (occupier[countryIds[j]] != playerId) {
+					allOccupied = false;
+				}
+			}
+			if (allOccupied) {
+				numUnits = numUnits + GameData.CONTINENT_VALUES[i];				
+			}
+		}
+		return numUnits;
+	}
+	
+	public void calcBattle (Player attackPlayer, Player defencePlayer, int attackCountryId, int defenceCountryId, int attackNumUnits, int defenceNumUnits) {
+		int numUnitsRemaining = attackNumUnits;
+		attackPlayer.resetBattleLoss();
+		defencePlayer.resetBattleLoss();
+		attackPlayer.rollDice(attackNumUnits);
+		defencePlayer.rollDice(defenceNumUnits);
+		if (attackPlayer.getDie(0) > defencePlayer.getDie(0)) {
+			subtractUnits(defenceCountryId, 1);		
+			defencePlayer.addBattleLoss();
+		} else {
+			subtractUnits(attackCountryId, 1);
+			attackPlayer.addBattleLoss();
+			numUnitsRemaining--;
+		}
+		if ( (attackNumUnits>=2) && (defenceNumUnits>=2) && isOccupied(defenceCountryId) ) {
+			if (attackPlayer.getDie(1) > defencePlayer.getDie(1)) {
+				subtractUnits(defenceCountryId, 1);				
+				defencePlayer.addBattleLoss();
+			} else {
+				subtractUnits(attackCountryId, 1);
+				attackPlayer.addBattleLoss();
+			}
+		}
+		if (!isOccupied(defenceCountryId)) {
+			subtractUnits(attackCountryId,numUnitsRemaining);
+			addUnits(defenceCountryId,attackPlayer,numUnitsRemaining);
+			invasionSuccess = true;
+		}
+		else {
+			invasionSuccess = false;
+		}
+		return;
+	}
+	
+	public boolean isAdjacent (int fromCountry, int toCountry) {
+		boolean found = false;
+		int[] neighbours = GameData.ADJACENT[fromCountry];
+		for (int i=0; (i<neighbours.length) && (!found); i++) {
+			found = (neighbours[i] == toCountry);
+		}
+		return found;
+	}
+	
+	public boolean isConnected (int fromCountry, int toCountry, boolean[] countriesChecked) {
+		int[] neighbours;
+		int currentCountry;
+		boolean found = false;
+		if (occupier[fromCountry] == occupier[toCountry])  {
+			if (isAdjacent(fromCountry,toCountry)) {
+				found = true;
+			}
+			else {
+				neighbours = GameData.ADJACENT[fromCountry];
+				countriesChecked[fromCountry] = true;
+				for (int i=0; (i<neighbours.length) && (!found); i++) {
+					currentCountry = neighbours[i];
+					if ( (occupier[currentCountry] == occupier[toCountry]) && (!countriesChecked[currentCountry]) ) {
+						found = isConnected(currentCountry,toCountry,countriesChecked);
+					}
+				}
+			}
+		}		
+		return found;
+	}
+	
+	public boolean isConnected (int fromCountry, int toCountry) {
+		boolean [] countriesChecked = new boolean[GameData.NUM_COUNTRIES];
+		for (int i=0; i<GameData.NUM_COUNTRIES; i++) {
+			countriesChecked[i] = false;
+		}
+		countriesChecked[fromCountry] = true;
+		return isConnected (fromCountry, toCountry, countriesChecked);
 	}
 	
 	public boolean isOccupied(int country) {
 		return occupied[country];
+	}
+	
+	public boolean isInvasionSuccess () {
+		return invasionSuccess;
+	}
+	
+	public boolean isGameOver () {
+		boolean gameOver = true;
+		int firstOccupier = occupier[0];
+		for (int i=1; (i<GameData.NUM_COUNTRIES) && gameOver; i++) {
+			if  (occupier[i] != firstOccupier) {
+				gameOver = false;
+			}
+		}
+		winnerId = firstOccupier;
+		return gameOver;
 	}
 	
 	public int getOccupier (int country) {
@@ -56,93 +176,8 @@ public class Board {
 		return numUnits[country];
 	}
 	
-	//function which calculates how much territories a user owns
-	public int getNumTerritories(int player) {
-		int numTerritories =0;
-		for(int i =0;i<GameData.NUM_COUNTRIES;i++) {
-			if (occupier[i]==player){
-				numTerritories++;
-			}
-		}
-		return numTerritories;
+	public int getWinner () {
+		return winnerId;
 	}
-	
-	//function which calculates how much armies to give each player at the start of their turn
-	public int numOfArmies(Player[] playerArray,int player) {
-		int numOfArmies = 0;
-		//if the user has less then nine territories give them 3 plus if the own any continents
-		if(this.getNumTerritories(player) <9) {
-			return 3
-			 +ownsNorthAmerica(player)
-			 +ownsEurope(player)
-			 +ownsAsia(player)
-			 +ownsAfrica(player)
-			 +ownsSouthAmerica(player)
-			 +ownsAustralia(player);
-		}else {
-			//else return the number of territories they have divided by 3 plus if they own any continents
-		 numOfArmies = (this.getNumTerritories(player)/3) 
-				 +ownsNorthAmerica(player)
-				 +ownsEurope(player)
-				 +ownsAsia(player)
-				 +ownsAfrica(player)
-				 +ownsSouthAmerica(player)
-				 +ownsAustralia(player);
-		}
-		return numOfArmies;
-	}
-	//checks if the user owns North America
-	public int ownsNorthAmerica(int player) {
-		for(int i =0;i<=8;i++) {
-			if (occupier[i]!=player){
-				return 0;
-			}
-		}
-		return 5;
-	}
-	//checks if the user Europe
-	public int ownsEurope(int player) {
-		for(int i =9;i<=15;i++) {
-			if (occupier[i]!=player){
-				return 0;
-			}
-		}
-		return 5;
-	}
-	//checks if the user Asia
-	public int ownsAsia(int player) {
-		for(int i =16;i<=27;i++) {
-			if (occupier[i]!=player){
-				return 0;
-			}
-		}
-		return 7;
-	}
-	//checks if the user Australia
-	public int ownsAustralia(int player) {
-		for(int i =28;i<=31;i++) {
-			if (occupier[i]!=player){
-				return 0;
-			}
-		}
-		return 2;
-	}
-	//checks if the user South America
-	public int ownsSouthAmerica(int player) {
-		for(int i =32;i<=35;i++) {
-			if (occupier[i]!=player){
-				return 0;
-			}
-		}
-		return 2;
-	}
-	//checks if the user Africa
-	public int ownsAfrica(int player) {
-		for(int i =36;i<=41;i++) {
-			if (occupier[i]!=player){
-				return 0;
-			}
-		}
-		return 3;
-	}
+
 }

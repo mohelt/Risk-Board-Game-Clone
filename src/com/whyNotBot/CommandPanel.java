@@ -1,16 +1,11 @@
 package com.whyNotBot;
+
 import java.awt.event.ActionEvent;
 import java.util.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.JTextField;
-
-//Team Members:
-//Mohamed Eltayeb Student Number:19349633
-//Cian O'Reilly Student Number:19394833
-//Tom Higgins Student Number: 19343176
-
 
 public class CommandPanel extends JPanel  {
 	

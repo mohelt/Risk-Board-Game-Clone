@@ -11,7 +11,7 @@ class ParseTest {
 //  This test throw a serious compiler error!!!!!!	
 //	@Test
 //	void testCountryId() {
-//		assertEquals(p1.countryId("Ontario"), 0);
+//		assertEquals(p1.countryId(GameData.COUNTRY_NAMES[0]), 0);
 //	}
 
 	@Test

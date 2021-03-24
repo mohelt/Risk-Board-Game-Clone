@@ -1,17 +1,10 @@
 package com.whyNotBot;
-//Team Members:
-//Mohamed Eltayeb Student Number:19349633
-//Cian O'Reilly Student Number:19394833
-//Tom Higgins Student Number: 19343176
-
 
 public class Parse {
 	
 	private String[] countryCodes = new String[GameData.NUM_COUNTRIES];
-	private boolean isError = false;
-	private int countryId = 0;
-	private boolean isDone = false;
-	private int numUnits;
+	private boolean isError = false, turnEnded = false;
+	private int countryId = 0, numUnits = 0, fromCountryId = 0, toCountryId = 0;
 	
 	Parse () {
 		String name;
@@ -25,7 +18,7 @@ public class Parse {
 		return;
 	}
 	
-	public void countryId (String string) {
+	public void country (String string) {
 		boolean found = false;
 		string = string.replaceAll("\\s", "");
 		if (string.length() >= 4) {
@@ -42,12 +35,91 @@ public class Parse {
 		return;
 	}
 	
+	public void countryNumber (String string) {
+		boolean found = false, parsable = true;
+		String[] strings;
+		string = string.trim();
+		string = string.toLowerCase();
+		if ((string.length() > 5) && string.contains(" ") && !string.contains("-")) { 
+			strings = string.split("\\s+");
+			if (strings.length == 2) {
+				country(strings[0]);
+				if (!isError) {
+					try {
+						numUnits = Integer.parseInt(strings[1]);
+					} catch (NumberFormatException e) {
+						parsable = false;
+					}
+					if (parsable) {
+						if (numUnits > 0) {
+							found = true;
+						}
+					}
+				}
+			}
+		}
+		isError = !found;
+		return;
+	}
+	
+	public void countryCountryNumber (String string) {
+		boolean found = false, parsable = true, ended = false;
+		String[] strings;
+		string = string.trim();
+		string = string.toLowerCase();
+		if (string.equals("skip")) {
+			found = true;
+			ended = true;
+		} else if ((string.length() > 5) && string.contains(" ") && !string.contains("-")) { 
+			strings = string.split("\\s+");
+			if (strings.length == 3) {
+				country(strings[0]);
+				fromCountryId = countryId;
+				if (!isError) {
+					country(strings[1]);
+					toCountryId = countryId;
+					if (!isError) {
+						try {
+							numUnits = Integer.parseInt(strings[2]);
+						} catch (NumberFormatException e) {
+							parsable = false;
+						}
+						if (parsable) {
+							if (numUnits > 0) {
+								found = true;
+							}
+						}
+					}
+				}
+			}
+		}
+		isError = !found;
+		turnEnded = ended;
+		return;
+	}
+	
+	public void number (String string) {
+		boolean found = false, parsable = true;
+		try {
+			numUnits = Integer.parseInt(string);
+		} catch (NumberFormatException e) {
+			parsable = false;
+		}
+		if (parsable) {
+			if (numUnits > 0) {
+				found = true;
+			}
+		}
+		isError = !found;
+		return;
+	}
+	
 	public boolean isError () {
 		return isError;
 	}
 	
-	public boolean isDone () {
-		return isDone;
+	public boolean isTurnEnded() {
+		return turnEnded;
 	}
 	
 	public int getCountryId () {
@@ -56,6 +128,14 @@ public class Parse {
 	
 	public int getNumUnits () {
 		return numUnits;
+	}
+	
+	public int getFromCountryId () {
+		return fromCountryId;
+	}
+	
+	public int getToCountryId () {
+		return toCountryId;
 	}
 
 }

@@ -1,9 +1,4 @@
 package com.whyNotBot;
-//Team Members:
-//Mohamed Eltayeb Student Number:19349633
-//Cian O'Reilly Student Number:19394833
-//Tom Higgins Student Number: 19343176
-
 
 public final class GameData {
 
@@ -13,8 +8,10 @@ public final class GameData {
 	public static final int NUM_COUNTRIES = 42;
 	public static final int INIT_COUNTRIES_PLAYER = 9;
 	public static final int INIT_COUNTRIES_NEUTRAL = 6;
-	public static final int INIT_UNITS_PLAYER = 36;
-	public static final int INIT_UNITS_NEUTRAL = 24;
+	public static final int NUM_REINFORCE_ROUNDS = 9;
+	public static final int ATTACK_MIN_IN_COUNTRY = 2;
+	public static final int ATTACK_MAX = 3;
+	public static final int DEFEND_MAX = 2;
 	public static final String[] COUNTRY_NAMES = {
 		"Ontario","Quebec","NW Territory","Alberta","Greenland","E United States","W United States","Central America","Alaska",
 		"Great Britain","W Europe","S Europe","Ukraine","N Europe","Iceland","Scandinavia",
@@ -66,10 +63,18 @@ public final class GameData {
 		{39,18,41,38,36,37},  //40
 		{38,40}
 	};
-	 
 	public static final int NUM_CONTINENTS = 6;
-	public static final String[] CONTINENT_NAMES = {"N America","Europe","Asia","Australia","S America","Africa"};  // for reference 
-	public static final int[] CONTINENTS = {0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,5,5};
+	public static final String[] CONTINENT_NAMES = {"North America","Europe","Asia","Australia","South America","Africa"};  // for reference 
+	public static final int[] CONTINENT_IDS = {0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,5,5};
+	public static final int[][] CONTINENT_COUNTRIES = {
+		{0,1,2,3,4,5,6,7,8},
+		{9,10,11,12,13,14,15},
+		{16,17,18,19,20,21,22,23,24,25,26,26,27},
+		{28,29,30,31},
+		{32,33,34,35},
+		{36,37,38,39,40,41}
+	};
+	public static final int[] CONTINENT_VALUES = {5,5,7,2,2,3};
 	
     private GameData() {
 	    //this prevents even the native class from calling this constructor

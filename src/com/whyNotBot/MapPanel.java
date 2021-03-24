@@ -1,13 +1,9 @@
 package com.whyNotBot;
+
 import javax.swing.*;
 
 import java.awt.*;
 import java.awt.geom.*;
-//Team Members:
-//Mohamed Eltayeb Student Number:19349633
-//Cian O'Reilly Student Number:19394833
-//Tom Higgins Student Number: 19343176
-
 
 class MapPanel extends JPanel {
 	
@@ -103,7 +99,7 @@ class MapPanel extends JPanel {
         }
         // Display countries
         for (int i=0; i<GameData.NUM_COUNTRIES; i++) {
-            g2.setColor(CONTINENT_COLORS[GameData.CONTINENTS[i]]);
+            g2.setColor(CONTINENT_COLORS[GameData.CONTINENT_IDS[i]]);
             xPos = COUNTRY_COORD[i][0] - COUNTRY_RADIUS;
             yPos = COUNTRY_COORD[i][1] - COUNTRY_RADIUS;
 			Ellipse2D.Double ellipse = new Ellipse2D.Double(xPos,yPos,2*COUNTRY_RADIUS,2*COUNTRY_RADIUS);

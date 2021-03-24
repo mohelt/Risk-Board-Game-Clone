@@ -1,14 +1,10 @@
 package com.whyNotBot;
-import java.util.ArrayList;
-//Team Members:
-//Mohamed Eltayeb Student Number:19349633
-//Cian O'Reilly Student Number:19394833
-//Tom Higgins Student Number: 19343176
 
+import java.util.ArrayList;
 
 public class Deck {
 
-	public ArrayList<Card> cards;
+	private ArrayList<Card> cards;
 	
 	Deck () {
 		int cardId;
@@ -20,7 +16,7 @@ public class Deck {
 	}
 	
 	public Card getCard () {
-		int index = (int)(Math.random() * cards.size());
+		int index = (int)(Math.random() * cards.size());  
 		Card card = cards.remove(index);
 		return card;
 	}

@@ -1,10 +1,7 @@
 package com.whyNotBot;
-import java.util.ArrayList;
-//Team Members:
-//Mohamed Eltayeb Student Number:19349633
-//Cian O'Reilly Student Number:19394833
-//Tom Higgins Student Number: 19343176
 
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Player {
 	
@@ -12,6 +9,7 @@ public class Player {
 	private String name;
 	private int numUnits;
 	private ArrayList<Integer> dice = new ArrayList<Integer>();
+	private int battleLoss = 0;
 	
 	Player (int inId, String inName, int inNumUnits) {
 		id = inId;
@@ -25,8 +23,10 @@ public class Player {
 		for (int j=0; j<numDice; j++) {
 				dice.add(1 + (int)(Math.random() * 6));   
 		}
+		Collections.sort(dice, Collections.reverseOrder());
 		return;
 	}
+
 	public void addUnits (int inNum) {
 		numUnits = numUnits + inNum;
 		return;
@@ -36,7 +36,7 @@ public class Player {
 		numUnits = numUnits - inNum;
 		return;
 	}
-		
+	
 	public int getId () {
 		return id;
 	}
@@ -57,4 +57,18 @@ public class Player {
 		return dice.get(dieId);
 	}
 	
+	public void resetBattleLoss () {
+		battleLoss = 0;
+		return;
+	}
+	
+	public void addBattleLoss () {
+		battleLoss++;
+		return;
+	}
+	
+	public int getBattleLoss () {
+		return battleLoss;
+	}
+		
 }
