@@ -129,14 +129,18 @@ public class Main {
 						board.subtractUnits(attackCountryId, ui.getNumUnits());
 						board.addUnits(defenceCountryId, currPlayer, ui.getNumUnits());
 						ui.displayMap();
-						// Functionality to give player territory card after winning battle
-						deck.removeCard(deck.getCard()); // Remove chosen card from Deck
-						currPlayer.addCard(deck.getCard()); // Give chosen card from deck to attacking player
-						ui.displayString(currPlayer.getName() + "wins the " + currPlayer.getLastCard().getCountryName() + " card."); // tell player what card they won
+
 					}
 				} 
 				
 			} while (!ui.isTurnEnded() && !board.isGameOver());
+
+			// Functionality to give player territory card after winning battle
+			deck.removeCard(deck.getCard()); // Remove chosen card from Deck
+			currPlayer.addCard(deck.getCard()); // Give chosen card from deck to attacking player
+			ui.displayString(currPlayer.getName() + "wins the " + currPlayer.getLastCard().getCountryName() + " card.");
+			ui.displayString("This has a " + currPlayer.getLastCard().getUnitType()); // tell player what card they won
+			ui.displayString(currPlayer.getName() + " now has " + currPlayer.getInfantryCards() + " infantry cards " + currPlayer.getCavalryCards() + " cavalry cards and " + currPlayer.getArtilleryCards() + " artillery cards.");
 
 			// 3. Fortify
 			if (!board.isGameOver()) {

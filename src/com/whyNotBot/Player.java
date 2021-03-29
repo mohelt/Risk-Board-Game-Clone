@@ -10,7 +10,7 @@ public class Player {
 	private int numUnits;
 	private ArrayList<Integer> dice = new ArrayList<Integer>();
 	private ArrayList<Card> obtainedCards = new ArrayList<Card>();
-	private int numCards = 0;
+	private int numCards = 0, infantryCards = 0, cavalryCards = 0, artilleryCards = 0;
 	private int battleLoss = 0;
 	
 	Player (int inId, String inName, int inNumUnits) {
@@ -77,7 +77,23 @@ public class Player {
 	public void addCard(Card card){
 		obtainedCards.add(card);
 		numCards++;
+		switch (card.getUnitTypeID()){
+			case 0:
+				infantryCards++;
+				break;
+			case 1:
+				cavalryCards++;
+				break;
+			case 2:
+				artilleryCards++;
+				break;
+		}
 	}
+
+	public int getInfantryCards(){return infantryCards;}
+	public int getCavalryCards(){return cavalryCards;}
+	public int getArtilleryCards(){return artilleryCards;}
+
 	public Card getFirstCard(){
 		return obtainedCards.get(0);
 	}
