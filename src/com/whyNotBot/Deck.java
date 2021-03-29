@@ -20,6 +20,10 @@ public class Deck {
 		Card card = cards.remove(index);
 		return card;
 	}
+
+	public void removeCard(int cardId){
+		cards.remove(cardId);
+	}
 	
 	public boolean isEmpty () {
 		return cards.isEmpty();
