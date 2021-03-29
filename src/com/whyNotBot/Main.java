@@ -132,6 +132,7 @@ public class Main {
 						// Functionality to give player territory card after winning battle
 						deck.removeCard(deck.getCard()); // Remove chosen card from Deck
 						currPlayer.addCard(deck.getCard()); // Give chosen card from deck to attacking player
+						ui.displayString(currPlayer.getName() + "wins the " + currPlayer.getLastCard().getCountryName() + " card."); // tell player what card they won
 					}
 				} 
 				

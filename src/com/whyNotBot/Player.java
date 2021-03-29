@@ -78,4 +78,14 @@ public class Player {
 		obtainedCards.add(card);
 		numCards++;
 	}
+	public Card getFirstCard(){
+		return obtainedCards.get(0);
+	}
+	public Card getCard(int cardId){
+		return obtainedCards.get(cardId);
+	}
+
+	public Card getLastCard(){
+		return obtainedCards.get(obtainedCards.size() - 1);
+	}
 }
