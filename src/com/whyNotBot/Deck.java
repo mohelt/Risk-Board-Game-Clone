@@ -21,8 +21,8 @@ public class Deck {
 		return card;
 	}
 
-	public void removeCard(int cardId){
-		cards.remove(cardId);
+	public void removeCard(Card card){
+		cards.remove(card);
 	}
 	
 	public boolean isEmpty () {

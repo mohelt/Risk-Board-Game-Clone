@@ -74,8 +74,8 @@ public class Player {
 	}
 
 	// add obtained card from battle to players cards
-	public void addCard(int cardId){
-		obtainedCards.add(new Card(cardId, GameData.COUNTRY_NAMES[cardId]));
+	public void addCard(Card card){
+		obtainedCards.add(card);
 		numCards++;
 	}
 }
