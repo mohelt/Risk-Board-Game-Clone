@@ -19,10 +19,10 @@ class ParseTest {
 		assertEquals(p1.isError(), false);
 	}
 
-	@Test
+	/*@Test
 	void testIsDone() {
 		assertEquals(p1.isDone(), false);
-	}
+	}*/
 
 	@Test
 	void testGetCountryId() {

@@ -180,4 +180,7 @@ public class Board {
 		return winnerId;
 	}
 
+	public boolean checkOccupier(Player player1, int i) {
+		return true;
+	}
 }

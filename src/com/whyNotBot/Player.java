@@ -9,6 +9,7 @@ public class Player {
 	private String name;
 	private int numUnits;
 	private ArrayList<Integer> dice = new ArrayList<Integer>();
+	private ArrayList<Card> obtainedCards = new ArrayList<Card>();
 	private int battleLoss = 0;
 	
 	Player (int inId, String inName, int inNumUnits) {
@@ -70,5 +71,9 @@ public class Player {
 	public int getBattleLoss () {
 		return battleLoss;
 	}
-		
+
+	// add obtained card from battle to players cards
+	public void addCard(int cardId){
+		obtainedCards.add(new Card(cardId, GameData.COUNTRY_NAMES[cardId]));
+	}
 }

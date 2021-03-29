@@ -66,7 +66,7 @@ class BoardTest {
 		assertEquals(boardTest.getNumUnits(1), 0);
 	}
 
-	@Test
+	/*@Test
 	void testGetNumTerritories() {
 		assertEquals(boardTest.getNumTerritories(1), 0);
 	}
@@ -104,7 +104,7 @@ class BoardTest {
 	@Test
 	void testOwnsAfrica() {
 		assertEquals(boardTest.ownsAfrica(1), 0);
-	}
+	}*/
 
 }
 

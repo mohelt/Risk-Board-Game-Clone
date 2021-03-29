@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Deck {
 
-	private ArrayList<Card> cards;
+	protected ArrayList<Card> cards;
 	
 	Deck () {
 		int cardId;
