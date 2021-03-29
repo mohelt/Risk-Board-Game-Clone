@@ -93,6 +93,13 @@ public class Main {
 		
 		ui.displayString("\nSTART TURNS");
 		do {
+			if(currPlayer.hasReinforcements()){
+				ui.displayString("You have " + currPlayer.getNumUnits() + " reinforcements to place");
+				ui.inputReinforcement(currPlayer);
+				currPlayer.subtractUnits(ui.getNumUnits());
+				board.addUnits(ui.getCountryId(), currPlayer, ui.getNumUnits());
+				ui.displayMap();
+			}
 			otherPlayerId = (playerId+1)%GameData.NUM_PLAYERS;
 			otherPlayer = players[otherPlayerId];
 			
@@ -129,7 +136,6 @@ public class Main {
 						board.subtractUnits(attackCountryId, ui.getNumUnits());
 						board.addUnits(defenceCountryId, currPlayer, ui.getNumUnits());
 						ui.displayMap();
-
 					}
 				} 
 				

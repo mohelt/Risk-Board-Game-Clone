@@ -90,6 +90,29 @@ public class Player {
 		}
 	}
 
+	// check if player has more than three of the same card
+	// return true if 3 or more of same card have been obtained
+	// return false if not
+	public boolean hasReinforcements(){
+		if(infantryCards >= 3){
+			addUnits(infantryCards / 3); // increase units by 1 per 3 infantry cards acquired
+			return true;
+		}
+
+		else if(cavalryCards >= 3){
+			addUnits(cavalryCards / 3 * 5); // increase units by 5 per 3 cavalry cards acquired
+			return true;
+		}
+
+		else if(artilleryCards >= 3 ){
+			addUnits(artilleryCards / 3 * 10); // increase units by 10 per 3 artillery cards acquired
+			return true;
+		}
+		else {
+			return true;
+		}
+	}
+
 	public int getInfantryCards(){return infantryCards;}
 	public int getCavalryCards(){return cavalryCards;}
 	public int getArtilleryCards(){return artilleryCards;}
