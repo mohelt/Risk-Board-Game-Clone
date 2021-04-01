@@ -156,8 +156,15 @@ public class Main {
 					board.addUnits(ui.getToCountryId(), currPlayer, ui.getNumUnits());
 					ui.displayMap();
 				}
-			}			
-
+			}		
+			
+			// 4. Exchange cards for armies
+			if (!ui.isTurnEnded() && !board.isGameOver()) {
+				if (currPlayer.hasReinforcements()) {
+					ui.inputExchange(currPlayer);
+				}
+			}
+			
 			playerId = (playerId+1)%GameData.NUM_PLAYERS;
 			currPlayer = players[playerId];			
 

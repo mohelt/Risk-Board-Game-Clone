@@ -7,6 +7,7 @@ public class Board {
 	private int[] numUnits = new int [GameData.NUM_COUNTRIES];
 	private int winnerId;
 	private boolean invasionSuccess;
+	public int cardSetsTradedIn = 0;
 	
 	Board() {
 		for (int i=0; i<GameData.NUM_COUNTRIES; i++) {

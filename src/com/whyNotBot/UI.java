@@ -291,24 +291,29 @@ public class UI {
 				displayString("Error: Invalid input");
 			} else if (message.equalsIgnoreCase("III")) { //infantry
 				
-				//add check to see if there is 3 infantry cards in the players deck and then remove them
-				
-				player.addUnits(0); //there is more logic behind the units you get
+					if(player.getInfantryCards() >= 3) { //they have 3 or more infantry cards
+						//function to remove the three infantry cards in the deck goes here:
+						
+						player.addUnits(player.calcCardsToArmiesTrade()); //adds the correct amount of armies
+					}
 				responseOK = true;
 			} else if (message.equalsIgnoreCase("AAA")) { //artillery
 				
-				//add check to see if there is 3 artillery cards in the players deck and then remove them
-				
-				player.addUnits(0); //there is more logic behind the units you get
+				if(player.getArtilleryCards() >= 3) { //they have 3 or more infantry cards
+					//function to remove the three artillery cards in the deck goes here:
+					
+					player.addUnits(player.calcCardsToArmiesTrade()); //adds the correct amount of armies
+				}
 				responseOK = true;
 			} else if (message.equalsIgnoreCase("CCC")) { //cavalry
 				
-				//add check to see if there is 3 cavalry cards in the players deck and then remove them
-				
-				player.addUnits(0); //there is more logic behind the units you get
+				if(player.getCavalryCards() >= 3) { //they have 3 or more infantry cards
+					//function to remove the three cavalry cards in the deck goes here:
+					
+					player.addUnits(player.calcCardsToArmiesTrade()); //adds the correct amount of armies
+				}
 				responseOK = true;
 			} else if (message.equalsIgnoreCase("skip")) { //skip
-				
 				responseOK = true;
 			} else {
 				displayString("Error: Invalid input");

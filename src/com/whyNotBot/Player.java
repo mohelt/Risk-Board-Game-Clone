@@ -93,26 +93,53 @@ public class Player {
 	// check if player has more than three of the same card
 	// return true if 3 or more of same card have been obtained
 	// return false if not
+	
+	//Cian: I commented out the add units because I think it works differently in the game rules
+	
 	public boolean hasReinforcements(){
 		if(infantryCards >= 3){
-			addUnits(infantryCards / 3); // increase units by 1 per 3 infantry cards acquired
+//			addUnits(infantryCards / 3); // increase units by 1 per 3 infantry cards acquired
 			return true;
 		}
 
 		else if(cavalryCards >= 3){
-			addUnits(cavalryCards / 3 * 5); // increase units by 5 per 3 cavalry cards acquired
+//			addUnits(cavalryCards / 3 * 5); // increase units by 5 per 3 cavalry cards acquired
 			return true;
 		}
 
 		else if(artilleryCards >= 3 ){
-			addUnits(artilleryCards / 3 * 10); // increase units by 10 per 3 artillery cards acquired
+//			addUnits(artilleryCards / 3 * 10); // increase units by 10 per 3 artillery cards acquired
 			return true;
 		}
 		else {
-			return true;
+			return false;
 		}
 	}
 
+	public int calcCardsToArmiesTrade() {
+		int total_armies = 0;
+		
+		// I added cardSetsTradedIn variable in board.java 
+		
+		//Taken from https://www.ultraboardgames.com/risk/game-rules.php
+		
+//		At the beginning of subsequent turns, you may trade in matched sets of cards and take 
+//		additional armies based on the total number of sets anyone has traded in so far. 
+//
+//		After the sixth set has been traded in, each additional set is worth 5 more armies. 
+//		Example: If you trade in the seventh set, you get 20 armies; 
+//		if you trade in the eighth, you get 25 armies, and so on.
+//
+//		"First" and "second" set, etc., refer to sets traded in by anyone during the game. 
+//		Thus, if you trade in the 3rd set in the game, you receive 8 armies, 
+//		even if it is the first set you have traded in.
+//
+//		Occupied territories: If any of the 3 cards you trade in shows the picture of a territory you occupy, 
+//		you receive 2 extra armies. You must place both those armies on to that particular territory.
+		
+		return total_armies;
+	}
+	
 	public int getInfantryCards(){return infantryCards;}
 	public int getCavalryCards(){return cavalryCards;}
 	public int getArtilleryCards(){return artilleryCards;}
