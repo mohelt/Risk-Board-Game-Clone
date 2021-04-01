@@ -271,6 +271,51 @@ public class UI {
 		} while (!responseOK);
 		return;		
 	}
+	
+	// check first if the player has 3 of the same cards and then call this function
+	
+	// iterate through player.obtainedCards to see if they have 3 the same types
+	
+	public void inputExchange (Player player) {
+		String response, message;
+		boolean responseOK = false;
+		do {
+			message = makeLongName(player) + ": EXCHANGE: Trade 3 cards of the same type for reinforcements";
+			displayString(message);
+			response = commandPanel.getCommand();
+			displayString(PROMPT + response);
+			
+			if (message.isEmpty()) { //if the player enters nothing
+				displayString("Error: No Input");
+			} else if (message.length() > 4) { //this input is too big
+				displayString("Error: Invalid input");
+			} else if (message.equalsIgnoreCase("III")) { //infantry
+				
+				//add check to see if there is 3 infantry cards in the players deck and then remove them
+				
+				player.addUnits(0); //there is more logic behind the units you get
+				responseOK = true;
+			} else if (message.equalsIgnoreCase("AAA")) { //artillery
+				
+				//add check to see if there is 3 artillery cards in the players deck and then remove them
+				
+				player.addUnits(0); //there is more logic behind the units you get
+				responseOK = true;
+			} else if (message.equalsIgnoreCase("CCC")) { //cavalry
+				
+				//add check to see if there is 3 cavalry cards in the players deck and then remove them
+				
+				player.addUnits(0); //there is more logic behind the units you get
+				responseOK = true;
+			} else if (message.equalsIgnoreCase("skip")) { //skip
+				
+				responseOK = true;
+			} else {
+				displayString("Error: Invalid input");
+			}
+		} while (!responseOK);
+		return;		
+	}
 }
 
 
