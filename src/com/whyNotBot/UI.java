@@ -291,32 +291,29 @@ public class UI {
 			} else if (message.length() > 4) { //this input is too big
 				displayString("Error: Invalid input");
 			} else if (message.equalsIgnoreCase("III")) { //infantry
-				
-					if(player.getInfantryCards() >= 3) { //they have 3 or more infantry cards
-						//function to remove the three infantry cards in the deck goes here:
-						
+					if (player.getInfantryCards() >= 3) { //they have 3 or more infantry cards
 						player.addUnits(player.calcCardsToArmiesTrade()); //adds the correct amount of armies
 						player.removeSet(0); // remove set of infantry cards after trade
+						responseOK = true;
+					}else {
+						displayString("You do not have a set of three Infantry cards.");
 					}
-				responseOK = true;
-			} else if (message.equalsIgnoreCase("AAA")) { //artillery
-				
-				if(player.getArtilleryCards() >= 3) { //they have 3 or more infantry cards
-					//function to remove the three artillery cards in the deck goes here:
-					
-					player.addUnits(player.calcCardsToArmiesTrade()); //adds the correct amount of armies
-					player.removeSet(2); // remove set of Artillery cards after trade
-				}
-				responseOK = true;
 			} else if (message.equalsIgnoreCase("CCC")) { //cavalry
-				
-				if(player.getCavalryCards() >= 3) { //they have 3 or more infantry cards
-					//function to remove the three cavalry cards in the deck goes here:
-					
+				if (player.getCavalryCards() >= 3) { //they have 3 or more Cavalry cards
 					player.addUnits(player.calcCardsToArmiesTrade()); //adds the correct amount of armies
 					player.removeSet(1); // remove set of Cavalry cards after trade
+					responseOK = true;
+				}else {
+					displayString("You do not have a set of three Cavalry cards.");
 				}
-				responseOK = true;
+			} else if (message.equalsIgnoreCase("AAA")) { //artillery
+				if (player.getArtilleryCards() >= 3) { //they have 3 or more artillery cards
+					player.addUnits(player.calcCardsToArmiesTrade()); //adds the correct amount of armies
+					player.removeSet(2); // remove set of Artillery cards after trade
+					responseOK = true;
+				}else {
+					displayString("You do not have a set of three Artillery cards.");
+				}
 			} else if (message.equalsIgnoreCase("skip")) { //skip
 				responseOK = true;
 			} else {

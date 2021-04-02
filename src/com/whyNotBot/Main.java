@@ -91,17 +91,15 @@ public class Main {
 		currPlayer = players[playerId];
 		ui.displayRollWinner(currPlayer);
 
+		
 		ui.displayString("\nSTART TURNS");
 		
 		// 1. Exchange Cards
 		do {
 			if(currPlayer.hasSetOfCards()){
-				//
 				ui.inputExchange(currPlayer);
-//				currPlayer.subtractUnits(ui.getNumUnits());
-//				board.addUnits(ui.getCountryId(), currPlayer, ui.getNumUnits());
-				ui.displayMap();
 			}
+			
 			otherPlayerId = (playerId+1)%GameData.NUM_PLAYERS;
 			otherPlayer = players[otherPlayerId];
 			
