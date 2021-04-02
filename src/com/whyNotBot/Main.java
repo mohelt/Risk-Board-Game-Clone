@@ -145,8 +145,9 @@ public class Main {
 
 			// Functionality to give player territory card after winning battle
 			if(!ui.isTurnEnded()) {
-				deck.removeCard(deck.getCard()); // Remove chosen card from Deck
-				currPlayer.addCard(deck.getCard()); // Give chosen card from deck to attacking player
+				Card tempCard = deck.getCard();
+				deck.removeCard(tempCard); // Remove chosen card from Deck
+				currPlayer.addCard(tempCard); // Give chosen card from deck to attacking player
 				ui.displayString(currPlayer.getName() + "wins the " + currPlayer.getLastCard().getCountryName() + " card.");
 				ui.displayString("This has a " + currPlayer.getLastCard().getUnitType()); // tell player what card they won
 				ui.displayString(currPlayer.getName() + " now has " + currPlayer.getInfantryCards() + " infantry cards " + currPlayer.getCavalryCards() + " cavalry cards and " + currPlayer.getArtilleryCards() + " artillery cards.");
