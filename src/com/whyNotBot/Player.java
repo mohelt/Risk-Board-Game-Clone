@@ -11,6 +11,7 @@ public class Player {
 	private ArrayList<Integer> dice = new ArrayList<Integer>();
 	private ArrayList<Card> obtainedCards = new ArrayList<Card>();
 	private Board board = new Board();
+	private UI ui = new UI(board);
 	private int numCards = 0, infantryCards = 0, cavalryCards = 0, artilleryCards = 0;
 	private int battleLoss = 0;
 	
@@ -110,16 +111,24 @@ public class Player {
 		}
 	}
 
-	public void removeSet(int unitTypeId){
-		int counter = 0;
+	public void removeSet(int unitTypeId, Player player){
+		int counter = 0, countryId = 0;
 		// iterate list
 		// find a set (3) of similar unit type cards
 		// remove first three
-		while(counter < 3){
+		while (counter < 3){
 			if(obtainedCards.get(counter).getUnitTypeID() == unitTypeId){
 				removeCard(obtainedCards.get(counter));
-				counter++;
 			}
+			
+			// if the player owns the country they are trading in, they get 2 extra units added to that country
+			countryId = obtainedCards.get(counter).getCountryId();
+			if (board.checkOccupier(player, countryId)){ //if that player owns the country they are trading in
+				board.addUnits(countryId, player, 2); //adds 2 units to that country
+				ui.displayMap();
+				
+			}
+			counter++;
 		}
 	}
 
@@ -187,12 +196,13 @@ public class Player {
 		
 		if(board.cardSetsTradedIn > 6) {
 			int varSetsTraded = board.cardSetsTradedIn;
-			varSetsTraded -= 5;
+			varSetsTraded -= 6;
 			total_armies = 15 + (varSetsTraded * 5);
 		}
 
 //		Occupied territories: If any of the 3 cards you trade in shows the picture of a territory you occupy, 
 //		you receive 2 extra armies. You must place both those armies on to that particular territory.
+//		This is handled in remove set
 		
 		return total_armies;
 	}
