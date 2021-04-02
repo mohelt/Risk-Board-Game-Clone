@@ -91,6 +91,25 @@ public class Player {
 		}
 	}
 
+	public void removeCard(Card inCard){
+		obtainedCards.remove(inCard); // remove card from player hand
+		numCards--; // decrement number of cards held by player
+
+		// decrement appropriate card unit type
+		switch(inCard.getUnitTypeID()){
+			case 0:
+				infantryCards--;
+				break;
+			case 1:
+				cavalryCards--;
+				break;
+			case 2:
+				artilleryCards--;
+				break;
+
+		}
+	}
+
 	// check if player has more than three of the same card
 	// return true if 3 or more of same card have been obtained
 	// return false if not
