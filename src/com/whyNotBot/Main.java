@@ -92,29 +92,31 @@ public class Main {
 		ui.displayRollWinner(currPlayer);
 
 		ui.displayString("\nSTART TURNS");
+		
+		// 1. Exchange Cards
 		do {
-			if(currPlayer.hasReinforcements()){
-				ui.displayString("You have " + currPlayer.getNumUnits() + " reinforcements to place");
-				ui.inputReinforcement(currPlayer);
-				currPlayer.subtractUnits(ui.getNumUnits());
-				board.addUnits(ui.getCountryId(), currPlayer, ui.getNumUnits());
+			if(currPlayer.hasSetOfCards()){
+				//
+				ui.inputExchange(currPlayer);
+//				currPlayer.subtractUnits(ui.getNumUnits());
+//				board.addUnits(ui.getCountryId(), currPlayer, ui.getNumUnits());
 				ui.displayMap();
 			}
 			otherPlayerId = (playerId+1)%GameData.NUM_PLAYERS;
 			otherPlayer = players[otherPlayerId];
 			
-			// 1. Reinforcements
+			// 2. Reinforcements
 			numUnits = board.calcReinforcements(currPlayer);
 			currPlayer.addUnits(numUnits);
 			ui.displayReinforcements(currPlayer, numUnits);
 			do {
 				ui.inputReinforcement(currPlayer);
 				currPlayer.subtractUnits(ui.getNumUnits());
-				board.addUnits(ui.getCountryId(),currPlayer,ui.getNumUnits());	
+				board.addUnits(ui.getCountryId(), currPlayer, ui.getNumUnits());
 				ui.displayMap();
 			} while (currPlayer.getNumUnits() > 0);
 
-			// 2. Combat
+			// 3. Combat
 			do {
 				ui.inputBattle(currPlayer);
 				if (!ui.isTurnEnded()) {
@@ -150,7 +152,7 @@ public class Main {
 				ui.displayString(currPlayer.getName() + " now has " + currPlayer.getInfantryCards() + " infantry cards " + currPlayer.getCavalryCards() + " cavalry cards and " + currPlayer.getArtilleryCards() + " artillery cards.");
 			}
 
-			// 3. Fortify
+			// 4. Fortify
 			if (!board.isGameOver()) {
 				ui.inputFortify(currPlayer);
 				if (!ui.isTurnEnded()) {
@@ -160,12 +162,6 @@ public class Main {
 				}
 			}		
 			
-			// 4. Exchange cards for armies
-			if (!ui.isTurnEnded() && !board.isGameOver()) {
-				if (currPlayer.hasReinforcements()) {
-					ui.inputExchange(currPlayer);
-				}
-			}
 			
 			playerId = (playerId+1)%GameData.NUM_PLAYERS;
 			currPlayer = players[playerId];			

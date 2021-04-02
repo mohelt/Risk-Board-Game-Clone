@@ -97,7 +97,7 @@ public class Player {
 	
 	//Cian: I commented out the add units because I think it works differently in the game rules
 	
-	public boolean hasReinforcements(){
+	public boolean hasSetOfCards(){
 		if(infantryCards >= 3){
 //			addUnits(infantryCards / 3); // increase units by 1 per 3 infantry cards acquired
 			return true;

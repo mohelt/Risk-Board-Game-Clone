@@ -280,6 +280,7 @@ public class UI {
 		String response, message;
 		boolean responseOK = false;
 		do {
+			displayString("You have a set of cards.");
 			message = makeLongName(player) + ": EXCHANGE: Trade 3 cards of the same type for reinforcements";
 			displayString(message);
 			response = commandPanel.getCommand();
