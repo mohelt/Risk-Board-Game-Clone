@@ -304,6 +304,7 @@ public class UI {
 					//function to remove the three artillery cards in the deck goes here:
 					
 					player.addUnits(player.calcCardsToArmiesTrade()); //adds the correct amount of armies
+
 				}
 				responseOK = true;
 			} else if (message.equalsIgnoreCase("CCC")) { //cavalry

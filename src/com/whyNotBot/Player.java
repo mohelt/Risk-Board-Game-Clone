@@ -110,6 +110,19 @@ public class Player {
 		}
 	}
 
+	public void removeSet(int unitTypeId){
+		int counter = 0;
+		// iterate list
+		// find a set (3) of similar unit type cards
+		// remove first three
+		while(counter < 3){
+			if(obtainedCards.get(counter).getUnitTypeID() == unitTypeId){
+				removeCard(obtainedCards.get(counter));
+				counter++;
+			}
+		}
+	}
+
 	// check if player has more than three of the same card
 	// return true if 3 or more of same card have been obtained
 	// return false if not
