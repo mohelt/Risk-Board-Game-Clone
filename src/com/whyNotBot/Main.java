@@ -54,7 +54,7 @@ public class Main {
 		}
 		currPlayer = players[playerId];
 		ui.displayRollWinner(currPlayer);
-		
+
 		ui.displayString("\nREINFORCE INITIAL COUNTRIES");
 		for (int r=0; r<2*GameData.NUM_REINFORCE_ROUNDS; r++) {
 			ui.displayReinforcements(currPlayer, 3);
@@ -90,7 +90,7 @@ public class Main {
 		}
 		currPlayer = players[playerId];
 		ui.displayRollWinner(currPlayer);
-		
+
 		ui.displayString("\nSTART TURNS");
 		do {
 			if(currPlayer.hasReinforcements()){
@@ -142,11 +142,13 @@ public class Main {
 			} while (!ui.isTurnEnded() && !board.isGameOver());
 
 			// Functionality to give player territory card after winning battle
-			deck.removeCard(deck.getCard()); // Remove chosen card from Deck
-			currPlayer.addCard(deck.getCard()); // Give chosen card from deck to attacking player
-			ui.displayString(currPlayer.getName() + "wins the " + currPlayer.getLastCard().getCountryName() + " card.");
-			ui.displayString("This has a " + currPlayer.getLastCard().getUnitType()); // tell player what card they won
-			ui.displayString(currPlayer.getName() + " now has " + currPlayer.getInfantryCards() + " infantry cards " + currPlayer.getCavalryCards() + " cavalry cards and " + currPlayer.getArtilleryCards() + " artillery cards.");
+			if(!ui.isTurnEnded()) {
+				deck.removeCard(deck.getCard()); // Remove chosen card from Deck
+				currPlayer.addCard(deck.getCard()); // Give chosen card from deck to attacking player
+				ui.displayString(currPlayer.getName() + "wins the " + currPlayer.getLastCard().getCountryName() + " card.");
+				ui.displayString("This has a " + currPlayer.getLastCard().getUnitType()); // tell player what card they won
+				ui.displayString(currPlayer.getName() + " now has " + currPlayer.getInfantryCards() + " infantry cards " + currPlayer.getCavalryCards() + " cavalry cards and " + currPlayer.getArtilleryCards() + " artillery cards.");
+			}
 
 			// 3. Fortify
 			if (!board.isGameOver()) {
