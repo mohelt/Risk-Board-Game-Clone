@@ -10,6 +10,7 @@ public class Player {
 	private int numUnits;
 	private ArrayList<Integer> dice = new ArrayList<Integer>();
 	private ArrayList<Card> obtainedCards = new ArrayList<Card>();
+	private Board board = new Board();
 	private int numCards = 0, infantryCards = 0, cavalryCards = 0, artilleryCards = 0;
 	private int battleLoss = 0;
 	
@@ -115,25 +116,54 @@ public class Player {
 			return false;
 		}
 	}
-
+	
+	
+//	At the beginning of subsequent turns, you may trade in matched sets of cards and take 
+//	additional armies based on the total number of sets anyone has traded in so far. 
+	
 	public int calcCardsToArmiesTrade() {
 		int total_armies = 0;
+		board.cardSetsTradedIn++;
 		
-		// I added cardSetsTradedIn variable in board.java 
+//		- First set turned in during game: 4
+//		- Second set: 6
+//		- Third set: 8
+//		- Fourth set: 10
+//		- Fifth set: 12
+//		- Sixth set: 15
+//		- For each set thereafter the set of cards is worth 5 more than the previous set turned in.
+//		Example: 
+//		- Seventh set: 20 
+//		- Eighth set: 25 
+//		and so on.
 		
-		//Taken from https://www.ultraboardgames.com/risk/game-rules.php
+		switch (board.cardSetsTradedIn) {
+			case 1:
+				total_armies = 4;
+				break;
+			case 2:
+				total_armies = 6;
+				break;
+			case 3:
+				total_armies = 8;
+				break;
+			case 4:
+				total_armies = 10;
+				break;
+			case 5:
+				total_armies = 12;
+				break;
+			case 6:
+				total_armies = 15;
+				break; 		
+		}
 		
-//		At the beginning of subsequent turns, you may trade in matched sets of cards and take 
-//		additional armies based on the total number of sets anyone has traded in so far. 
-//
-//		After the sixth set has been traded in, each additional set is worth 5 more armies. 
-//		Example: If you trade in the seventh set, you get 20 armies; 
-//		if you trade in the eighth, you get 25 armies, and so on.
-//
-//		"First" and "second" set, etc., refer to sets traded in by anyone during the game. 
-//		Thus, if you trade in the 3rd set in the game, you receive 8 armies, 
-//		even if it is the first set you have traded in.
-//
+		if(board.cardSetsTradedIn > 6) {
+			int varSetsTraded = board.cardSetsTradedIn;
+			varSetsTraded -= 5;
+			total_armies = 15 + (varSetsTraded * 5);
+		}
+
 //		Occupied territories: If any of the 3 cards you trade in shows the picture of a territory you occupy, 
 //		you receive 2 extra armies. You must place both those armies on to that particular territory.
 		
