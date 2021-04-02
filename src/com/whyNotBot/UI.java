@@ -296,6 +296,7 @@ public class UI {
 						//function to remove the three infantry cards in the deck goes here:
 						
 						player.addUnits(player.calcCardsToArmiesTrade()); //adds the correct amount of armies
+						player.removeSet(0); // remove set of infantry cards after trade
 					}
 				responseOK = true;
 			} else if (message.equalsIgnoreCase("AAA")) { //artillery
@@ -304,7 +305,7 @@ public class UI {
 					//function to remove the three artillery cards in the deck goes here:
 					
 					player.addUnits(player.calcCardsToArmiesTrade()); //adds the correct amount of armies
-
+					player.removeSet(2); // remove set of Artillery cards after trade
 				}
 				responseOK = true;
 			} else if (message.equalsIgnoreCase("CCC")) { //cavalry
@@ -313,6 +314,7 @@ public class UI {
 					//function to remove the three cavalry cards in the deck goes here:
 					
 					player.addUnits(player.calcCardsToArmiesTrade()); //adds the correct amount of armies
+					player.removeSet(1); // remove set of Cavalry cards after trade
 				}
 				responseOK = true;
 			} else if (message.equalsIgnoreCase("skip")) { //skip
