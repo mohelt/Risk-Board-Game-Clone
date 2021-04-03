@@ -11,7 +11,6 @@ public class Player {
 	private ArrayList<Integer> dice = new ArrayList<Integer>();
 	private ArrayList<Card> obtainedCards = new ArrayList<Card>();
 	private Board board = new Board();
-	private UI ui = new UI(board);
 	private int numCards = 0, infantryCards = 0, cavalryCards = 0, artilleryCards = 0;
 	private int battleLoss = 0;
 	
@@ -122,7 +121,6 @@ public class Player {
 			countryId = obtainedCards.get(counter).getCountryId();
 			if (board.checkOccupier(player, countryId)){ //if that player owns the country they are trading in
 				board.addUnits(countryId, player, 2); //adds 2 units to that country
-				ui.displayMap();
 			}
 			//removes the card after adding units
 			if (obtainedCards.get(counter).getUnitTypeID() == unitTypeId){
