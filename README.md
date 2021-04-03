@@ -30,6 +30,8 @@ according to the rules of Risk☑
 
 3.The user should receive appropriate error messages if their exchanges are invalid.☑
 
+![alt text](https://github.com/UCD-COMP20050/WhyNotBot/blob/main/src/ImagesForGithub/Sprint4.PNG?raw=true)
+
 Sprint 3 
 ======
 

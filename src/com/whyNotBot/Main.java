@@ -62,7 +62,7 @@ public class Main {
 		currPlayer = players[playerId];
 		ui.displayRollWinner(currPlayer);
 
-		ui.displayString("\nREINFORCE INITIAL COUNTRIES");
+		/*ui.displayString("\nREINFORCE INITIAL COUNTRIES");
 		for (int r=0; r<2*GameData.NUM_REINFORCE_ROUNDS; r++) {
 			ui.displayReinforcements(currPlayer, 3);
 			currPlayer.addUnits(3);
@@ -82,7 +82,7 @@ public class Main {
 			playerId = (++playerId)%GameData.NUM_PLAYERS;
 			currPlayer = players[playerId];
 		}
-
+*/
 		ui.displayString("\nROLL DICE TO SEE WHO TAKES THE FIRST TURN");
 		do {
 			for (int i=0; i<GameData.NUM_PLAYERS; i++) {
@@ -103,7 +103,7 @@ public class Main {
 			otherPlayerId = (playerId+1)%GameData.NUM_PLAYERS;
 			otherPlayer = players[otherPlayerId];
 			
-			/* 
+			
 			//code to test territory cards
 			Card a= new Card(0, GameData.COUNTRY_NAMES[0]);
 			Card b= new Card(3, GameData.COUNTRY_NAMES[3]);
@@ -116,7 +116,7 @@ public class Main {
 			currPlayer.addCard(c);
 			currPlayer.addCard(a2);
 			currPlayer.addCard(b2);
-			currPlayer.addCard(c2);*/
+			currPlayer.addCard(c2);
 			
 			ui.displayAllCards(currPlayer);
 			if(currPlayer.hasSetOfCards()){
