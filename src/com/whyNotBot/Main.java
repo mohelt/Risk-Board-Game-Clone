@@ -2,7 +2,8 @@ package com.whyNotBot;
 
 public class Main {
 
-	public static void main (String args[]) {	   
+	public static void main (String args[]) {	
+		SplashScreen splash =new SplashScreen();
 		Board board = new Board();
 		UI ui = new UI(board);
 		Player[] players = new Player[GameData.NUM_PLAYERS_PLUS_NEUTRALS];
@@ -58,7 +59,7 @@ public class Main {
 		ui.displayRollWinner(currPlayer);
 
 		ui.displayString("\nREINFORCE INITIAL COUNTRIES");
-		/*for (int r=0; r<2*GameData.NUM_REINFORCE_ROUNDS; r++) {
+		for (int r=0; r<2*GameData.NUM_REINFORCE_ROUNDS; r++) {
 			ui.displayReinforcements(currPlayer, 3);
 			currPlayer.addUnits(3);
 			do {
@@ -76,7 +77,7 @@ public class Main {
 			}
 			playerId = (++playerId)%GameData.NUM_PLAYERS;
 			currPlayer = players[playerId];
-		}*/
+		}
 
 		ui.displayString("\nROLL DICE TO SEE WHO TAKES THE FIRST TURN");
 		do {
