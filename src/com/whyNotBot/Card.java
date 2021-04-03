@@ -1,7 +1,11 @@
+// Team Members:
+//Mohamed Eltayeb Student Number:19349633
+//Cian O'Reilly Student Number:19394833
+//Tom Higgins Student Number: 19343176
 package com.whyNotBot;
 
 public class Card {
-	
+
 	private int countryId;
 	private String countryName;
 	private int unitTypeID; // integer reference to unit type of card
@@ -13,26 +17,26 @@ public class Card {
 		countryName = inCountryName;
 		unitTypeID = chooseUnitType();
 		switch (unitTypeID){
-			case 0:
-				unitType = "Infantry";
-				numUnits = 1;
-				break;
-			case 1:
-				unitType = "Cavalry";
-				numUnits = 5;
-				break;
-			case 2:
-				unitType = "Artillery";
-				numUnits = 10;
-				break;
+		case 0:
+			unitType = "Infantry";
+			numUnits = 1;
+			break;
+		case 1:
+			unitType = "Cavalry";
+			numUnits = 5;
+			break;
+		case 2:
+			unitType = "Artillery";
+			numUnits = 10;
+			break;
 		}
 		return;
 	}
-	
+
 	public int getCountryId () {
 		return countryId;
 	}
-	
+
 	public String getCountryName () {
 		return countryName;
 	}
@@ -52,5 +56,5 @@ public class Card {
 	private int chooseUnitType(){
 		return (int)(Math.random() * 3);
 	}
-	
+
 }

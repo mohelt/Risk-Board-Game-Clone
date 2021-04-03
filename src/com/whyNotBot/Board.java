@@ -1,14 +1,18 @@
+// Team Members:
+//Mohamed Eltayeb Student Number:19349633
+//Cian O'Reilly Student Number:19394833
+//Tom Higgins Student Number: 19343176
 package com.whyNotBot;
 
 public class Board {
-	
+
 	private boolean[] occupied = new boolean [GameData.NUM_COUNTRIES];
 	private int[] occupier = new int [GameData.NUM_COUNTRIES];
 	private int[] numUnits = new int [GameData.NUM_COUNTRIES];
 	private int winnerId;
 	public boolean invasionSuccess;
 	public int cardSetsTradedIn = 0;
-	
+
 	Board() {
 		for (int i=0; i<GameData.NUM_COUNTRIES; i++) {
 			occupied[i] = false;
@@ -17,7 +21,7 @@ public class Board {
 		}
 		return;
 	}
-	
+
 	public void addUnits (int countryId, int player, int addNumUnits) {	
 		// prerequisite: country must be unoccupied or already occupied by this player
 		if (!occupied[countryId]) {
@@ -27,12 +31,12 @@ public class Board {
 		numUnits[countryId] = numUnits[countryId] + addNumUnits;
 		return;
 	}
-	
+
 	public void addUnits (Card card, Player player, int addNumUnits) {
 		addUnits(card.getCountryId(), player.getId(), addNumUnits);
 		return;
 	}
-	
+
 	public void addUnits (int countryId, Player player, int addNumUnits) {
 		addUnits(countryId, player.getId(), addNumUnits);
 		return;
@@ -45,7 +49,7 @@ public class Board {
 		}
 		return;
 	}
-	
+
 	public int calcReinforcements (Player player) {
 		int playerId = player.getId();
 		int numCountriesOccupied = 0, numUnits;
@@ -74,7 +78,7 @@ public class Board {
 		}
 		return numUnits;
 	}
-	
+
 	public void calcBattle (Player attackPlayer, Player defencePlayer, int attackCountryId, int defenceCountryId, int attackNumUnits, int defenceNumUnits) {
 		int numUnitsRemaining = attackNumUnits;
 		attackPlayer.resetBattleLoss();
@@ -108,7 +112,7 @@ public class Board {
 		}
 		return;
 	}
-	
+
 	public boolean isAdjacent (int fromCountry, int toCountry) {
 		boolean found = false;
 		int[] neighbours = GameData.ADJACENT[fromCountry];
@@ -117,7 +121,7 @@ public class Board {
 		}
 		return found;
 	}
-	
+
 	public boolean isConnected (int fromCountry, int toCountry, boolean[] countriesChecked) {
 		int[] neighbours;
 		int currentCountry;
@@ -139,7 +143,7 @@ public class Board {
 		}		
 		return found;
 	}
-	
+
 	public boolean isConnected (int fromCountry, int toCountry) {
 		boolean [] countriesChecked = new boolean[GameData.NUM_COUNTRIES];
 		for (int i=0; i<GameData.NUM_COUNTRIES; i++) {
@@ -148,15 +152,15 @@ public class Board {
 		countriesChecked[fromCountry] = true;
 		return isConnected (fromCountry, toCountry, countriesChecked);
 	}
-	
+
 	public boolean isOccupied(int country) {
 		return occupied[country];
 	}
-	
+
 	public boolean isInvasionSuccess () {
 		return invasionSuccess;
 	}
-	
+
 	public boolean isGameOver () {
 		boolean gameOver = true;
 		int firstOccupier = occupier[0];
@@ -168,15 +172,15 @@ public class Board {
 		winnerId = firstOccupier;
 		return gameOver;
 	}
-	
+
 	public int getOccupier (int country) {
 		return occupier[country];
 	}
-	
+
 	public int getNumUnits (int country) {
 		return numUnits[country];
 	}
-	
+
 	public int getWinner () {
 		return winnerId;
 	}

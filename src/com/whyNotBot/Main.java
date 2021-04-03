@@ -1,3 +1,7 @@
+// Team Members:
+//Mohamed Eltayeb Student Number:19349633
+//Cian O'Reilly Student Number:19394833
+//Tom Higgins Student Number: 19343176
 package com.whyNotBot;
 
 public class Main {
@@ -11,7 +15,7 @@ public class Main {
 		Card card;
 		int playerId, otherPlayerId, numUnits, numCards, attackUnits, defenceUnits, countryId, attackCountryId, defenceCountryId;
 		String name;
-		
+
 		ui.displayString("ENTER PLAYER NAMES");
 		ui.displayMap();
 		for (playerId=0; playerId<GameData.NUM_PLAYERS_PLUS_NEUTRALS; playerId++) {
@@ -23,7 +27,7 @@ public class Main {
 			}
 			players[playerId] = new Player (playerId, name, 0);
 		}
-		
+
 		ui.displayString("\nDRAW TERRITORY CARDS FOR STARTING COUNTRIES");
 		Deck deck = new Deck();
 		for (playerId=0; playerId<GameData.NUM_PLAYERS_PLUS_NEUTRALS; playerId++) {
@@ -42,7 +46,7 @@ public class Main {
 		ui.displayMap();
 
 		Deck deck2 = new Deck();
-		
+
 		ui.displayString("\nROLL DICE TO SEE WHO REINFORCES THEIR COUNTRIES FIRST");
 		do {
 			for (int i=0; i<GameData.NUM_PLAYERS; i++) {
@@ -78,7 +82,7 @@ public class Main {
 			playerId = (++playerId)%GameData.NUM_PLAYERS;
 			currPlayer = players[playerId];
 		}
-		
+
 		ui.displayString("\nROLL DICE TO SEE WHO TAKES THE FIRST TURN");
 		do {
 			for (int i=0; i<GameData.NUM_PLAYERS; i++) {
@@ -98,6 +102,9 @@ public class Main {
 		do {
 			otherPlayerId = (playerId+1)%GameData.NUM_PLAYERS;
 			otherPlayer = players[otherPlayerId];
+			
+			/* 
+			//code to test territory cards
 			Card a= new Card(0, GameData.COUNTRY_NAMES[0]);
 			Card b= new Card(3, GameData.COUNTRY_NAMES[3]);
 			Card c= new Card(6, GameData.COUNTRY_NAMES[6]);
@@ -109,7 +116,8 @@ public class Main {
 			currPlayer.addCard(c);
 			currPlayer.addCard(a2);
 			currPlayer.addCard(b2);
-			currPlayer.addCard(c2);
+			currPlayer.addCard(c2);*/
+			
 			ui.displayAllCards(currPlayer);
 			if(currPlayer.hasSetOfCards()){
 				ui.inputExchange(currPlayer);
@@ -126,7 +134,7 @@ public class Main {
 				board.addUnits(ui.getCountryId(),currPlayer,ui.getNumUnits());
 				ui.displayMap();
 			} while (currPlayer.getNumUnits() > 0);
-			
+
 			//setting the board invasion success to false at the beginning of each turn so that bug doesn't appear
 			board.invasionSuccess = false;
 			// 2. Combat
@@ -178,10 +186,10 @@ public class Main {
 			currPlayer = players[playerId];			
 
 		} while (!board.isGameOver());
-		
+
 		ui.displayWinner(players[board.getWinner()]);
 		ui.displayString("GAME OVER");
-		
+
 		return;
 	}
 

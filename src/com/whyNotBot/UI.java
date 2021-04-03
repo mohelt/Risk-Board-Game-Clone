@@ -1,3 +1,7 @@
+// Team Members:
+//Mohamed Eltayeb Student Number:19349633
+//Cian O'Reilly Student Number:19394833
+//Tom Higgins Student Number: 19343176
 package com.whyNotBot;
 
 import java.awt.BorderLayout;
@@ -15,7 +19,7 @@ public class UI {
 	private CommandPanel commandPanel = new CommandPanel();
 	private Parse parse = new Parse();
 	private Board board;
-	
+
 	UI (Board inBoard) {
 		board = inBoard;
 		mapPanel = new MapPanel(board);
@@ -29,31 +33,31 @@ public class UI {
 		frame.setVisible(true);
 		return;
 	}
-	
+
 	public int getCountryId () {
 		return parse.getCountryId();
 	}
-	
+
 	public int getNumUnits () {
 		return parse.getNumUnits();
 	}	
-	
+
 	public boolean isTurnEnded() {
 		return parse.isTurnEnded();
 	}
-	
+
 	public int getFromCountryId () {
 		return parse.getFromCountryId();
 	}
-	
+
 	public int getToCountryId () {
 		return parse.getToCountryId();
 	}
-	
+
 	private String makeLongName (Player player) {
 		return player.getName() + " (" + mapPanel.getColorName(player.getId()) + ")";
 	}
-	
+
 	public void displayMap () {
 		mapPanel.refresh();
 		return;
@@ -63,7 +67,7 @@ public class UI {
 		infoPanel.addText(string);
 		return;
 	}
-	
+
 	public void displayName (int playerId, String name) {
 		displayString("Neutral player " + (playerId+1) + " is " + mapPanel.getColorName(playerId));
 		return;		
@@ -83,28 +87,28 @@ public class UI {
 		}
 		return;
 	}
-	
+
 	public void displayDice (Player player) {
 		displayString(makeLongName(player) + " rolls " + player.getDice() );
 		return;
 	}
-	
+
 	public void displayRollWinner (Player player) {
 		displayString(makeLongName(player)  + " wins roll and goes first");
 		return;
 	}
-	
+
 	public void displayReinforcements (Player player, int numUnits) {
 		displayString(makeLongName(player) + " gets " + numUnits + " reinforcements.");
 		return;
 	}
-	
+
 	public void displayNumUnits (Player player) {
 		String message = makeLongName(player) + " has " + player.getNumUnits() + " units";
 		displayString(message);
 		return;
 	}
-	
+
 	public void displayBattle (Player attackPlayer, Player defencePlayer) {
 		String message;
 		message = makeLongName(attackPlayer) + "'s roll was " + attackPlayer.getDice() + " and ";
@@ -123,12 +127,12 @@ public class UI {
 		displayString(message);
 		return;
 	}
-	
+
 	public void displayWinner (Player player) {
 		displayString(makeLongName(player) + " wins the game!");
 		return;
 	}
-		
+
 	public String inputName (int playerId) {
 		String response;
 		displayString("Enter the name for player " + (playerId+1) + " (" + mapPanel.getColorName(playerId) + "):");
@@ -137,7 +141,7 @@ public class UI {
 		displayString(PROMPT + response);
 		return response;		
 	}
-		
+
 	public void inputReinforcement (Player player) {
 		String response, message;
 		boolean responseOK = false;
@@ -211,7 +215,7 @@ public class UI {
 		} while (!responseOK);
 		return;
 	}
-	
+
 	public void inputDefence (Player player, int countryId) {
 		String response, message;
 		boolean responseOK = false;
@@ -253,7 +257,7 @@ public class UI {
 		} while (!responseOK);
 		return;		
 	}
-	
+
 	public void inputFortify (Player player) {
 		String response, message;
 		boolean responseOK = false;
@@ -281,11 +285,11 @@ public class UI {
 		} while (!responseOK);
 		return;		
 	}
-	
+
 	// check first if the player has 3 of the same cards and then call this function
-	
+
 	// iterate through player.obtainedCards to see if they have 3 the same types
-	
+
 	public void inputExchange (Player player) {
 		String response, message;
 		boolean responseOK = false;
@@ -295,21 +299,21 @@ public class UI {
 			displayString(message);
 			response = commandPanel.getCommand();
 			displayString(PROMPT + response);
-			
+
 			if (response.isEmpty()) { //if the player enters nothing
 				displayString("Error: No Input");
 			} else if (response.length() > 4) { //this input is too big
 				displayString("Error: Invalid input");
 			} else if (response.equalsIgnoreCase("III")) { //infantry
-					if (player.getInfantryCards() >= 3) { //they have 3 or more infantry cards
-						Integer armies = player.calcCardsToArmiesTrade();
-						player.addUnits(armies); //adds the correct amount of armies
-						displayString(makeLongName(player) +" added "+armies.toString() +" armies. ");
-						player.removeSet(0, player); // remove set of infantry cards after trade
-						responseOK = true;
-					}else {
-						displayString("You do not have a set of three Infantry cards.");
-					}
+				if (player.getInfantryCards() >= 3) { //they have 3 or more infantry cards
+					Integer armies = player.calcCardsToArmiesTrade();
+					player.addUnits(armies); //adds the correct amount of armies
+					displayString(makeLongName(player) +" added "+armies.toString() +" armies. ");
+					player.removeSet(0, player); // remove set of infantry cards after trade
+					responseOK = true;
+				}else {
+					displayString("You do not have a set of three Infantry cards.");
+				}
 			} else if (response.equalsIgnoreCase("CCC")) { //cavalry
 				if (player.getCavalryCards() >= 3) { //they have 3 or more Cavalry cards
 					Integer armies = player.calcCardsToArmiesTrade();

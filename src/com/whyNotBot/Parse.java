@@ -1,11 +1,15 @@
+// Team Members:
+//Mohamed Eltayeb Student Number:19349633
+//Cian O'Reilly Student Number:19394833
+//Tom Higgins Student Number: 19343176
 package com.whyNotBot;
 
 public class Parse {
-	
+
 	private String[] countryCodes = new String[GameData.NUM_COUNTRIES];
 	private boolean isError = false, turnEnded = false;
 	private int countryId = 0, numUnits = 0, fromCountryId = 0, toCountryId = 0;
-	
+
 	Parse () {
 		String name;
 		for (int i=0; i<GameData.NUM_COUNTRIES; i++) {
@@ -17,24 +21,24 @@ public class Parse {
 		}
 		return;
 	}
-	
+
 	public void country (String string) {
 		boolean found = false;
 		string = string.replaceAll("\\s", "");
 		if (string.length() >= 4) {
 			string = string.toLowerCase();
 			string = string.substring(0,4);
-	 		for (int i=0; (i<GameData.NUM_COUNTRIES) && !found; i++) {
+			for (int i=0; (i<GameData.NUM_COUNTRIES) && !found; i++) {
 				if (string.equals(countryCodes[i])) {
 					found = true;
 					countryId = i;
 				}
-	 		}
+			}
 		}
 		isError = !found;
 		return;
 	}
-	
+
 	public void countryNumber (String string) {
 		boolean found = false, parsable = true;
 		String[] strings;
@@ -61,7 +65,7 @@ public class Parse {
 		isError = !found;
 		return;
 	}
-	
+
 	public void countryCountryNumber (String string) {
 		boolean found = false, parsable = true, ended = false;
 		String[] strings;
@@ -97,7 +101,7 @@ public class Parse {
 		turnEnded = ended;
 		return;
 	}
-	
+
 	public void number (String string) {
 		boolean found = false, parsable = true;
 		try {
@@ -113,27 +117,27 @@ public class Parse {
 		isError = !found;
 		return;
 	}
-	
+
 	public boolean isError () {
 		return isError;
 	}
-	
+
 	public boolean isTurnEnded() {
 		return turnEnded;
 	}
-	
+
 	public int getCountryId () {
 		return countryId;
 	}
-	
+
 	public int getNumUnits () {
 		return numUnits;
 	}
-	
+
 	public int getFromCountryId () {
 		return fromCountryId;
 	}
-	
+
 	public int getToCountryId () {
 		return toCountryId;
 	}

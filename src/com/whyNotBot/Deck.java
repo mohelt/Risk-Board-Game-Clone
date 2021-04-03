@@ -1,3 +1,7 @@
+// Team Members:
+//Mohamed Eltayeb Student Number:19349633
+//Cian O'Reilly Student Number:19394833
+//Tom Higgins Student Number: 19343176
 package com.whyNotBot;
 
 import java.util.ArrayList;
@@ -6,7 +10,7 @@ import java.util.Collections;
 public class Deck {
 
 	protected ArrayList<Card> cards;
-	
+
 	Deck () {
 		int cardId;
 		cards = new ArrayList<Card>();
@@ -29,9 +33,9 @@ public class Deck {
 	public void removeCard(Card card){
 		cards.remove(card);
 	}
-	
+
 	public boolean isEmpty () {
 		return cards.isEmpty();
 	}
-	
+
 }
