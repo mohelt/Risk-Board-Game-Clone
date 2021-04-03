@@ -112,7 +112,9 @@ public class Main {
 				board.addUnits(ui.getCountryId(),currPlayer,ui.getNumUnits());
 				ui.displayMap();
 			} while (currPlayer.getNumUnits() > 0);
-
+			
+			//setting the board invasion success to false at the beginning of each turn so that bug doesn't appear
+			board.invasionSuccess = false;
 			// 2. Combat
 			do {
 				ui.inputBattle(currPlayer);
