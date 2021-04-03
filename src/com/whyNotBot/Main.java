@@ -39,6 +39,8 @@ public class Main {
 			}
 		}
 		ui.displayMap();
+
+		Deck deck2 = new Deck();
 		
 		ui.displayString("\nROLL DICE TO SEE WHO REINFORCES THEIR COUNTRIES FIRST");
 		do {
@@ -54,7 +56,7 @@ public class Main {
 		}
 		currPlayer = players[playerId];
 		ui.displayRollWinner(currPlayer);
-		
+
 		ui.displayString("\nREINFORCE INITIAL COUNTRIES");
 		for (int r=0; r<2*GameData.NUM_REINFORCE_ROUNDS; r++) {
 			ui.displayReinforcements(currPlayer, 3);
@@ -69,20 +71,20 @@ public class Main {
 			for (int p=GameData.NUM_PLAYERS; p<GameData.NUM_PLAYERS_PLUS_NEUTRALS; p++) {
 				ui.inputPlacement(currPlayer, players[p]);
 				countryId = ui.getCountryId();
-				board.addUnits(countryId, players[p], 1);	
+				board.addUnits(countryId, players[p], 1);
 				ui.displayMap();
 			}
 			playerId = (++playerId)%GameData.NUM_PLAYERS;
 			currPlayer = players[playerId];
 		}
-		
+
 		ui.displayString("\nROLL DICE TO SEE WHO TAKES THE FIRST TURN");
 		do {
 			for (int i=0; i<GameData.NUM_PLAYERS; i++) {
 				players[i].rollDice(1);
 				ui.displayDice(players[i]);
 			}
-		} while (players[0].getDie(0) == players[1].getDie(0)); 
+		} while (players[0].getDie(0) == players[1].getDie(0));
 		if (players[0].getDie(0) > players[1].getDie(0)) {
 			playerId = 0;
 		} else {
@@ -90,12 +92,12 @@ public class Main {
 		}
 		currPlayer = players[playerId];
 		ui.displayRollWinner(currPlayer);
-		
+
 		ui.displayString("\nSTART TURNS");
 		do {
 			otherPlayerId = (playerId+1)%GameData.NUM_PLAYERS;
 			otherPlayer = players[otherPlayerId];
-			
+
 			// 1. Reinforcements
 			numUnits = board.calcReinforcements(currPlayer);
 			currPlayer.addUnits(numUnits);
@@ -103,7 +105,7 @@ public class Main {
 			do {
 				ui.inputReinforcement(currPlayer);
 				currPlayer.subtractUnits(ui.getNumUnits());
-				board.addUnits(ui.getCountryId(),currPlayer,ui.getNumUnits());	
+				board.addUnits(ui.getCountryId(),currPlayer,ui.getNumUnits());
 				ui.displayMap();
 			} while (currPlayer.getNumUnits() > 0);
 
@@ -133,8 +135,8 @@ public class Main {
 						deck.removeCard(deck.getCard()); // Remove chosen card from Deck
 						currPlayer.addCard(deck.getCard()); // Give chosen card from deck to attacking player
 					}
-				} 
-				
+				}
+
 			} while (!ui.isTurnEnded() && !board.isGameOver());
 
 			// 3. Fortify
@@ -145,7 +147,7 @@ public class Main {
 					board.addUnits(ui.getToCountryId(), currPlayer, ui.getNumUnits());
 					ui.displayMap();
 				}
-			}			
+			}
 
 			playerId = (playerId+1)%GameData.NUM_PLAYERS;
 			currPlayer = players[playerId];			
