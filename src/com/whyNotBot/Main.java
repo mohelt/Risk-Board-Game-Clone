@@ -142,7 +142,7 @@ public class Main {
 			} while (!ui.isTurnEnded() && !board.isGameOver());
 
 			// Functionality to give player territory card after winning battle
-			if(!ui.isTurnEnded()) {
+			if(!board.isGameOver() && board.isInvasionSuccess()) {
 				Card tempCard = deck.getCard();
 				deck.removeCard(tempCard); // Remove chosen card from Deck
 				currPlayer.addCard(tempCard); // Give chosen card from deck to attacking player
