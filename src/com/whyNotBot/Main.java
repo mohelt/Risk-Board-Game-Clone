@@ -139,6 +139,12 @@ public class Main {
 
 			} while (!ui.isTurnEnded() && !board.isGameOver());
 
+			if(!board.isGameOver() && board.isInvasionSuccess()){
+				// Functionality to give player territory card after winning battle
+				deck.removeCard(deck2.getCard()); // Remove chosen card from Deck
+				currPlayer.addCard(deck2.getCard()); // Give chosen card from deck to attacking player
+			}
+
 			// 3. Fortify
 			if (!board.isGameOver()) {
 				ui.inputFortify(currPlayer);
