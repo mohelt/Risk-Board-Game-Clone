@@ -131,9 +131,6 @@ public class Main {
 						board.subtractUnits(attackCountryId, ui.getNumUnits());
 						board.addUnits(defenceCountryId, currPlayer, ui.getNumUnits());
 						ui.displayMap();
-						// Functionality to give player territory card after winning battle
-						deck.removeCard(deck.getCard()); // Remove chosen card from Deck
-						currPlayer.addCard(deck.getCard()); // Give chosen card from deck to attacking player
 					}
 				}
 
