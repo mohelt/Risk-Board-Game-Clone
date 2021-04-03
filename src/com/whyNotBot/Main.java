@@ -98,6 +98,10 @@ public class Main {
 			otherPlayerId = (playerId+1)%GameData.NUM_PLAYERS;
 			otherPlayer = players[otherPlayerId];
 
+			if(currPlayer.hasSetOfCards()){
+				ui.inputExchange(currPlayer);
+			}
+
 			// 1. Reinforcements
 			numUnits = board.calcReinforcements(currPlayer);
 			currPlayer.addUnits(numUnits);
