@@ -291,40 +291,46 @@ public class UI {
 		boolean responseOK = false;
 		do {
 			displayString("You have a set of cards.");
-			message = makeLongName(player) + ": EXCHANGE: Trade 3 cards of the same type for reinforcements";
+			message = makeLongName(player) + ": EXCHANGE: Trade 3 cards of the same type for reinforcements or type 'skip' to skip";
 			displayString(message);
 			response = commandPanel.getCommand();
 			displayString(PROMPT + response);
 			
-			if (message.isEmpty()) { //if the player enters nothing
+			if (response.isEmpty()) { //if the player enters nothing
 				displayString("Error: No Input");
-			} else if (message.length() > 4) { //this input is too big
+			} else if (response.length() > 4) { //this input is too big
 				displayString("Error: Invalid input");
-			} else if (message.equalsIgnoreCase("III")) { //infantry
+			} else if (response.equalsIgnoreCase("III")) { //infantry
 					if (player.getInfantryCards() >= 3) { //they have 3 or more infantry cards
-						player.addUnits(player.calcCardsToArmiesTrade()); //adds the correct amount of armies
+						Integer armies = player.calcCardsToArmiesTrade();
+						player.addUnits(armies); //adds the correct amount of armies
+						displayString(makeLongName(player) +" added "+armies.toString() +" armies. ");
 						player.removeSet(0, player); // remove set of infantry cards after trade
 						responseOK = true;
 					}else {
 						displayString("You do not have a set of three Infantry cards.");
 					}
-			} else if (message.equalsIgnoreCase("CCC")) { //cavalry
+			} else if (response.equalsIgnoreCase("CCC")) { //cavalry
 				if (player.getCavalryCards() >= 3) { //they have 3 or more Cavalry cards
-					player.addUnits(player.calcCardsToArmiesTrade()); //adds the correct amount of armies
+					Integer armies = player.calcCardsToArmiesTrade();
+					player.addUnits(armies); //adds the correct amount of armies
+					displayString(makeLongName(player) +" added "+armies.toString() +" armies. ");
 					player.removeSet(1, player); // remove set of Cavalry cards after trade
 					responseOK = true;
 				}else {
 					displayString("You do not have a set of three Cavalry cards.");
 				}
-			} else if (message.equalsIgnoreCase("AAA")) { //artillery
+			} else if (response.equalsIgnoreCase("AAA")) { //artillery
 				if (player.getArtilleryCards() >= 3) { //they have 3 or more artillery cards
-					player.addUnits(player.calcCardsToArmiesTrade()); //adds the correct amount of armies
+					Integer armies = player.calcCardsToArmiesTrade();
+					player.addUnits(armies); //adds the correct amount of armies
+					displayString(makeLongName(player) +" added "+armies.toString() +" armies. ");
 					player.removeSet(2, player); // remove set of Artillery cards after trade
 					responseOK = true;
 				}else {
 					displayString("You do not have a set of three Artillery cards.");
 				}
-			} else if (message.equalsIgnoreCase("skip")) { //skip
+			} else if (response.equalsIgnoreCase("skip")) { //skip
 				responseOK = true;
 			} else {
 				displayString("Error: Invalid input");

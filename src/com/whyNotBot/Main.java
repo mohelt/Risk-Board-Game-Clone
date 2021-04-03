@@ -78,7 +78,7 @@ public class Main {
 			playerId = (++playerId)%GameData.NUM_PLAYERS;
 			currPlayer = players[playerId];
 		}
-
+		
 		ui.displayString("\nROLL DICE TO SEE WHO TAKES THE FIRST TURN");
 		do {
 			for (int i=0; i<GameData.NUM_PLAYERS; i++) {
@@ -98,15 +98,28 @@ public class Main {
 		do {
 			otherPlayerId = (playerId+1)%GameData.NUM_PLAYERS;
 			otherPlayer = players[otherPlayerId];
-
+			Card a= new Card(0, GameData.COUNTRY_NAMES[0]);
+			Card b= new Card(3, GameData.COUNTRY_NAMES[3]);
+			Card c= new Card(6, GameData.COUNTRY_NAMES[6]);
+			Card a2= new Card(1, GameData.COUNTRY_NAMES[1]);
+			Card b2= new Card(2, GameData.COUNTRY_NAMES[2]);
+			Card c2= new Card(4, GameData.COUNTRY_NAMES[4]);
+			currPlayer.addCard(a);
+			currPlayer.addCard(b);
+			currPlayer.addCard(c);
+			currPlayer.addCard(a2);
+			currPlayer.addCard(b2);
+			currPlayer.addCard(c2);
+			ui.displayAllCards(currPlayer);
 			if(currPlayer.hasSetOfCards()){
 				ui.inputExchange(currPlayer);
 			}
-			ui.displayAllCards(currPlayer);
 			// 1. Reinforcements
 			numUnits = board.calcReinforcements(currPlayer);
 			currPlayer.addUnits(numUnits);
 			ui.displayReinforcements(currPlayer, numUnits);
+			Integer numberOfUnits =currPlayer.getNumUnits();
+			ui.displayString(currPlayer.getName() + " has "+ numberOfUnits.toString()+ " armies ");
 			do {
 				ui.inputReinforcement(currPlayer);
 				currPlayer.subtractUnits(ui.getNumUnits());
