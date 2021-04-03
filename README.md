@@ -20,6 +20,16 @@ Step 3. Click run
 //Jar File
 Step 1. Double click the risk.jar
 
+Sprint 4
+======
+
+1.Include the use to territory cards, that is, the winning of territory cards after combat and the exchange of territory cards for reinforcements, 
+according to the rules of Risk☑
+
+2.Users should be allowedto enter just the first letter of the insignias that they wish to exchange, e.g. “III” for exchange of 3 infantry cards.☑
+
+3.The user should receive appropriate error messages if their exchanges are invalid.☑
+
 Sprint 3 
 ======
 
