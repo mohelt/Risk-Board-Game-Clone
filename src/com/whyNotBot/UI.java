@@ -73,6 +73,16 @@ public class UI {
 		displayString(makeLongName(player) + " draws the " + card.getCountryName() + " card");
 		return;
 	}
+	public void displayCardAfterAttack (Player player, Card card) {
+		displayString(makeLongName(player) + " draws the " + card.getCountryName() + " " + card.getUnitType() + " card");
+		return;
+	}
+	public void displayAllCards(Player player) {
+		for(int i =0;i<player.getObtainedCards().size();i++) {
+			displayString(makeLongName(player) + "owns the " +player.getObtainedCards().get(i).getCountryName() + " " +player.getObtainedCards().get(i).getUnitType() + " card");
+		}
+		return;
+	}
 	
 	public void displayDice (Player player) {
 		displayString(makeLongName(player) + " rolls " + player.getDice() );

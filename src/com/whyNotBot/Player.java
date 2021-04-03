@@ -43,6 +43,9 @@ public class Player {
 	public int getId () {
 		return id;
 	}
+	public ArrayList<Card> getObtainedCards () {
+		return obtainedCards;
+	}
 	
 	public String getName () {
 		return name;

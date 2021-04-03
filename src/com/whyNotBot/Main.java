@@ -58,7 +58,7 @@ public class Main {
 		ui.displayRollWinner(currPlayer);
 
 		ui.displayString("\nREINFORCE INITIAL COUNTRIES");
-		for (int r=0; r<2*GameData.NUM_REINFORCE_ROUNDS; r++) {
+		/*for (int r=0; r<2*GameData.NUM_REINFORCE_ROUNDS; r++) {
 			ui.displayReinforcements(currPlayer, 3);
 			currPlayer.addUnits(3);
 			do {
@@ -76,7 +76,7 @@ public class Main {
 			}
 			playerId = (++playerId)%GameData.NUM_PLAYERS;
 			currPlayer = players[playerId];
-		}
+		}*/
 
 		ui.displayString("\nROLL DICE TO SEE WHO TAKES THE FIRST TURN");
 		do {
@@ -101,7 +101,7 @@ public class Main {
 			if(currPlayer.hasSetOfCards()){
 				ui.inputExchange(currPlayer);
 			}
-
+			ui.displayAllCards(currPlayer);
 			// 1. Reinforcements
 			numUnits = board.calcReinforcements(currPlayer);
 			currPlayer.addUnits(numUnits);
@@ -142,8 +142,10 @@ public class Main {
 
 			if(!board.isGameOver() && board.isInvasionSuccess()){
 				// Functionality to give player territory card after winning battle
-				deck.removeCard(deck2.getCard()); // Remove chosen card from Deck
-				currPlayer.addCard(deck2.getCard()); // Give chosen card from deck to attacking player
+				Card chosenCard =deck2.getCard();
+				deck.removeCard(chosenCard); // Remove chosen card from Deck
+				currPlayer.addCard(chosenCard); // Give chosen card from deck to attacking player
+				ui.displayCardAfterAttack(currPlayer,chosenCard);
 			}
 
 			// 3. Fortify
