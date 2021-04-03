@@ -117,16 +117,16 @@ public class Player {
 		// find a set (3) of similar unit type cards
 		// remove first three
 		while (counter < 3){
-			if(obtainedCards.get(counter).getUnitTypeID() == unitTypeId){
-				removeCard(obtainedCards.get(counter));
-			}
 			
 			// if the player owns the country they are trading in, they get 2 extra units added to that country
 			countryId = obtainedCards.get(counter).getCountryId();
 			if (board.checkOccupier(player, countryId)){ //if that player owns the country they are trading in
 				board.addUnits(countryId, player, 2); //adds 2 units to that country
 				ui.displayMap();
-				
+			}
+			//removes the card after adding units
+			if (obtainedCards.get(counter).getUnitTypeID() == unitTypeId){
+				removeCard(obtainedCards.get(counter));
 			}
 			counter++;
 		}
@@ -202,7 +202,7 @@ public class Player {
 
 //		Occupied territories: If any of the 3 cards you trade in shows the picture of a territory you occupy, 
 //		you receive 2 extra armies. You must place both those armies on to that particular territory.
-//		This is handled in remove set
+//		This is handled in removeSet above
 		
 		return total_armies;
 	}

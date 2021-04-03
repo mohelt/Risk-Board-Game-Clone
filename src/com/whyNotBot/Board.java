@@ -181,7 +181,7 @@ public class Board {
 		return winnerId;
 	}
 
-	public boolean checkOccupier(Player player1, int i) {
-		return true;
+	public boolean checkOccupier(Player player, int countryId) {
+		return (occupier[countryId] == player.getId());
 	}
 }

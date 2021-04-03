@@ -293,7 +293,7 @@ public class UI {
 			} else if (message.equalsIgnoreCase("III")) { //infantry
 					if (player.getInfantryCards() >= 3) { //they have 3 or more infantry cards
 						player.addUnits(player.calcCardsToArmiesTrade()); //adds the correct amount of armies
-						player.removeSet(0); // remove set of infantry cards after trade
+						player.removeSet(0, player); // remove set of infantry cards after trade
 						responseOK = true;
 					}else {
 						displayString("You do not have a set of three Infantry cards.");
@@ -301,7 +301,7 @@ public class UI {
 			} else if (message.equalsIgnoreCase("CCC")) { //cavalry
 				if (player.getCavalryCards() >= 3) { //they have 3 or more Cavalry cards
 					player.addUnits(player.calcCardsToArmiesTrade()); //adds the correct amount of armies
-					player.removeSet(1); // remove set of Cavalry cards after trade
+					player.removeSet(1, player); // remove set of Cavalry cards after trade
 					responseOK = true;
 				}else {
 					displayString("You do not have a set of three Cavalry cards.");
@@ -309,7 +309,7 @@ public class UI {
 			} else if (message.equalsIgnoreCase("AAA")) { //artillery
 				if (player.getArtilleryCards() >= 3) { //they have 3 or more artillery cards
 					player.addUnits(player.calcCardsToArmiesTrade()); //adds the correct amount of armies
-					player.removeSet(2); // remove set of Artillery cards after trade
+					player.removeSet(2, player); // remove set of Artillery cards after trade
 					responseOK = true;
 				}else {
 					displayString("You do not have a set of three Artillery cards.");
