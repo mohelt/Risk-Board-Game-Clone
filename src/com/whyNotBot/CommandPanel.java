@@ -1,7 +1,3 @@
-// Team Members:
-//Mohamed Eltayeb Student Number:19349633
-//Cian O'Reilly Student Number:19394833
-//Tom Higgins Student Number: 19343176
 package com.whyNotBot;
 
 import java.awt.event.ActionEvent;
@@ -11,25 +7,26 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.JTextField;
 
-public class CommandPanel extends JPanel  {
 
+public class CommandPanel extends JPanel  {
+	
 	private static final long serialVersionUID = 1L;
 	private static final int FONT_SIZE = 14;
-
+	
 	private JTextField commandField = new JTextField(); 
 	private LinkedList<String> commandBuffer = new LinkedList<String>();
-
+	
 	CommandPanel () {
 		class AddActionListener implements ActionListener {
-			public void actionPerformed(ActionEvent event)	{
-				synchronized (commandBuffer) {
-					commandBuffer.add(commandField.getText());
-					commandField.setText("");
-					commandBuffer.notify();
-				}
-				return;
-			}
-		}
+			   public void actionPerformed(ActionEvent event)	{
+				   synchronized (commandBuffer) {
+					   commandBuffer.add(commandField.getText());
+					   commandField.setText("");
+					   commandBuffer.notify();
+				   }
+		           return;
+			   }
+		   }
 		ActionListener listener = new AddActionListener();
 		commandField.addActionListener(listener);
 		commandField.setFont(new Font("Times New Roman", Font.PLAIN, FONT_SIZE));
@@ -52,5 +49,5 @@ public class CommandPanel extends JPanel  {
 		}
 		return command;
 	}
-
+	
 }

@@ -1,11 +1,10 @@
-// Team Members:
-//Mohamed Eltayeb Student Number:19349633
-//Cian O'Reilly Student Number:19394833
-//Tom Higgins Student Number: 19343176
 package com.whyNotBot;
 
 import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
+
+import java.util.ArrayList;
 
 public class UI {
 
@@ -19,7 +18,7 @@ public class UI {
 	private CommandPanel commandPanel = new CommandPanel();
 	private Parse parse = new Parse();
 	private Board board;
-
+	
 	UI (Board inBoard) {
 		board = inBoard;
 		mapPanel = new MapPanel(board);
@@ -33,31 +32,35 @@ public class UI {
 		frame.setVisible(true);
 		return;
 	}
-
+	
 	public int getCountryId () {
 		return parse.getCountryId();
 	}
-
+	
 	public int getNumUnits () {
 		return parse.getNumUnits();
 	}	
-
+	
 	public boolean isTurnEnded() {
 		return parse.isTurnEnded();
 	}
-
+	
 	public int getFromCountryId () {
 		return parse.getFromCountryId();
 	}
-
+	
 	public int getToCountryId () {
 		return parse.getToCountryId();
 	}
-
-	private String makeLongName (Player player) {
+	
+	public int[] getInsigniaIds () {
+		return parse.getInsigniaIds();
+	}
+	
+	public String makeLongName (Player player) {
 		return player.getName() + " (" + mapPanel.getColorName(player.getId()) + ")";
 	}
-
+	
 	public void displayMap () {
 		mapPanel.refresh();
 		return;
@@ -67,52 +70,47 @@ public class UI {
 		infoPanel.addText(string);
 		return;
 	}
-
+	
 	public void displayName (int playerId, String name) {
 		displayString("Neutral player " + (playerId+1) + " is " + mapPanel.getColorName(playerId));
 		return;		
 	}
 
 	public void displayCardDraw (Player player, Card card) {
-		displayString(makeLongName(player) + " draws the " + card.getCountryName() + " card");
+		displayString(makeLongName(player) + " draws the " + card.getCountryName() + " " + card.getInsigniaName() + " card");
 		return;
 	}
-	public void displayCardAfterAttack (Player player, Card card) {
-		displayString(makeLongName(player) + " draws the " + card.getCountryName() + " " + card.getUnitType() + " card");
-		return;
-	}
-	public void displayAllCards(Player player) {
-		for(int i =0;i<player.getObtainedCards().size();i++) {
-			displayString(makeLongName(player) + "owns the " +player.getObtainedCards().get(i).getCountryName() + " " +player.getObtainedCards().get(i).getUnitType() + " card");
-		}
-		return;
-	}
-
+	
 	public void displayDice (Player player) {
 		displayString(makeLongName(player) + " rolls " + player.getDice() );
 		return;
 	}
-
+	
 	public void displayRollWinner (Player player) {
 		displayString(makeLongName(player)  + " wins roll and goes first");
 		return;
 	}
-
-	public void displayReinforcements (Player player, int numUnits) {
-		displayString(makeLongName(player) + " gets " + numUnits + " reinforcements.");
+	
+	public void displayReinforcements (Player player) {
+		displayString(makeLongName(player) + " has " + player.getNumUnits() + " reinforcements.");
 		return;
 	}
-
+	
 	public void displayNumUnits (Player player) {
 		String message = makeLongName(player) + " has " + player.getNumUnits() + " units";
 		displayString(message);
 		return;
 	}
-
+	
+	public void displayWinner (Player player) {
+		displayString(makeLongName(player) + " wins the game!");
+		return;
+	}
+	
 	public void displayBattle (Player attackPlayer, Player defencePlayer) {
 		String message;
-		message = makeLongName(attackPlayer) + "'s roll was " + attackPlayer.getDice() + " and ";
-		message += makeLongName(defencePlayer) + "'s roll was " + defencePlayer.getDice();
+		message = makeLongName(attackPlayer) + " rolls " + attackPlayer.getDice() + " and ";
+		message += makeLongName(defencePlayer) + " rolls " + defencePlayer.getDice();
 		displayString(message);
 		if (attackPlayer.getBattleLoss()==1) {
 			message = makeLongName(attackPlayer) + " loses 1 unit and ";
@@ -127,35 +125,71 @@ public class UI {
 		displayString(message);
 		return;
 	}
-
-	public void displayWinner (Player player) {
-		displayString(makeLongName(player) + " wins the game!");
+	
+	public void displayCards (Player player) {
+		String message;
+		ArrayList<Card> cards = player.getCards();
+		message = makeLongName(player);
+		if (cards.size() == 0) {
+			message += " has no cards ";
+		} else {
+			message += " has " + cards.size() + " cards : ";
+			for (int i=0; i<cards.size(); i++) {
+				message += cards.get(i).getInsigniaName() + " ";
+			}
+		}
+		displayString(message);
 		return;
 	}
-
-	public String inputName (int playerId) {
+	
+	public void displayCannotExchange (Player player) {
+		String message;
+		message = makeLongName(player) + " cannot exchange any cards";
+		displayString(message);
+		return;
+	}
+	
+	public void displayCardsWon (Player attackPlayer, Player defencePlayer, ArrayList<Card> cards) {
+		String message;
+		message = makeLongName(attackPlayer) + " eliminated " + makeLongName(defencePlayer) + " and gets their cards ";
+		for (int i=0; i<cards.size(); i++) {
+			message += cards.get(i).getInsigniaName() + " ";
+		}
+		displayString(message);
+		return;
+	}
+	
+	public String inputName (Player player) {
 		String response;
-		displayString("Enter the name for player " + (playerId+1) + " (" + mapPanel.getColorName(playerId) + "):");
-		response = commandPanel.getCommand();
+		displayString("Enter the name for player " + (player.getId()+1) + " (" + mapPanel.getColorName(player.getId()) + "):");
+		if (player.isBot()) {
+			response = player.getBot().getName();
+		} else {
+			response = commandPanel.getCommand();
+		}
 		response.trim();
 		displayString(PROMPT + response);
 		return response;		
 	}
-
+		
 	public void inputReinforcement (Player player) {
 		String response, message;
 		boolean responseOK = false;
 		do {
 			message = makeLongName(player) + ": REINFORCE: Enter a country to reinforce and the number of units";
 			displayString(message);
-			response = commandPanel.getCommand();
+			if (player.isBot()) {
+				response = player.getBot().getReinforcement();
+			} else {
+				response = commandPanel.getCommand();
+			}
 			displayString(PROMPT + response);
 			parse.countryNumber(response);
 			if (parse.isError()) {
 				displayString("Error: Incorrect command");
 			} else if (board.getOccupier(getCountryId()) != player.getId()) {
 				displayString("Error: Cannot place the units in that country");
-			} else if (parse.getNumUnits() > player.getNumUnits()) {
+			} else if (getNumUnits() > player.getNumUnits()) {
 				displayString("Error: Not enough units");
 			} else {
 				responseOK = true;
@@ -170,7 +204,11 @@ public class UI {
 		do {
 			message = makeLongName(byPlayer) + ": REINFORCE: Enter a country occupied by " + makeLongName(forPlayer) + " to reinforce by 1 unit";
 			displayString(message);
-			response = commandPanel.getCommand();
+			if (byPlayer.isBot()) {
+				response = byPlayer.getBot().getPlacement(forPlayer.getId());
+			} else {
+				response = commandPanel.getCommand();
+			}
 			displayString(PROMPT + response);
 			parse.country(response);
 			if (parse.isError()) {
@@ -190,7 +228,11 @@ public class UI {
 		do {
 			message = makeLongName(player) + ": ATTACK: Enter country to attack from, country to attack and number of units to use, or enter skip";
 			displayString(message);
-			response = commandPanel.getCommand();
+			if (player.isBot()) {
+				response = player.getBot().getBattle();
+			} else {
+				response = commandPanel.getCommand();
+			}
 			displayString(PROMPT + response);
 			parse.countryCountryNumber(response);
 			if (parse.isError()) {
@@ -202,12 +244,12 @@ public class UI {
 			} else if (board.getOccupier(getToCountryId()) == player.getId()) {
 				displayString("Error: Cannot invade your own country");
 			} else if (!board.isAdjacent(getFromCountryId(),parse.getToCountryId())) {
-				displayString("Error: Countries not neighbours");				
+				displayString("Error: Countries are not neighbours");				
 			} else if (getNumUnits() >= board.getNumUnits(getFromCountryId())) {
 				displayString("Error: Not enough units in the attacking country, must leave 1 behind");
 			} else if (board.getNumUnits(getFromCountryId()) < GameData.ATTACK_MIN_IN_COUNTRY) {
 				displayString("Error: Must have 2 or more units in the attacking country");
-			} else if (parse.getNumUnits() > GameData.ATTACK_MAX) {
+			} else if (getNumUnits() > GameData.ATTACK_MAX) {
 				displayString("Error: The maximum number of units that can used to attack is 3");
 			} else {
 				responseOK = true;
@@ -215,16 +257,20 @@ public class UI {
 		} while (!responseOK);
 		return;
 	}
-
+	
 	public void inputDefence (Player player, int countryId) {
 		String response, message;
 		boolean responseOK = false;
 		do {
 			message = makeLongName(player) + ": DEFEND: Enter number of units to defend with";
 			displayString(message);
-			response = commandPanel.getCommand();
+			if (player.isBot()) {
+				response = player.getBot().getDefence(countryId);
+			} else {
+				response = commandPanel.getCommand();
+			}
 			displayString(PROMPT + response);
-			parse.number(response);
+			parse.numUnits(response);
 			if (parse.isError()) {
 				displayString("Error: Incorrect command");
 			} else if (getNumUnits() > GameData.DEFEND_MAX) {
@@ -244,9 +290,13 @@ public class UI {
 		do {
 			message = makeLongName(player) + ": MOVE IN: How many units do you wish to move in";
 			displayString(message);
-			response = commandPanel.getCommand();
+			if (player.isBot()) {
+				response = player.getBot().getMoveIn(attackCountryId);
+			} else {
+				response = commandPanel.getCommand();
+			}
 			displayString(PROMPT + response);
-			parse.number(response);
+			parse.numUnits(response);
 			if (parse.isError()) {
 				displayString("Error: Incorrect command");
 			} else if (getNumUnits() >= board.getNumUnits(attackCountryId)) {
@@ -257,14 +307,18 @@ public class UI {
 		} while (!responseOK);
 		return;		
 	}
-
+	
 	public void inputFortify (Player player) {
 		String response, message;
 		boolean responseOK = false;
 		do {
 			message = makeLongName(player) + ": FORTIFY: Enter country to move units from, country to fortify and number of units to move, or enter skip";
 			displayString(message);
-			response = commandPanel.getCommand();
+			if (player.isBot()) {
+				response = player.getBot().getFortify();
+			} else {
+				response = commandPanel.getCommand();
+			}
 			displayString(PROMPT + response);
 			parse.countryCountryNumber(response);
 			if (parse.isError()) {
@@ -285,62 +339,35 @@ public class UI {
 		} while (!responseOK);
 		return;		
 	}
-
-	// check first if the player has 3 of the same cards and then call this function
-
-	// iterate through player.obtainedCards to see if they have 3 the same types
-
-	public void inputExchange (Player player) {
+	
+	public void inputCardExchange (Player player) {
 		String response, message;
 		boolean responseOK = false;
 		do {
-			displayString("You have a set of cards.");
-			message = makeLongName(player) + ": EXCHANGE: Trade 3 cards of the same type for reinforcements or type 'skip' to skip";
+			message = makeLongName(player) + ": EXCHANGE: Enter 3 cards to exchange (just first letter), or enter skip if less than 5 cards";
 			displayString(message);
-			response = commandPanel.getCommand();
-			displayString(PROMPT + response);
-
-			if (response.isEmpty()) { //if the player enters nothing
-				displayString("Error: No Input");
-			} else if (response.length() > 4) { //this input is too big
-				displayString("Error: Invalid input");
-			} else if (response.equalsIgnoreCase("III")) { //infantry
-				if (player.getInfantryCards() >= 3) { //they have 3 or more infantry cards
-					Integer armies = player.calcCardsToArmiesTrade();
-					player.addUnits(armies); //adds the correct amount of armies
-					displayString(makeLongName(player) +" added "+armies.toString() +" armies. ");
-					player.removeSet(0, player); // remove set of infantry cards after trade
-					responseOK = true;
-				}else {
-					displayString("You do not have a set of three Infantry cards.");
-				}
-			} else if (response.equalsIgnoreCase("CCC")) { //cavalry
-				if (player.getCavalryCards() >= 3) { //they have 3 or more Cavalry cards
-					Integer armies = player.calcCardsToArmiesTrade();
-					player.addUnits(armies); //adds the correct amount of armies
-					displayString(makeLongName(player) +" added "+armies.toString() +" armies. ");
-					player.removeSet(1, player); // remove set of Cavalry cards after trade
-					responseOK = true;
-				}else {
-					displayString("You do not have a set of three Cavalry cards.");
-				}
-			} else if (response.equalsIgnoreCase("AAA")) { //artillery
-				if (player.getArtilleryCards() >= 3) { //they have 3 or more artillery cards
-					Integer armies = player.calcCardsToArmiesTrade();
-					player.addUnits(armies); //adds the correct amount of armies
-					displayString(makeLongName(player) +" added "+armies.toString() +" armies. ");
-					player.removeSet(2, player); // remove set of Artillery cards after trade
-					responseOK = true;
-				}else {
-					displayString("You do not have a set of three Artillery cards.");
-				}
-			} else if (response.equalsIgnoreCase("skip")) { //skip
-				responseOK = true;
+			if (player.isBot()) {
+				response = player.getBot().getCardExchange();
 			} else {
-				displayString("Error: Invalid input");
+				response = commandPanel.getCommand();
 			}
-		} while (!responseOK);
-		return;		
+			displayString(PROMPT + response);
+			parse.cardExchange(response);
+			if (parse.isError()) {
+				displayString("Error: Incorrect command");
+			} else if (parse.isTurnEnded() && player.isForcedExchange()) {
+				displayString("Error: Cannot skip, forced exchange");
+			} else if (parse.isTurnEnded()) {
+				responseOK = true;
+			} else if (!Deck.isASet(getInsigniaIds())) {
+				displayString("Error: Not a set");
+			} else if (!player.isCardsAvailable(getInsigniaIds())) {
+				displayString("Error: Cards not available");
+			} else {
+				responseOK = true;
+			}
+		} while (!responseOK);		
+		return;
 	}
 }
 

@@ -1,35 +1,40 @@
-// Team Members:
-//Mohamed Eltayeb Student Number:19349633
-//Cian O'Reilly Student Number:19394833
-//Tom Higgins Student Number: 19343176
 package com.whyNotBot;
 
-public class Main {
+import java.util.ArrayList;
 
-	public static void main (String args[]) {	
-		SplashScreen splash =new SplashScreen();
+public class Main {
+	
+	public static void main (String args[]) {	   
 		Board board = new Board();
 		UI ui = new UI(board);
 		Player[] players = new Player[GameData.NUM_PLAYERS_PLUS_NEUTRALS];
 		Player currPlayer, otherPlayer, defencePlayer;
+		Deck deck;
 		Card card;
-		int playerId, otherPlayerId, numUnits, numCards, attackUnits, defenceUnits, countryId, attackCountryId, defenceCountryId;
+		ArrayList<Card> cards;
+		int playerId, otherPlayerId, numUnits, numCards, attackUnits, defenceUnits;
+		int countryId, attackCountryId, defenceCountryId, countriesInvaded;
 		String name;
-
+		
 		ui.displayString("ENTER PLAYER NAMES");
 		ui.displayMap();
 		for (playerId=0; playerId<GameData.NUM_PLAYERS_PLUS_NEUTRALS; playerId++) {
+			players[playerId] = new Player (playerId);
+			if (playerId == 1) {
+				players[playerId].setBot(new WhyNotBot(board,players[playerId]));
+			}
 			if (playerId < GameData.NUM_PLAYERS) {
-				name = ui.inputName(playerId);
+				name = ui.inputName(players[playerId]);
+				players[playerId].setName(name);
 			} else {
 				name = "Neutral " + (playerId - GameData.NUM_PLAYERS + 1);
 				ui.displayName(playerId,name);
+				players[playerId].setName(name);
 			}
-			players[playerId] = new Player (playerId, name, 0);
 		}
-
+		
 		ui.displayString("\nDRAW TERRITORY CARDS FOR STARTING COUNTRIES");
-		Deck deck = new Deck();
+		deck = new Deck(Deck.NO_WILD_CARD_DECK);
 		for (playerId=0; playerId<GameData.NUM_PLAYERS_PLUS_NEUTRALS; playerId++) {
 			currPlayer = players[playerId];
 			if (playerId < GameData.NUM_PLAYERS) {
@@ -37,16 +42,15 @@ public class Main {
 			} else {
 				numCards = GameData.INIT_COUNTRIES_NEUTRAL;
 			}
-			for (int c=0; c<numCards; c++) {
+			for (int i=0; i<numCards; i++) {
 				card = deck.getCard();
 				ui.displayCardDraw(currPlayer, card);
-				board.addUnits(card, currPlayer, 1);
+				board.occupy(card.getCountryId(), currPlayer.getId());
+				board.addUnits(card.getCountryId(), 1);
 			}
 		}
 		ui.displayMap();
-
-		Deck deck2 = new Deck();
-
+		
 		ui.displayString("\nROLL DICE TO SEE WHO REINFORCES THEIR COUNTRIES FIRST");
 		do {
 			for (int i=0; i<GameData.NUM_PLAYERS; i++) {
@@ -61,34 +65,35 @@ public class Main {
 		}
 		currPlayer = players[playerId];
 		ui.displayRollWinner(currPlayer);
-
+		
 		ui.displayString("\nREINFORCE INITIAL COUNTRIES");
 		for (int r=0; r<2*GameData.NUM_REINFORCE_ROUNDS; r++) {
-			ui.displayReinforcements(currPlayer, 3);
 			currPlayer.addUnits(3);
+			ui.displayReinforcements(currPlayer);
 			do {
 				ui.inputReinforcement(currPlayer);
 				currPlayer.subtractUnits(ui.getNumUnits());
-				board.addUnits(ui.getCountryId(), currPlayer, ui.getNumUnits());
+				board.addUnits(ui.getCountryId(), ui.getNumUnits());
 				ui.displayMap();
 			} while (currPlayer.getNumUnits() > 0);
 			ui.displayMap();
 			for (int p=GameData.NUM_PLAYERS; p<GameData.NUM_PLAYERS_PLUS_NEUTRALS; p++) {
 				ui.inputPlacement(currPlayer, players[p]);
 				countryId = ui.getCountryId();
-				board.addUnits(countryId, players[p], 1);
+				board.addUnits(countryId, 1);	
 				ui.displayMap();
 			}
 			playerId = (++playerId)%GameData.NUM_PLAYERS;
 			currPlayer = players[playerId];
 		}
+			
 		ui.displayString("\nROLL DICE TO SEE WHO TAKES THE FIRST TURN");
 		do {
 			for (int i=0; i<GameData.NUM_PLAYERS; i++) {
 				players[i].rollDice(1);
 				ui.displayDice(players[i]);
 			}
-		} while (players[0].getDie(0) == players[1].getDie(0));
+		} while (players[0].getDie(0) == players[1].getDie(0)); 
 		if (players[0].getDie(0) > players[1].getDie(0)) {
 			playerId = 0;
 		} else {
@@ -96,48 +101,56 @@ public class Main {
 		}
 		currPlayer = players[playerId];
 		ui.displayRollWinner(currPlayer);
-
+		
+		deck = new Deck(Deck.WILD_CARD_DECK);		
+		
+		// TEST CODE TO GIVE PLAYERS 6 CARDS TO START WITH
+//		for (int i=0; i<GameData.NUM_PLAYERS; i++) {
+//			for (int j=0; j<6; j++) {
+//				card = deck.getCard();
+//				players[i].addCard(card);
+//				ui.displayCardDraw(players[i],card);
+//			}
+//		}
+		
 		ui.displayString("\nSTART TURNS");
 		do {
 			otherPlayerId = (playerId+1)%GameData.NUM_PLAYERS;
 			otherPlayer = players[otherPlayerId];
 			
-			/*
-			//code to test territory cards
-			Card a= new Card(0, GameData.COUNTRY_NAMES[0]);
-			Card b= new Card(3, GameData.COUNTRY_NAMES[3]);
-			Card c= new Card(6, GameData.COUNTRY_NAMES[6]);
-			Card a2= new Card(1, GameData.COUNTRY_NAMES[1]);
-			Card b2= new Card(2, GameData.COUNTRY_NAMES[2]);
-			Card c2= new Card(4, GameData.COUNTRY_NAMES[4]);
-			currPlayer.addCard(a);
-			currPlayer.addCard(b);
-			currPlayer.addCard(c);
-			currPlayer.addCard(a2);
-			currPlayer.addCard(b2);
-			currPlayer.addCard(c2);
-			*/
-
-			ui.displayAllCards(currPlayer);
-			if(currPlayer.hasSetOfCards()){
-				ui.inputExchange(currPlayer);
-			}
-			// 1. Reinforcements
+			// 1. Reinforcements from occupied countries & continents
 			numUnits = board.calcReinforcements(currPlayer);
 			currPlayer.addUnits(numUnits);
-			ui.displayReinforcements(currPlayer, numUnits);
-			Integer numberOfUnits =currPlayer.getNumUnits();
-			ui.displayString(currPlayer.getName() + " has "+ numberOfUnits.toString()+ " armies ");
+			ui.displayReinforcements(currPlayer);
+			// 1. Reinforcements from cards
+			if (!currPlayer.isOptionalExchange()) {	
+				ui.displayCards(currPlayer);
+				ui.displayCannotExchange(currPlayer);
+			} else {
+				do {
+					ui.displayCards(currPlayer);
+					ui.inputCardExchange(currPlayer);		
+					if (!ui.isTurnEnded()) {
+						board.calcCardExchange(currPlayer);
+						cards = currPlayer.subtractCards(ui.getInsigniaIds());
+						deck.addCards(cards);
+						ui.displayReinforcements(currPlayer);
+					}
+				} while (currPlayer.isOptionalExchange() && !ui.isTurnEnded());
+				if (!currPlayer.isOptionalExchange() && !ui.isTurnEnded()) {
+					ui.displayCannotExchange(currPlayer);					
+				}
+			} 
 			do {
+				ui.displayReinforcements(currPlayer);
 				ui.inputReinforcement(currPlayer);
 				currPlayer.subtractUnits(ui.getNumUnits());
-				board.addUnits(ui.getCountryId(),currPlayer,ui.getNumUnits());
+				board.addUnits(ui.getCountryId(),ui.getNumUnits());	
 				ui.displayMap();
 			} while (currPlayer.getNumUnits() > 0);
 
-			//setting the board invasion success to false at the beginning of each turn so that bug doesn't appear
-			board.invasionSuccess = false;
 			// 2. Combat
+			countriesInvaded = 0;
 			do {
 				ui.inputBattle(currPlayer);
 				if (!ui.isTurnEnded()) {
@@ -154,42 +167,57 @@ public class Main {
 					board.calcBattle(currPlayer,defencePlayer,attackCountryId,defenceCountryId,attackUnits,defenceUnits);
 					ui.displayBattle(currPlayer,defencePlayer);
 					ui.displayMap();
+					if (board.isInvasionSuccess()) {
+						countriesInvaded++;						
+					}
 					if ( board.isInvasionSuccess() && (board.getNumUnits(attackCountryId) > 1) ) {
 						ui.inputMoveIn(currPlayer,attackCountryId);
 						board.subtractUnits(attackCountryId, ui.getNumUnits());
-						board.addUnits(defenceCountryId, currPlayer, ui.getNumUnits());
+						board.addUnits(defenceCountryId, ui.getNumUnits());
 						ui.displayMap();
 					}
-				}
-
+					if ( board.isInvasionSuccess() && (board.isEliminated(defencePlayer.getId())) ) {
+						cards = defencePlayer.removeCards();
+						currPlayer.addCards(cards);
+						ui.displayCardsWon(currPlayer,defencePlayer,cards);  // No cards received from passive neutrals
+						while (currPlayer.isForcedExchange()) {
+							ui.displayCards(currPlayer);
+							ui.inputCardExchange(currPlayer);
+							board.calcCardExchange(currPlayer);
+							cards = currPlayer.subtractCards(ui.getInsigniaIds());
+							deck.addCards(cards);
+							ui.displayReinforcements(currPlayer);
+						}
+					}
+				} 
+				
 			} while (!ui.isTurnEnded() && !board.isGameOver());
-
-			if(!board.isGameOver() && board.isInvasionSuccess()){
-				// Functionality to give player territory card after winning battle
-				Card chosenCard =deck2.getCard();
-				deck.removeCard(chosenCard); // Remove chosen card from Deck
-				currPlayer.addCard(chosenCard); // Give chosen card from deck to attacking player
-				ui.displayCardAfterAttack(currPlayer,chosenCard);
-			}
 
 			// 3. Fortify
 			if (!board.isGameOver()) {
 				ui.inputFortify(currPlayer);
 				if (!ui.isTurnEnded()) {
 					board.subtractUnits(ui.getFromCountryId(), ui.getNumUnits());
-					board.addUnits(ui.getToCountryId(), currPlayer, ui.getNumUnits());
+					board.addUnits(ui.getToCountryId(), ui.getNumUnits());
 					ui.displayMap();
 				}
+			}			
+			
+			// 4. Territory Card
+			if (countriesInvaded > 0) {
+				card = deck.getCard();
+				currPlayer.addCard(card);
+				ui.displayCardDraw(currPlayer,card);
 			}
 
 			playerId = (playerId+1)%GameData.NUM_PLAYERS;
 			currPlayer = players[playerId];			
 
 		} while (!board.isGameOver());
-
+		
 		ui.displayWinner(players[board.getWinner()]);
 		ui.displayString("GAME OVER");
-
+		
 		return;
 	}
 
