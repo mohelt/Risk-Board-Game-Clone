@@ -17,13 +17,24 @@ public class WhyNotBot implements Bot {
 	private PlayerAPI player;
 	ArrayList<Territory> borderTerritories;
 	private int personalId,enemyIdentification;
+	private ArrayList<Territory> territories;
 	WhyNotBot (BoardAPI inBoard, PlayerAPI inPlayer) {
 		board = inBoard;	
 		player = inPlayer;
 		personalId = getPersonalIdentification();
 		enemyIdentification = getEnemyIdentification();
+		territories = createTerritories();
 		// put your code here
 		return;
+	}
+
+	private ArrayList<Territory> createTerritories() {
+		// TODO Auto-generated method stub
+		ArrayList<Territory> allTerritories = new ArrayList<>();
+		for(int i=0; i<GameData.NUM_COUNTRIES; i++){
+			allTerritories.add(new Territory(i));
+		}
+		return allTerritories;
 	}
 
 	private int getEnemyIdentification() {
@@ -109,9 +120,20 @@ public class WhyNotBot implements Bot {
 	public String getPlacement (int forPlayer) {
 		String command = "";
 		// put your code here
-		command = GameData.COUNTRY_NAMES[(int)(Math.random() * GameData.NUM_COUNTRIES)];
+		command = getRandomNeutral(forPlayer);
 		command = command.replaceAll("\\s", "");
 		return(command);
+	}
+
+	private String getRandomNeutral(int forPlayer) {
+		ArrayList<Territory> ownedTerritories = new ArrayList<>();
+		
+		for(Territory i:territories){
+			if(i.ownerTerritory() == forPlayer){
+				ownedTerritories.add(i);
+			}
+		}
+		return ownedTerritories.get((int)(Math.random() * ownedTerritories.size() -1)).nameOfTerritory;
 	}
 
 	public String getCardExchange () {
