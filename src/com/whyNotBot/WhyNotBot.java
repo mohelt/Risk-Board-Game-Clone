@@ -12,7 +12,28 @@ public class WhyNotBot implements Bot {
 	// WhyNotBot may not alter the state of the board or the player objects
 	// It may only inspect the state of the board and the player objects
 	// So you can use player.getNumUnits() but you can't use player.addUnits(10000), for example
+	
+	class Territory {
+		public int indexNumber;
+		public String nameOfTerritory;
+		public int continentTerritory;
+		public int[] adjacentTerritorys;
 
+		public Territory(int ind) {
+			indexNumber = ind;
+			nameOfTerritory = GameData.COUNTRY_NAMES[indexNumber];
+			adjacentTerritorys = GameData.ADJACENT[indexNumber];
+			continentTerritory = GameData.CONTINENT_IDS[indexNumber];
+		}
+
+		public int numberOfUnits(){ return board.getNumUnits(indexNumber);}
+
+		public Boolean hasOwnerTerritory(){return board.isOccupied(indexNumber);}
+
+		public int ownerTerritory(){return board.getOccupier(indexNumber);}
+
+	}
+	
 	private BoardAPI board;
 	private PlayerAPI player;
 	ArrayList<Territory> borderTerritories;
@@ -33,6 +54,7 @@ public class WhyNotBot implements Bot {
 		// TODO Auto-generated method stub
 		ArrayList<Territory> allTerritories = new ArrayList<>();
 		for(int i=0; i<GameData.NUM_COUNTRIES; i++){
+			//code creates a territory object for each country
 			allTerritories.add(new Territory(i));
 		}
 		return allTerritories;
@@ -56,26 +78,7 @@ public class WhyNotBot implements Bot {
 		command = "WhyNotBot";
 		return(command);
 	}
-	class Territory {
-		public int indexNumber;
-		public String nameOfTerritory;
-		public int continentTerritory;
-		public int[] adjacentTerritorys;
 
-		public Territory(int ind) {
-			indexNumber = ind;
-			nameOfTerritory = GameData.COUNTRY_NAMES[indexNumber];
-			adjacentTerritorys = GameData.ADJACENT[indexNumber];
-			continentTerritory = GameData.CONTINENT_IDS[indexNumber];
-		}
-
-		public int numberOfUnits(){ return board.getNumUnits(indexNumber);}
-
-		public Boolean hasOwnerTerritory(){return board.isOccupied(indexNumber);}
-
-		public int ownerTerritory(){return board.getOccupier(indexNumber);}
-
-	}
 	private void getBorderingTerritories(int flag){
 		for (int i=0; i<GameData.NUM_COUNTRIES; i++){
 			if (board.getOccupier(i) == personalId){
@@ -98,10 +101,58 @@ public class WhyNotBot implements Bot {
 			return new Integer(a.numberOfUnits()).compareTo(new Integer(b.numberOfUnits()));
 		}
 	};
+	public class AttackMoves{
+		int attackerUnits, defenderUnits, attackID, defendID;
+		double probability = 0;
 
+		public AttackMoves(int a, int d){
+			attackID = a;
+			defendID = d;
+			attackerUnits = board.getNumUnits(a);
+			defenderUnits = board.getNumUnits(d);
+			probability = calculateProb(attackerUnits, defenderUnits);
+		}
+
+		private double calculateProb(int attackerUnits, int defenderUnits) {
+			if(attackerUnits>(defenderUnits+5) && ((attackerUnits-10) <defenderUnits)) {
+				return 0.6;	
+			}
+			else if(attackerUnits>(defenderUnits+10) &&((attackerUnits-15) <defenderUnits)) {
+				return 0.75;	
+			}
+			else if(attackerUnits>(defenderUnits+15) &&((attackerUnits-20) <defenderUnits)) {
+				return 0.9;
+			}
+			else if(attackerUnits>(defenderUnits+20) &&((attackerUnits-25) <defenderUnits)) {
+				return 0.95;
+			}else if (defenderUnits>(attackerUnits+5) && ((defenderUnits-10) <attackerUnits)) {
+				return 0.4;
+			}else if (defenderUnits>(attackerUnits+10) && ((defenderUnits-15) <attackerUnits)) {
+				return 0.25;
+			}
+			else if (defenderUnits>(attackerUnits+15) && ((defenderUnits-20) <attackerUnits)) {
+				return 0.1;
+			}
+			else if (defenderUnits>(attackerUnits+20) && ((defenderUnits-25) <attackerUnits)) {
+				return 0.05;
+			}
+			else {
+				return 0.5;
+			}
+		}
+	}
+
+	Comparator<AttackMoves> compareAttackByProbability = new Comparator<AttackMoves>() {
+		@Override
+		public int compare(AttackMoves a, AttackMoves b) {
+			return new Double(a.probability).compareTo(b.probability);
+		}
+	};
+	
 	public String getReinforcement () {
 		String command = "";
 		String territory = "";
+		//gets an arraylist with all the bordering territories
 		borderTerritories = new ArrayList<Territory>();
 		getBorderingTerritories(0);
 		if(borderTerritories.size() != 0){
@@ -150,56 +201,22 @@ public class WhyNotBot implements Bot {
 
 	public String getCardExchange () {
 		String command = "";
-		// put your code here
-		command = "skip";
-		return(command);
-	}
-	public class AttackMoves{
-		int attackerUnits, defenderUnits, attackID, defendID;
-		double probability = 0;
-
-		public AttackMoves(int a, int d){
-			attackID = a;
-			defendID = d;
-			attackerUnits = board.getNumUnits(a);
-			defenderUnits = board.getNumUnits(d);
-			probability = calculateProb(attackerUnits, defenderUnits);
+		ArrayList<Card> Cards = player.getCards();
+		int[] c = {0,0,0,0};
+		for(Card card: Cards){
+			c[card.getInsigniaId()]++;
 		}
-
-		private double calculateProb(int attackerUnits, int defenderUnits) {
-			if(attackerUnits>(defenderUnits+5) && ((attackerUnits-10) <defenderUnits)) {
-				return 0.6;	
-			}
-			else if(attackerUnits>(defenderUnits+10) &&((attackerUnits-15) <defenderUnits)) {
-				return 0.75;	
-			}
-			else if(attackerUnits>(defenderUnits+15) &&((attackerUnits-20) <defenderUnits)) {
-				return 0.9;
-			}
-			else if(attackerUnits>(defenderUnits+20) &&((attackerUnits-25) <defenderUnits)) {
-				return 0.95;
-			}else if (defenderUnits>(attackerUnits+5) && ((defenderUnits-10) <attackerUnits)) {
-				return 0.4;
-			}else if (defenderUnits>(attackerUnits+10) && ((defenderUnits-15) <attackerUnits)) {
-				return 0.25;
-			}
-			else if (defenderUnits>(attackerUnits+15) && ((defenderUnits-20) <attackerUnits)) {
-				return 0.1;
-			}
-			else if (defenderUnits>(attackerUnits+20) && ((defenderUnits-25) <attackerUnits)) {
-				return 0.05;
-			}
-			else {
-				return 0.5;
-			}
+		if(c[0] >= 3){
+			return "iii";
+		}
+		if(c[1] >= 3){
+			return "ccc";
+		}
+		if(c[2] >= 3){
+			return "aaa";
 		}
 	}
-	Comparator<AttackMoves> compareAttackByProbability = new Comparator<AttackMoves>() {
-		@Override
-		public int compare(AttackMoves a, AttackMoves b) {
-			return new Double(a.probability).compareTo(b.probability);
-		}
-	};
+
 
 	public String getBattle () {
 		String command = "";
