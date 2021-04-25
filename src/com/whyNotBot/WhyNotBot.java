@@ -200,21 +200,22 @@ public class WhyNotBot implements Bot {
 	}
 
 	public String getCardExchange () {
-		String command = "";
+		String command = "skip";
 		ArrayList<Card> Cards = player.getCards();
 		int[] c = {0,0,0,0};
 		for(Card card: Cards){
 			c[card.getInsigniaId()]++;
 		}
 		if(c[0] >= 3){
-			return "iii";
+			command = "iii";
 		}
 		if(c[1] >= 3){
-			return "ccc";
+			command ="ccc";
 		}
 		if(c[2] >= 3){
-			return "aaa";
+			command ="aaa";
 		}
+		return command;
 	}
 
 
