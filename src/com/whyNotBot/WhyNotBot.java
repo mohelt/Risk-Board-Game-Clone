@@ -175,4 +175,57 @@ public class WhyNotBot implements Bot {
 		return(command);
 	}
 
+	public int bestContinentToAttack() {
+		int bestContinent = 0; // 1.NA 2.Europe 3.Asia 4.Austraila 5.SA 6.Africa
+		int botId = player.getId();
+		int countriesInNA = 0, countriesInSA = 0, countriesInEurope = 0, countriesInAfrica = 0, countriesInAsia = 0, countriesInAustralia = 0;
+		float percentOfNA = 0, percentOfSA = 0, percentOfEurope = 0, percentOfAfrica = 0, percentOfAsia = 0, percentOfAustralia = 0;
+		
+		// scan through all countries
+		for(int i=0;i<GameData.NUM_COUNTRIES;i++) {
+			// if we own the country
+			if(botId == board.getOccupier(i)) { //calculates how much countries we have in each continent
+				if((i>=0) && (i<=8)) {countriesInNA++;}
+				if((i>=9) && (i<=15)) {countriesInEurope++;}
+				if((i>=16) && (i<=27)) {countriesInAsia++;}//////
+				if((i>=28) && (i<=31)) {countriesInAustralia++;}
+				if((i>=32) && (i<=35)) {countriesInSA++;}
+				if((i>=36) && (i<=41)) {countriesInAfrica++;}
+			}
+		}
+		percentOfNA = countriesInNA / 9;
+		percentOfEurope = countriesInEurope / 7;
+		percentOfAsia = countriesInAsia / 12;
+		percentOfAustralia = countriesInAustralia / 4;
+		percentOfSA = countriesInSA / 4;
+		percentOfAfrica = countriesInAfrica / 6;
+		
+		highestPercent(percentOfNA, percentOfEurope, percentOfAsia, percentOfAustralia, percentOfSA, percentOfAfrica);
+		
+		
+		return bestContinent;
+	}
+	
+private float highestPercent(float a, float b, float c,float d, float e, float f) {
+		
+		if((a>=b) && (a>=c) && (a>=d) && (a>=e) && (a>=f)) {
+			return a;
+		}
+		if((b>=a) && (b>=c) && (b>=d) && (b>=e) && (b>=f)) {
+			return b;
+		}
+		if((c>=a) && (c>=b) && (c>=d) && (c>=e) && (c>=f)) {
+			return c;
+		}
+		if((d>=a) && (d>=b) && (d>=c) && (d>=e) && (d>=f)) {
+			return d;
+		}
+		if((e>=a) && (e>=b) && (e>=c) && (e>=d) && (e>=f)) {
+			return e;
+		}
+		if((f>=a) && (f>=b) && (f>=c) && (f>=d) && (d>=e)) {
+			return f;
+		}
+		return e;
+	}
 }
