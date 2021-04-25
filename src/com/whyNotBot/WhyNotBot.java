@@ -272,7 +272,7 @@ public class WhyNotBot implements Bot {
 	}
 
 	public int ourBestContinent() {
-		int bestContinent = 0; // 1.NA 2.Europe 3.Asia 4.Austraila 5.SA 6.Africa
+		int bestContinent = 4; // 1.NA 2.Europe 3.Asia 4.Austraila 5.SA 6.Africa
 		int botId = player.getId();
 		int countriesInNA = 0, countriesInSA = 0, countriesInEurope = 0, countriesInAfrica = 0, countriesInAsia = 0, countriesInAustralia = 0;
 		int percentOfNA = 0, percentOfSA = 0, percentOfEurope = 0, percentOfAfrica = 0, percentOfAsia = 0, percentOfAustralia = 0;
@@ -288,7 +288,7 @@ public class WhyNotBot implements Bot {
 				if((i>=32) && (i<=35)) {countriesInSA++;}
 				if((i>=36) && (i<=41)) {countriesInAfrica++;}
 			}
-		}
+		}// calculates the percentage of each continent
 		percentOfNA = (countriesInNA / 9) * 100;
 		percentOfEurope = (countriesInEurope / 7) * 100;
 		percentOfAsia = (countriesInAsia / 12) * 100;
@@ -320,6 +320,7 @@ public class WhyNotBot implements Bot {
 		int firstCountryID = 0, lastCountryID = 41;
 		int botId = player.getId(), i = 0;
 		
+		// get min and max to use for random below
 		switch (continent) {// 1.NA 2.Europe 3.Asia 4.Austraila 5.SA 6.Africa
 		case 1:
 			firstCountryID = 0;
@@ -349,7 +350,7 @@ public class WhyNotBot implements Bot {
 			break;
 		}
 		
-		do {
+		do {// picks random country we own
 			i = firstCountryID + (int)(Math.random() * ((lastCountryID - firstCountryID) + 1));
 			ownedCountry = i;
 		} while (!(botId == board.getOccupier(i)));
@@ -357,7 +358,8 @@ public class WhyNotBot implements Bot {
 		return ownedCountry;
 	}
 	
-private int highestPercent(int a, int b, int c,int d, int e, int f) {
+	// returns the highest percentage of the 6 arguments
+	private int highestPercent(int a, int b, int c,int d, int e, int f) {
 		
 		if((a>=b) && (a>=c) && (a>=d) && (a>=e) && (a>=f)) {
 			return a;
