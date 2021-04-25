@@ -153,7 +153,11 @@ public class WhyNotBot implements Bot {
 	public String getDefence (int countryId) {
 		String command = "";
 		// put your code here
-		command = "1";
+		if (board.getNumUnits(countryId) >= 2){
+			command += 2;
+		} else {
+			command += 1;
+		}
 		return(command);
 	}
 
