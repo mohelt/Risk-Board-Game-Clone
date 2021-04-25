@@ -20,6 +20,22 @@ Step 3. Click run
 //Jar File
 Step 1. Double click the risk.jar
 
+Sprint 5
+======
+Reinforcements:
+Trading in Cards: It will not trade in unless its forced to trade in (e.g CCC)
+
+For Player:   Code reinforcements territory with the least amount of armies that shares a border with
+              the enemy, else bordering a neutral
+For Neutrals: it randomly selects them
+
+Defending: Always defends with 2 if available else 1;
+
+Attacking: Each attack is given a probability of winning
+ Any attack with probability greater than 0.5 is executed
+
+Fortification:  This is not a useful tool and thus our bot skips fortification always
+
 Sprint 4
 ======
 

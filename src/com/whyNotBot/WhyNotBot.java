@@ -1,10 +1,28 @@
+// Team Members:
+//Mohamed Eltayeb Student Number:19349633
+//Cian O'Reilly Student Number:19394833
+//Tom Higgins Student Number: 19343176
 package com.whyNotBot;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-// put your code here
+// Sprint 5
+//Reinforcements:
+//Trading in Cards: It will not trade in unless its forced to trade in (e.g CCC)
+//
+//For Player:   Code reinforcements territory with the least amount of armies that shares a border with
+//              the enemy, else bordering a neutral
+//For Neutrals: it randomly selects them
+//
+//Defending: Always defends with 2 if available else 1;
+//
+//Attacking: Each attack is given a probability of winning
+// Any attack with probability greater than 0.5 is executed
+//
+//Fortification:  This is not a useful tool and thus our bot skips fortification always
+
 
 public class WhyNotBot implements Bot {
 	// The public API of WhyNotBot must not change
