@@ -268,13 +268,10 @@ public class WhyNotBot implements Bot {
 		int bestContinent = 0; // 1.NA 2.Europe 3.Asia 4.Austraila 5.SA 6.Africa
 		int botId = player.getId();
 		int countriesInNA = 0, countriesInSA = 0, countriesInEurope = 0, countriesInAfrica = 0, countriesInAsia = 0, countriesInAustralia = 0;
-<<<<<<< HEAD
 		float percentOfNA = 0, percentOfSA = 0, percentOfEurope = 0, percentOfAfrica = 0, percentOfAsia = 0, percentOfAustralia = 0;
 
-=======
 		int percentOfNA = 0, percentOfSA = 0, percentOfEurope = 0, percentOfAfrica = 0, percentOfAsia = 0, percentOfAustralia = 0;
 		
->>>>>>> d92bc8a93375b2eccdd148a447795057023314f0
 		// scan through all countries
 		for(int i=0;i<GameData.NUM_COUNTRIES;i++) {
 			// if we own the country
@@ -287,7 +284,6 @@ public class WhyNotBot implements Bot {
 				if((i>=36) && (i<=41)) {countriesInAfrica++;}
 			}
 		}
-<<<<<<< HEAD
 		percentOfNA = countriesInNA / 9;
 		percentOfEurope = countriesInEurope / 7;
 		percentOfAsia = countriesInAsia / 12;
@@ -303,7 +299,6 @@ public class WhyNotBot implements Bot {
 
 	private float highestPercent(float a, float b, float c,float d, float e, float f) {
 
-=======
 		percentOfNA = (countriesInNA / 9) * 100;
 		percentOfEurope = (countriesInEurope / 7) * 100;
 		percentOfAsia = (countriesInAsia / 12) * 100;
@@ -374,7 +369,6 @@ public class WhyNotBot implements Bot {
 	
 private int highestPercent(int a, int b, int c,int d, int e, int f) {
 		
->>>>>>> d92bc8a93375b2eccdd148a447795057023314f0
 		if((a>=b) && (a>=c) && (a>=d) && (a>=e) && (a>=f)) {
 			return a;
 		}
