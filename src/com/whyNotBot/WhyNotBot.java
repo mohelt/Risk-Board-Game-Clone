@@ -18,6 +18,7 @@ public class WhyNotBot implements Bot {
 	ArrayList<Territory> borderTerritories;
 	private int personalId,enemyIdentification;
 	private ArrayList<Territory> territories;
+	public ArrayList<AttackMoves> possibleAttackingMoves;
 	WhyNotBot (BoardAPI inBoard, PlayerAPI inPlayer) {
 		board = inBoard;	
 		player = inPlayer;
@@ -127,7 +128,7 @@ public class WhyNotBot implements Bot {
 
 	private String getRandomNeutral(int forPlayer) {
 		ArrayList<Territory> ownedTerritories = new ArrayList<>();
-		
+
 		for(Territory i:territories){
 			if(i.ownerTerritory() == forPlayer){
 				ownedTerritories.add(i);
@@ -142,12 +143,93 @@ public class WhyNotBot implements Bot {
 		command = "skip";
 		return(command);
 	}
+	public class AttackMoves{
+		int attackerUnits, defenderUnits, attackID, defendID;
+		double probability = 0;
+
+		public AttackMoves(int a, int d){
+			attackID = a;
+			defendID = d;
+			attackerUnits = board.getNumUnits(a);
+			defenderUnits = board.getNumUnits(d);
+			probability = calculateProb(attackerUnits, defenderUnits);
+		}
+
+		private double calculateProb(int attackerUnits, int defenderUnits) {
+			if(attackerUnits>(defenderUnits+5) && ((attackerUnits-10) <defenderUnits)) {
+				return 0.6;	
+			}
+			else if(attackerUnits>(defenderUnits+10) &&((attackerUnits-15) <defenderUnits)) {
+				return 0.75;	
+			}
+			else if(attackerUnits>(defenderUnits+15) &&((attackerUnits-20) <defenderUnits)) {
+				return 0.9;
+			}
+			else if(attackerUnits>(defenderUnits+20) &&((attackerUnits-25) <defenderUnits)) {
+				return 0.95;
+			}else if (defenderUnits>(attackerUnits+5) && ((defenderUnits-10) <attackerUnits)) {
+				return 0.4;
+			}else if (defenderUnits>(attackerUnits+10) && ((defenderUnits-15) <attackerUnits)) {
+				return 0.25;
+			}
+			else if (defenderUnits>(attackerUnits+15) && ((defenderUnits-20) <attackerUnits)) {
+				return 0.1;
+			}
+			else if (defenderUnits>(attackerUnits+20) && ((defenderUnits-25) <attackerUnits)) {
+				return 0.05;
+			}
+			else {
+				return 0.5;
+			}
+		}
+	}
+	Comparator<AttackMoves> compareAttackByProbability = new Comparator<AttackMoves>() {
+		@Override
+		public int compare(AttackMoves a, AttackMoves b) {
+			return new Double(a.probability).compareTo(b.probability);
+		}
+	};
 
 	public String getBattle () {
 		String command = "";
 		// put your code here
 		command = "skip";
+		possibleAttackingMoves = new ArrayList<AttackMoves>();
+		getAllPossibleAttacks();
+		Collections.sort(possibleAttackingMoves, compareAttackByProbability);
+		if (possibleAttackingMoves.size() > 0) {
+			AttackMoves chosenAttackMove = possibleAttackingMoves.get(possibleAttackingMoves.size() - 1);
+			AttackMoves lastAttackMove = chosenAttackMove;
+
+			String attackerName = GameData.COUNTRY_NAMES[chosenAttackMove.attackID].replaceAll("\\s", "");
+			String defenderName =  GameData.COUNTRY_NAMES[chosenAttackMove.defendID].replaceAll("\\s", "");
+			int troopsToAttackWith;
+			if (chosenAttackMove.attackerUnits > 3){
+				troopsToAttackWith = 3;
+				command = attackerName + " " + defenderName + " " + troopsToAttackWith;
+			} else if (chosenAttackMove.attackerUnits > 1) {
+				troopsToAttackWith = chosenAttackMove.attackerUnits-1;
+				command = attackerName + " " + defenderName + " " + troopsToAttackWith;
+			}else {
+				command = "skip";
+			}
+		} else {
+			command = "skip";
+		}
 		return(command);
+	}
+
+	private void getAllPossibleAttacks() {
+		for (int i=0; i<GameData.NUM_COUNTRIES; i++){
+			if (board.getOccupier(i) == personalId &&(board.getNumUnits(i)>1)){
+				for (int j=0; j<GameData.ADJACENT[i].length; j++){
+					if (board.getOccupier(GameData.ADJACENT[i][j]) != personalId){
+						
+						possibleAttackingMoves.add(new AttackMoves(i, GameData.ADJACENT[i][j]));
+					}
+				}
+			}
+		}		
 	}
 
 	public String getDefence (int countryId) {
@@ -164,7 +246,8 @@ public class WhyNotBot implements Bot {
 	public String getMoveIn (int attackCountryId) {
 		String command = "";
 		// put your code here
-		command = "0";
+		int half =board.getNumUnits(attackCountryId)/2;
+		command = String.valueOf(half);
 		return(command);
 	}
 
@@ -180,7 +263,7 @@ public class WhyNotBot implements Bot {
 		int botId = player.getId();
 		int countriesInNA = 0, countriesInSA = 0, countriesInEurope = 0, countriesInAfrica = 0, countriesInAsia = 0, countriesInAustralia = 0;
 		float percentOfNA = 0, percentOfSA = 0, percentOfEurope = 0, percentOfAfrica = 0, percentOfAsia = 0, percentOfAustralia = 0;
-		
+
 		// scan through all countries
 		for(int i=0;i<GameData.NUM_COUNTRIES;i++) {
 			// if we own the country
@@ -199,15 +282,15 @@ public class WhyNotBot implements Bot {
 		percentOfAustralia = countriesInAustralia / 4;
 		percentOfSA = countriesInSA / 4;
 		percentOfAfrica = countriesInAfrica / 6;
-		
+
 		highestPercent(percentOfNA, percentOfEurope, percentOfAsia, percentOfAustralia, percentOfSA, percentOfAfrica);
-		
-		
+
+
 		return bestContinent;
 	}
-	
-private float highestPercent(float a, float b, float c,float d, float e, float f) {
-		
+
+	private float highestPercent(float a, float b, float c,float d, float e, float f) {
+
 		if((a>=b) && (a>=c) && (a>=d) && (a>=e) && (a>=f)) {
 			return a;
 		}
