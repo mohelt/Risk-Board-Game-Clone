@@ -230,8 +230,10 @@ public class WhyNotBot implements Bot {
 			if (board.getOccupier(i) == personalId &&(board.getNumUnits(i)>1)){
 				for (int j=0; j<GameData.ADJACENT[i].length; j++){
 					if (board.getOccupier(GameData.ADJACENT[i][j]) != personalId){
-						
-						possibleAttackingMoves.add(new AttackMoves(i, GameData.ADJACENT[i][j]));
+						AttackMoves attack =new AttackMoves(i, GameData.ADJACENT[i][j]);
+						if(attack.probability>=0.5) {
+						possibleAttackingMoves.add(attack);
+						}
 					}
 				}
 			}
