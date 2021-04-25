@@ -121,15 +121,20 @@ public class WhyNotBot implements Bot {
 	public String getPlacement (int forPlayer) {
 		String command = "";
 		// put your code here
-		int continent = 0, country = 0;
-		
-		continent = ourBestContinent();
-		country = randomCountryInContinent(continent);
-		
-//		command = getRandomNeutral(forPlayer);
-		command = GameData.COUNTRY_NAMES[country];
-		command = command.replaceAll("\\s", "");
-		return(command);
+		if(forPlayer == getPersonalIdentification()) { //this doesn't work, its supposed to check if bot is assigning its own territory
+			int continent = 0, country = 0;
+			
+			continent = ourBestContinent();
+			country = randomCountryInContinent(continent);
+			
+			command = GameData.COUNTRY_NAMES[country];
+			command = command.replaceAll("\\s", "");
+			return(command);
+		}else { // if its to assign a neutrals territory
+			command = getRandomNeutral(forPlayer);
+			command = command.replaceAll("\\s", "");
+			return(command);
+		}
 	}
 
 	private String getRandomNeutral(int forPlayer) {
@@ -270,8 +275,6 @@ public class WhyNotBot implements Bot {
 		int bestContinent = 0; // 1.NA 2.Europe 3.Asia 4.Austraila 5.SA 6.Africa
 		int botId = player.getId();
 		int countriesInNA = 0, countriesInSA = 0, countriesInEurope = 0, countriesInAfrica = 0, countriesInAsia = 0, countriesInAustralia = 0;
-		float percentOfNA = 0, percentOfSA = 0, percentOfEurope = 0, percentOfAfrica = 0, percentOfAsia = 0, percentOfAustralia = 0;
-
 		int percentOfNA = 0, percentOfSA = 0, percentOfEurope = 0, percentOfAfrica = 0, percentOfAsia = 0, percentOfAustralia = 0;
 		
 		// scan through all countries
@@ -286,21 +289,6 @@ public class WhyNotBot implements Bot {
 				if((i>=36) && (i<=41)) {countriesInAfrica++;}
 			}
 		}
-		percentOfNA = countriesInNA / 9;
-		percentOfEurope = countriesInEurope / 7;
-		percentOfAsia = countriesInAsia / 12;
-		percentOfAustralia = countriesInAustralia / 4;
-		percentOfSA = countriesInSA / 4;
-		percentOfAfrica = countriesInAfrica / 6;
-
-		highestPercent(percentOfNA, percentOfEurope, percentOfAsia, percentOfAustralia, percentOfSA, percentOfAfrica);
-
-
-		return bestContinent;
-	}
-
-	private float highestPercent(float a, float b, float c,float d, float e, float f) {
-
 		percentOfNA = (countriesInNA / 9) * 100;
 		percentOfEurope = (countriesInEurope / 7) * 100;
 		percentOfAsia = (countriesInAsia / 12) * 100;
@@ -391,5 +379,4 @@ private int highestPercent(int a, int b, int c,int d, int e, int f) {
 		}
 		return e;
 	}
-
 }
