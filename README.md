@@ -1,3 +1,9 @@
+Risk Bot Clone
+======
+This was the software engineering project for UCD 2nd year module COMP20050
+
+This assignment was split into 5 sprints, the first 4 making the game, last sprint to make a bot which would play the game.
+
 Team Name: WhyNotBot
 ======
 
